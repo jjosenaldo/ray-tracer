@@ -1,6 +1,7 @@
 #include "parser.hpp"
 
 int main(){
-	parse("inout/in.xml");
+	Camera camera;
+	parseScene("inout/in.xml", camera);
 	return 0;
 }

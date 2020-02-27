@@ -4,16 +4,21 @@ BIN = ./bin
 OBJ = ./obj
 PARSER = $(SRC)/parser
 TINYXML = $(PARSER)/tinyxml
+UTILS = $(SRC)/utils
+SCENE = $(SRC)/scene
 
 # Other
-FLAGS = -g -std=c++11
-INC := -I $(TINYXML) -I $(PARSER)
-OBJS = $(OBJ)/tinyxml.o $(OBJ)/tinystr.o $(OBJ)/tinyxmlerror.o $(OBJ)/tinyxmlparser.o $(OBJ)/parser.o
+FLAGS = -g -std=c++14
+INC := -I $(TINYXML) -I $(PARSER) -I $(UTILS) -I $(SCENE)
+OBJS = $(OBJ)/tinyxml.o $(OBJ)/tinystr.o $(OBJ)/tinyxmlerror.o $(OBJ)/tinyxmlparser.o $(OBJ)/camera.o $(OBJ)/parser.o 
 
 all: $(BIN)/rt.out
 
 $(BIN)/rt.out: $(OBJS) $(SRC)/main.cpp
 	g++ $(SRC)/main.cpp $(OBJS) -o $(BIN)/rt.out $(INC) $(FLAGS)
+
+$(OBJ)/camera.o: $(SCENE)/camera.hpp $(SCENE)/camera.cpp
+	g++ -c -o $(OBJ)/camera.o $(SCENE)/camera.cpp $(INC) $(FLAGS)
 
 $(OBJ)/parser.o: $(PARSER)/parser.hpp $(PARSER)/parser.cpp
 	g++ -c -o $(OBJ)/parser.o $(PARSER)/parser.cpp $(INC) $(FLAGS)

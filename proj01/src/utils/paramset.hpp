@@ -26,7 +26,7 @@ private:
 
 public:
 	template<typename T>
-	void add (const string &new_key, unique_ptr< T[]> values, size_t size){
+	void add (const string &new_key, unique_ptr< T[]> values, size_t size=1){
 		shared_ptr<ParamSetItem<T>> item = make_shared<ParamSetItem<T>>(move(values), size, false);
 		params[new_key] = item;
 	}
