@@ -6,9 +6,10 @@
 
 using std::cout;
 using std::endl;
+using std::make_unique;
 using std::string;
 
-void parseScene(const char* input, Camera& camera){
+void parseScene(const char* input, unique_ptr<Camera>& camera){
 	TiXmlDocument doc(input);
 	
 	if(doc.LoadFile()){
@@ -19,13 +20,18 @@ void parseScene(const char* input, Camera& camera){
 
 			if(tag == "camera"){ 
 				camera = parseCamera(child);
+			} 
+
+			else if(tag == "film"){
+
 			}
+			
 		}
 
 	} else cout << "ERROR: couldn't load file " << input << endl;
 }
 
-Camera parseCamera(const TiXmlElement* camera){
+unique_ptr<Camera> parseCamera(const TiXmlElement* camera){
 	ParamSet ps;
 
 	string type;
@@ -38,5 +44,5 @@ Camera parseCamera(const TiXmlElement* camera){
 		ps.add<CameraType>("type", move(arr_type));
 	}
 
-	return Camera(ps);
+	return make_unique<Camera>(ps);
 }
