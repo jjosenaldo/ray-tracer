@@ -10,10 +10,10 @@ FLAGS = -g -std=c++11
 INC := -I $(TINYXML) -I $(PARSER)
 OBJS = $(OBJ)/tinyxml.o $(OBJ)/tinystr.o $(OBJ)/tinyxmlerror.o $(OBJ)/tinyxmlparser.o $(OBJ)/parser.o
 
-all: $(BIN)/rt
+all: $(BIN)/rt.out
 
-$(BIN)/rt: $(OBJS) $(SRC)/main.cpp
-	g++ $(SRC)/main.cpp $(OBJS) -o $(BIN)/rt $(INC) $(FLAGS)
+$(BIN)/rt.out: $(OBJS) $(SRC)/main.cpp
+	g++ $(SRC)/main.cpp $(OBJS) -o $(BIN)/rt.out $(INC) $(FLAGS)
 
 $(OBJ)/parser.o: $(PARSER)/parser.hpp $(PARSER)/parser.cpp
 	g++ -c -o $(OBJ)/parser.o $(PARSER)/parser.cpp $(INC) $(FLAGS)
