@@ -9,7 +9,7 @@ using std::endl;
 using std::string;
 
 void parse(const char* input){
-	TiXmlDocument doc("inout/in.xml" );
+	TiXmlDocument doc(input);
 	
 	if(doc.LoadFile()){
 		auto rt3 = doc.RootElement();
