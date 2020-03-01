@@ -1,3 +1,6 @@
+#ifndef PARAMSET_HPP
+#define PARAMSET_HPP
+
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -48,3 +51,5 @@ public:
 		return d;
 	}
 };
+
+#endif

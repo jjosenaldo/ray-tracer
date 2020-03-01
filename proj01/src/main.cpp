@@ -2,6 +2,7 @@
 
 int main(){
 	unique_ptr<Camera> camera;
-	parseScene("inout/in.xml", camera);
+	unique_ptr<Film> film;
+	parseScene("inout/in.xml", camera, film);
 	return 0;
 }
