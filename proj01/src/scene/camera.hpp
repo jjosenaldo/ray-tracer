@@ -7,6 +7,8 @@ enum CameraType{
 	CT_ORTHO
 };
 
+CameraType cameraTypeFromString(string str);
+
 struct Camera{
 	CameraType type;
 	Camera();

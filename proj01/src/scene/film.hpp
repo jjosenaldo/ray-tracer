@@ -11,6 +11,8 @@ enum FilmType{
 	FT_IMAGE
 };
 
+FilmType filmTypeFromString(string str);
+
 class Film{
 public:
 	int width;
@@ -21,7 +23,7 @@ public:
 	string imgType;
 	~Film();
 	Film(ParamSet ps);
-	Film(int width, int height);
+	Film(int height, int width, string filename, string imgType, FilmType type);
 	void setPixel( RgbColor color, int row, int col );
 
 };

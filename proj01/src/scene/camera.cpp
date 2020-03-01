@@ -1,5 +1,10 @@
 #include "camera.hpp"
 
+CameraType cameraTypeFromString(string str){
+	if(str == "ortographic") return CameraType::CT_ORTHO;
+	return CameraType::CT_ORTHO;
+}
+
 Camera::Camera(){
 	
 }
