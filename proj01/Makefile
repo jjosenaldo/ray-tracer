@@ -11,17 +11,20 @@ SCENE = $(SRC)/scene
 FLAGS = -g -std=c++14
 INC := -I $(TINYXML) -I $(PARSER) -I $(UTILS) -I $(SCENE)
 OBJS = $(OBJ)/tinyxml.o $(OBJ)/tinystr.o $(OBJ)/tinyxmlerror.o $(OBJ)/tinyxmlparser.o \
-	   $(OBJ)/camera.o $(OBJ)/film.o $(OBJ)/parser.o 
+	   $(OBJ)/background.o $(OBJ)/camera.o $(OBJ)/film.o $(OBJ)/parser.o 
 
 all: $(BIN)/rt.out
 
 $(BIN)/rt.out: $(OBJS) $(SRC)/main.cpp
 	g++ $(SRC)/main.cpp $(OBJS) -o $(BIN)/rt.out $(INC) $(FLAGS)
 
-$(OBJ)/camera.o: $(SCENE)/camera.hpp $(SCENE)/camera.cpp
+$(OBJ)/background.o: $(SCENE)/background.hpp $(SCENE)/background.cpp $(UTILS)/paramset.hpp
+	g++ -c -o $(OBJ)/background.o $(SCENE)/background.cpp $(INC) $(FLAGS)
+
+$(OBJ)/camera.o: $(SCENE)/camera.hpp $(SCENE)/camera.cpp $(UTILS)/paramset.hpp
 	g++ -c -o $(OBJ)/camera.o $(SCENE)/camera.cpp $(INC) $(FLAGS)
 
-$(OBJ)/film.o: $(SCENE)/film.hpp $(SCENE)/film.cpp
+$(OBJ)/film.o: $(SCENE)/film.hpp $(SCENE)/film.cpp $(UTILS)/paramset.hpp
 	g++ -c -o $(OBJ)/film.o $(SCENE)/film.cpp $(INC) $(FLAGS)
 
 $(OBJ)/parser.o: $(PARSER)/parser.hpp $(PARSER)/parser.cpp

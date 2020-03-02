@@ -50,6 +50,22 @@ public:
 
 		return d;
 	}
+
+	template<typename T>
+	const T* find_array (const string &target_key, size_t &size) const{
+		T* retVal = nullptr;
+
+		try {
+			auto psi = static_pointer_cast<ParamSetItem<T>>(params.at(target_key));
+			size = psi->size;
+			retVal = psi->values.get();
+		}
+		  catch (const std::out_of_range& oor) {
+		    retVal = nullptr;
+		}
+
+		return retVal;
+	}
 };
 
 #endif

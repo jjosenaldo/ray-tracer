@@ -1,5 +1,6 @@
 #include <iostream>
 #include <memory>
+#include <sstream>
 #include <string>
 
 #include "parser.hpp"
@@ -8,6 +9,7 @@ using std::cout;
 using std::endl;
 using std::make_unique;
 using std::string;
+using std::stringstream;
 
 void parseScene(const char* input, unique_ptr<Camera>& camera, unique_ptr<Film>& film, unique_ptr<Background>& background){
 	TiXmlDocument doc(input);
@@ -41,12 +43,10 @@ void parseWorld(const TiXmlElement* world, unique_ptr<Background>& background){
 	}
 }
 
-
-// TODO: the other 3 corners of the screen
 unique_ptr<Background> parseBackground(const TiXmlElement* background){
 	ParamSet psBack;
-	string type, mapping, bl;
-	char r,g,b;
+	string type, mapping, bl, br, tl, tr;
+	short r,g,b;
 
 	if(background->QueryStringAttribute("type", &type) == TIXML_SUCCESS){
 		auto typeArr = make_unique<string[]>(1);
@@ -63,12 +63,50 @@ unique_ptr<Background> parseBackground(const TiXmlElement* background){
 	if(background->QueryStringAttribute("bl", &bl) == TIXML_SUCCESS){
 		stringstream blStream(bl);
 		blStream >> r >> g >> b;
+
 		auto blArr = make_unique<char[]>(3);
-		blArr[0] = r;
-		blArr[1] = g;
-		blArr[2] = b;
-		psBack.add<int>("bl", move(blArr));
+		blArr[0] = (char)r;
+		blArr[1] = (char)g;
+		blArr[2] = (char)b;
+		
+		psBack.add<char>("bl", move(blArr), 3);
 	}	
+
+	if(background->QueryStringAttribute("br", &br) == TIXML_SUCCESS){
+		stringstream brStream(br);
+		brStream >> r >> g >> b;
+
+		auto brArr = make_unique<char[]>(3);
+		brArr[0] = (char)r;
+		brArr[1] = (char)g;
+		brArr[2] = (char)b;
+		
+		psBack.add<char>("br", move(brArr), 3);
+	}
+
+	if(background->QueryStringAttribute("tl", &tl) == TIXML_SUCCESS){
+		stringstream tlStream(tl);
+		tlStream >> r >> g >> b;
+
+		auto tlArr = make_unique<char[]>(3);
+		tlArr[0] = (char)r;
+		tlArr[1] = (char)g;
+		tlArr[2] = (char)b;
+		
+		psBack.add<char>("tl", move(tlArr), 3);
+	}
+
+	if(background->QueryStringAttribute("tr", &tr) == TIXML_SUCCESS){
+		stringstream trStream(tr);
+		trStream >> r >> g >> b;
+
+		auto trArr = make_unique<char[]>(3);
+		trArr[0] = (char)r;
+		trArr[1] = (char)g;
+		trArr[2] = (char)b;
+		
+		psBack.add<char>("tr", move(trArr), 3);
+	}
 
 	return make_unique<Background>(psBack);
 }
