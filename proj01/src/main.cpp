@@ -7,10 +7,10 @@ int main(){
 	
 	parseScene("inout/in.xml", camera, film, background);
 	
-	for(int row = 0; row < film->height; ++row){
+	for(int row = film->height-1; row >=0 ; --row){
 		for(int col = 0; col < film->width; ++col){
-			auto color = background->sample(float(row)/film->height, float(col)/film->width);
-			film->setPixel(color,Point2{col,row});
+			auto color = background->sample(float(col)/film->width, float(row)/film->height); //(x,y)
+			film->setPixel(color,Point2{row,col});
 		}
 	}
 

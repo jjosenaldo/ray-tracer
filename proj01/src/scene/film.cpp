@@ -69,7 +69,8 @@ void Film::writeImg(){
 
 	for(int row = 0; row < height; ++row){
 		for(int col = 0; col < width; ++col){
-			outFile << buff[row][col][0] << " " << buff[row][col][1] << " " << buff[row][col][2] << endl;
+			outFile << buff[row][col][0] << " " << buff[row][col][1] << " " << buff[row][col][2] << " ";
 		}
+		outFile << endl;
 	}
 }

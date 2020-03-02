@@ -1,8 +1,8 @@
 <RT3>
     <camera type="orthographic" />
-    <film type="image" x_res="300" y_res="300" filename="bilinearInterpolated" img_type="ppm" />
+    <film type="image" x_res="50" y_res="50" filename="bilinearInterpolated" img_type="ppm" />
     <world>
         <!-- This defines an interpolated background -->
-        <background type="colors" mapping="screen" bl="0 0 51" tl="0 255 51" tr="255 255 51" br="255 0 51" />
+        <background type="colors" mapping="screen" bl="50 50 50" tl="200 50 50" tr="50 200 50" br="50 50 200" />
     </world>
 </RT3>
