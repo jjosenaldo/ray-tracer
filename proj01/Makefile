@@ -11,7 +11,8 @@ SCENE = $(SRC)/scene
 FLAGS = -g -std=c++14
 INC := -I $(TINYXML) -I $(PARSER) -I $(UTILS) -I $(SCENE)
 OBJS = $(OBJ)/tinyxml.o $(OBJ)/tinystr.o $(OBJ)/tinyxmlerror.o $(OBJ)/tinyxmlparser.o \
-	   $(OBJ)/background.o $(OBJ)/camera.o $(OBJ)/film.o $(OBJ)/parser.o 
+	   $(OBJ)/background.o $(OBJ)/camera.o $(OBJ)/film.o $(OBJ)/parser.o \
+	   $(OBJ)/linearalgebra.o
 
 all: $(BIN)/rt.out
 
@@ -26,6 +27,9 @@ $(OBJ)/camera.o: $(SCENE)/camera.hpp $(SCENE)/camera.cpp $(UTILS)/paramset.hpp
 
 $(OBJ)/film.o: $(SCENE)/film.hpp $(SCENE)/film.cpp $(UTILS)/paramset.hpp
 	g++ -c -o $(OBJ)/film.o $(SCENE)/film.cpp $(INC) $(FLAGS)
+
+$(OBJ)/linearalgebra.o: $(UTILS)/linearalgebra.hpp $(UTILS)/linearalgebra.cpp
+	g++ -c -o $(OBJ)/linearalgebra.o $(UTILS)/linearalgebra.cpp $(INC) $(FLAGS)
 
 $(OBJ)/parser.o: $(PARSER)/parser.hpp $(PARSER)/parser.cpp
 	g++ -c -o $(OBJ)/parser.o $(PARSER)/parser.cpp $(INC) $(FLAGS)

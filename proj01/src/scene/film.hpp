@@ -3,6 +3,7 @@
 
 #include <string>
 #include "color.hpp"
+#include "linearalgebra.hpp"
 #include "paramset.hpp"
 
 using std::string;
@@ -25,6 +26,8 @@ public:
 	Film(ParamSet ps);
 	Film(int height, int width, string filename, string imgType, FilmType type);
 	void setPixel( RgbColor color, int row, int col );
+	void setPixel(RgbColor, Point2 p);
+	void writeImg();
 
 };
 

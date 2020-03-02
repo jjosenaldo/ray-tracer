@@ -1,4 +1,10 @@
+#include <algorithm>
+
 #include "background.hpp"
+#include "linearalgebra.hpp"
+
+using std::max;
+using std::min;
 
 BackgroundType backgroundType(string type){
 	if(type == "colors") return BACKTYPE_COLORS;
@@ -38,3 +44,14 @@ Background::Background(ParamSet ps) : Background(
 	if(br != nullptr) this->br = {br[0], br[1], br[2]};
 	else this->br = {0,0,0};
 }
+
+RgbColor Background::sample(float x, float y){
+	float floatR = bilinearInterpolation(x, y, (float)bl.r, (float)tl.r, (float)tr.r, (float)br.r);
+	float floatG = bilinearInterpolation(x, y, (float)bl.g, (float)tl.g, (float)tr.g, (float)br.g);
+	float floatB = bilinearInterpolation(x, y, (float)bl.b, (float)tl.b, (float)tr.b, (float)br.b);
+	unsigned char r = max(min((int)round(floatR), 255), 0);
+	unsigned char g = max(min((int)round(floatG), 255), 0);
+	unsigned char b = max(min((int)round(floatB), 255), 0);
+	return {r,g,b};
+}
+

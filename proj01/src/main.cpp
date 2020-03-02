@@ -4,10 +4,16 @@ int main(){
 	unique_ptr<Camera> camera;
 	unique_ptr<Film> film;
 	unique_ptr<Background> background;
+	
 	parseScene("inout/in.xml", camera, film, background);
-	std::cout << +background->bl.r << " " << +background->bl.g << " " << +background->bl.b << "\n";
-	std::cout << +background->tl.r << " " << +background->tl.g << " " << +background->tl.b << "\n";
-	std::cout << +background->tr.r << " " << +background->tr.g << " " << +background->tr.b << "\n";
-	std::cout << +background->br.r << " " << +background->br.g << " " << +background->br.b << "\n";
+	
+	for(int row = 0; row < film->height; ++row){
+		for(int col = 0; col < film->width; ++col){
+			auto color = background->sample(float(row)/film->height, float(col)/film->width);
+			film->setPixel(color,Point2{col,row});
+		}
+	}
+
+	film->writeImg();
 	return 0;
 }
