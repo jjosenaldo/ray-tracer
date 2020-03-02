@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cmath>
 
 #include "background.hpp"
 #include "linearalgebra.hpp"
