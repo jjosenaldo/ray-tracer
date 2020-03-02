@@ -2,9 +2,9 @@
 #define COLOR_HPP
 
 struct RgbColor{
-	char r;
-	char g;
-	char b;
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
 };
 
 #endif

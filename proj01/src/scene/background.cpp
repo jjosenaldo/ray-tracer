@@ -1,5 +1,4 @@
 #include "background.hpp"
-#include <iostream>
 
 BackgroundType backgroundType(string type){
 	if(type == "colors") return BACKTYPE_COLORS;
@@ -22,12 +21,10 @@ Background::Background(ParamSet ps) : Background(
 	backgroundType(ps.find_one<string>("type", "colors")), 
 	backgroundMapping(ps.find_one<string>("mapping", "screen"))) {
 	size_t size;
-	const char* bl = ps.find_array<char>("bl", size); 
-	const char* br = ps.find_array<char>("br", size); 
-	const char* tl = ps.find_array<char>("tl", size); 
-	const char* tr = ps.find_array<char>("tr", size); 
-
-	std::cout << +tl[0] << " " << +(tl[1]) << " " << +tl[2] << "end\n";
+	const unsigned char* bl = ps.find_array<unsigned char>("bl", size); 
+	const unsigned char* br = ps.find_array<unsigned char>("br", size); 
+	const unsigned char* tl = ps.find_array<unsigned char>("tl", size); 
+	const unsigned char* tr = ps.find_array<unsigned char>("tr", size); 
 
 	if(bl != nullptr) this->bl = {bl[0], bl[1], bl[2]};
 	else this->bl = {0,0,0};

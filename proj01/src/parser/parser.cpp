@@ -64,48 +64,48 @@ unique_ptr<Background> parseBackground(const TiXmlElement* background){
 		stringstream blStream(bl);
 		blStream >> r >> g >> b;
 
-		auto blArr = make_unique<char[]>(3);
-		blArr[0] = (char)r;
-		blArr[1] = (char)g;
-		blArr[2] = (char)b;
+		auto blArr = make_unique<unsigned char[]>(3);
+		blArr[0] = (unsigned char)r;
+		blArr[1] = (unsigned char)g;
+		blArr[2] = (unsigned char)b;
 		
-		psBack.add<char>("bl", move(blArr), 3);
+		psBack.add<unsigned char>("bl", move(blArr), 3);
 	}	
 
 	if(background->QueryStringAttribute("br", &br) == TIXML_SUCCESS){
 		stringstream brStream(br);
 		brStream >> r >> g >> b;
 
-		auto brArr = make_unique<char[]>(3);
-		brArr[0] = (char)r;
-		brArr[1] = (char)g;
-		brArr[2] = (char)b;
+		auto brArr = make_unique<unsigned char[]>(3);
+		brArr[0] = (unsigned char)r;
+		brArr[1] = (unsigned char)g;
+		brArr[2] = (unsigned char)b;
 		
-		psBack.add<char>("br", move(brArr), 3);
+		psBack.add<unsigned char>("br", move(brArr), 3);
 	}
 
 	if(background->QueryStringAttribute("tl", &tl) == TIXML_SUCCESS){
 		stringstream tlStream(tl);
 		tlStream >> r >> g >> b;
 
-		auto tlArr = make_unique<char[]>(3);
-		tlArr[0] = (char)r;
-		tlArr[1] = (char)g;
-		tlArr[2] = (char)b;
+		auto tlArr = make_unique<unsigned char[]>(3);
+		tlArr[0] = (unsigned char)r;
+		tlArr[1] = (unsigned char)g;
+		tlArr[2] = (unsigned char)b;
 		
-		psBack.add<char>("tl", move(tlArr), 3);
+		psBack.add<unsigned char>("tl", move(tlArr), 3);
 	}
 
 	if(background->QueryStringAttribute("tr", &tr) == TIXML_SUCCESS){
 		stringstream trStream(tr);
 		trStream >> r >> g >> b;
 
-		auto trArr = make_unique<char[]>(3);
-		trArr[0] = (char)r;
-		trArr[1] = (char)g;
-		trArr[2] = (char)b;
+		auto trArr = make_unique<unsigned char[]>(3);
+		trArr[0] = (unsigned char)r;
+		trArr[1] = (unsigned char)g;
+		trArr[2] = (unsigned char)b;
 		
-		psBack.add<char>("tr", move(trArr), 3);
+		psBack.add<unsigned char>("tr", move(trArr), 3);
 	}
 
 	return make_unique<Background>(psBack);
