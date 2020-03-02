@@ -9,7 +9,7 @@ using std::endl;
 using std::make_unique;
 using std::string;
 
-void parseScene(const char* input, unique_ptr<Camera>& camera, unique_ptr<Film>& film){
+void parseScene(const char* input, unique_ptr<Camera>& camera, unique_ptr<Film>& film, unique_ptr<Background>& background){
 	TiXmlDocument doc(input);
 	
 	if(doc.LoadFile()){
@@ -18,17 +18,59 @@ void parseScene(const char* input, unique_ptr<Camera>& camera, unique_ptr<Film>&
 		for (auto child = rt3->FirstChildElement(); child != NULL; child = child->NextSiblingElement()){
 			string tag = child->ValueStr();
 
-			if(tag == "camera"){ 
+			if(tag == "camera")
 				camera = parseCamera(child);
-			} 
 
-			else if(tag == "film"){
+			else if(tag == "film")
 				film = parseFilm(child);
-			}
+
+			else if(tag == "world")
+				parseWorld(child, background);
 			
 		}
 
 	} else cout << "ERROR: couldn't load file " << input << endl;
+}
+
+void parseWorld(const TiXmlElement* world, unique_ptr<Background>& background){
+	for (auto child = world->FirstChildElement(); child != NULL; child = child->NextSiblingElement()){
+		string tag = child->ValueStr();
+
+		if(tag == "background")
+			background = parseBackground(child);		
+	}
+}
+
+
+// TODO: the other 3 corners of the screen
+unique_ptr<Background> parseBackground(const TiXmlElement* background){
+	ParamSet psBack;
+	string type, mapping, bl;
+	char r,g,b;
+
+	if(background->QueryStringAttribute("type", &type) == TIXML_SUCCESS){
+		auto typeArr = make_unique<string[]>(1);
+		typeArr[0] = type;
+		psBack.add<string>("type", move(typeArr));
+	}
+
+	if(background->QueryStringAttribute("mapping", &mapping) == TIXML_SUCCESS){
+		auto mappingArr = make_unique<string[]>(1);
+		mappingArr[0] = mapping;
+		psBack.add<string>("mapping", move(mappingArr));
+	}
+
+	if(background->QueryStringAttribute("bl", &bl) == TIXML_SUCCESS){
+		stringstream blStream(bl);
+		blStream >> r >> g >> b;
+		auto blArr = make_unique<char[]>(3);
+		blArr[0] = r;
+		blArr[1] = g;
+		blArr[2] = b;
+		psBack.add<int>("bl", move(blArr));
+	}	
+
+	return make_unique<Background>(psBack);
 }
 
 unique_ptr<Film> parseFilm(const TiXmlElement* film){
