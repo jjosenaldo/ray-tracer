@@ -65,7 +65,7 @@ void Film::setPixel(RgbColor color, Point2 p){
 void Film::writeImg(){
 	ofstream outFile;
 	outFile.open(filename+"."+imgType);
-	outFile << "P6 " << width << " " << height << " " << 255 << endl;
+	outFile << "P3 " << width << " " << height << " " << 255 << endl;
 
 	for(int row = 0; row < height; ++row){
 		for(int col = 0; col < width; ++col){
