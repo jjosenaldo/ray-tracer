@@ -49,7 +49,7 @@ unique_ptr<Scene> parseScene(const TiXmlElement* world){
 
 unique_ptr<Background> parseBackground(const TiXmlElement* background){
 	ParamSet psBack;
-	string type, mapping, bl, br, tl, tr;
+	string type, mapping, bl, br, tl, tr, color;
 	short r,g,b;
 
 	if(background->QueryStringAttribute("type", &type) == TIXML_SUCCESS){
@@ -110,6 +110,18 @@ unique_ptr<Background> parseBackground(const TiXmlElement* background){
 		trArr[2] = (unsigned char)b;
 		
 		psBack.add<unsigned char>("tr", move(trArr), 3);
+	}
+
+	if(background->QueryStringAttribute("color", &color) == TIXML_SUCCESS){
+		stringstream colorStream(color);
+		colorStream >> r >> g >> b;
+
+		auto colorArr = make_unique<unsigned char[]>(3);
+		colorArr[0] = (unsigned char)r;
+		colorArr[1] = (unsigned char)g;
+		colorArr[2] = (unsigned char)b;
+		
+		psBack.add<unsigned char>("color", move(colorArr), 3);
 	}
 
 	return make_unique<Background>(psBack);

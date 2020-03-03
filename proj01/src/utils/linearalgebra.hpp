@@ -13,7 +13,8 @@ struct Point3{
     T y;
     T z;
     Point3<T>() : Point3<T>(0,0,0){}
-    Point3<T>(T x, T y, T z){this->x=x;this->y=y;this->z=z; }
+    Point3<T>(T x, T y, T z){set(x,y,z); }
+    void set(T x, T y, T z){this->x=x;this->y=y;this->z=z;}
 };
 
 template <typename T>

@@ -22,23 +22,31 @@ BackgroundMapping backgroundMapping(string mapping){
 Background::Background(ParamSet ps) {
 	this->type = backgroundType(ps.find_one<string>("type", "colors"));
 	this->mapping = backgroundMapping(ps.find_one<string>("mapping", "screen"));
+	this->bl = RgbColor<unsigned char>();
+	this->tl = RgbColor<unsigned char>();
+	this->tr = RgbColor<unsigned char>();
+	this->br = RgbColor<unsigned char>();
+
 	size_t size;
-	const unsigned char* bl = ps.find_array<unsigned char>("bl", size); 
-	const unsigned char* br = ps.find_array<unsigned char>("br", size); 
-	const unsigned char* tl = ps.find_array<unsigned char>("tl", size); 
-	const unsigned char* tr = ps.find_array<unsigned char>("tr", size); 
+	auto color = ps.find_array<unsigned char>("color", size); 
+	if(color != nullptr) {
+		this->bl.set(color[0], color[1], color[2]);
+		this->br.set(color[0], color[1], color[2]);
+		this->tl.set(color[0], color[1], color[2]);
+		this->tr.set(color[0], color[1], color[2]);
+	}
+	
+	else{
+		auto bl = ps.find_array<unsigned char>("bl", size); 
+		auto br = ps.find_array<unsigned char>("br", size); 
+		auto tl = ps.find_array<unsigned char>("tl", size); 
+		auto tr = ps.find_array<unsigned char>("tr", size); 
 
-	if(bl != nullptr) this->bl = RgbColor<unsigned char>(bl[0], bl[1], bl[2]);
-	else this->bl = RgbColor<unsigned char>(0,0,0);
-
-	if(tl != nullptr) this->tl = RgbColor<unsigned char>(tl[0], tl[1], tl[2]);
-	else this->tl = RgbColor<unsigned char>(0,0,0);
-
-	if(tr != nullptr) this->tr = RgbColor<unsigned char>(tr[0], tr[1], tr[2]);
-	else this->tr = RgbColor<unsigned char>(0,0,0);
-
-	if(br != nullptr) this->br = RgbColor<unsigned char>(br[0], br[1], br[2]);
-	else this->br = RgbColor<unsigned char>(0,0,0);
+		if(bl != nullptr) this->bl.set(bl[0], bl[1], bl[2]);
+		if(br != nullptr) this->br.set(br[0], br[1], br[2]);
+		if(tl != nullptr) this->tl.set(tl[0], tl[1], tl[2]);
+		if(tr != nullptr) this->tr.set(tr[0], tr[1], tr[2]);
+	}
 }
 
 RgbColor<unsigned char> Background::sample(float x, float y){

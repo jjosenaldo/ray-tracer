@@ -4,7 +4,7 @@ int main(){
 	unique_ptr<Camera> camera;
 	unique_ptr<Scene> scene;
 	
-	parse("inout/in.xml", camera, scene);
+	parse("inout/backgroundSimple.xml", camera, scene);
 	int height = camera->film->height;
 	int width = camera->film->width;
 	
