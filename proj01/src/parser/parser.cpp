@@ -11,7 +11,7 @@ using std::make_unique;
 using std::string;
 using std::stringstream;
 
-void parseScene(const char* input, unique_ptr<Camera>& camera, unique_ptr<Film>& film, unique_ptr<Background>& background){
+void parseScene(const char* input, unique_ptr<Camera>& camera, unique_ptr<Background>& background){
 	TiXmlDocument doc(input);
 	
 	if(doc.LoadFile()){
@@ -24,7 +24,7 @@ void parseScene(const char* input, unique_ptr<Camera>& camera, unique_ptr<Film>&
 				camera = parseCamera(child);
 
 			else if(tag == "film")
-				film = parseFilm(child);
+				camera->film = parseFilm(child);
 
 			else if(tag == "world")
 				parseWorld(child, background);
