@@ -11,7 +11,7 @@ using std::make_unique;
 using std::string;
 using std::stringstream;
 
-void parse(const char* input, unique_ptr<Camera>& camera, unique_ptr<Scene>& scene){
+void parse(const string input, unique_ptr<Camera>& camera, unique_ptr<Scene>& scene){
 	TiXmlDocument doc(input);
 	
 	if(doc.LoadFile()){
@@ -31,7 +31,7 @@ void parse(const char* input, unique_ptr<Camera>& camera, unique_ptr<Scene>& sce
 			
 		}
 
-	} else cout << "ERROR: couldn't load file " << input << endl;
+	} else {cout << "ERROR: couldn't load file " << input << endl;exit(0);}
 }
 
 unique_ptr<Scene> parseScene(const TiXmlElement* world){
