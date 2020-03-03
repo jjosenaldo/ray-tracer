@@ -52,13 +52,13 @@ Film::~Film(){
 	delete[] this->buff;
 }
 
-void Film::setPixel( RgbColor color, int row, int col ){
-	this->buff[row][col][0] = color.r;
-	this->buff[row][col][1] = color.g;
-	this->buff[row][col][2] = color.b;
+void Film::setPixel( RgbColorChar color, int row, int col ){
+	this->buff[row][col][0] = color.r();
+	this->buff[row][col][1] = color.g();
+	this->buff[row][col][2] = color.b();
 }
 
-void Film::setPixel(RgbColor color, Point2<int> p){
+void Film::setPixel(RgbColorChar color, Point2<int> p){
 	this->setPixel(color, p.y, p.x);
 }
 

@@ -2,7 +2,7 @@
 #define FILM_HPP
 
 #include <string>
-#include "color.hpp"
+
 #include "linearalgebra.hpp"
 #include "paramset.hpp"
 
@@ -25,8 +25,8 @@ public:
 	~Film();
 	Film(ParamSet ps);
 	Film(int height, int width, string filename, string imgType, FilmType type);
-	void setPixel( RgbColor color, int row, int col );
-	void setPixel(RgbColor, Point2<int> p);
+	void setPixel( RgbColorChar color, int row, int col );
+	void setPixel(RgbColorChar, Point2<int> p);
 	void writeImg();
 
 };
