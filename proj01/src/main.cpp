@@ -8,7 +8,7 @@ using std::endl;
 using cxxopts::Options;
 using cxxopts::ParseResult;
 
-Options parseCmdlineOptions(int argc, char** argv){
+Options makeCmdLineOptions(int argc, char** argv){
 	Options options = Options("./bin/rt.out", "Generates a image using the Ray Tracing Algorithm.");
 	options.add_options()
         ("i,input", "Input file", cxxopts::value<string>()->default_value("inout/in.xml"))
@@ -17,7 +17,7 @@ Options parseCmdlineOptions(int argc, char** argv){
 }
 
 int main(int argc, char** argv){
-	auto commandLineOptions = parseCmdlineOptions(argc, argv);
+	auto commandLineOptions = makeCmdLineOptions(argc, argv);
 	auto parseResult = commandLineOptions.parse(argc, argv);
 
     if (parseResult.count("help")){
