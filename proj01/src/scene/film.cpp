@@ -58,7 +58,7 @@ void Film::setPixel( RgbColor color, int row, int col ){
 	this->buff[row][col][2] = color.b;
 }
 
-void Film::setPixel(RgbColor color, Point2 p){
+void Film::setPixel(RgbColor color, Point2<int> p){
 	this->setPixel(color, p.y, p.x);
 }
 

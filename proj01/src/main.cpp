@@ -11,7 +11,7 @@ int main(){
 	for(int row = 0; row < height; ++row){
 		for(int col = 0; col < width; ++col){
 			auto color = scene->background->sample(float(col)/width, 1-float(row)/height); //(x,y)
-			camera->film->setPixel(color,Point2{.x=col,.y=row});
+			camera->film->setPixel(color,Point2<int>{.x=col,.y=row});
 		}
 	}
 

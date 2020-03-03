@@ -1,9 +1,10 @@
 #ifndef LINEARALGEBRA_HPP
 #define LINEARALGEBRA_HPP
 
+template <typename T> 
 struct Point2{
-    int x;
-    int y;
+    T x;
+    T y;
 };
 
 float bilinearInterpolation(float x, float y, float bl, float tl, float tr, float br );
