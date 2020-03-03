@@ -18,7 +18,7 @@ class Film{
 public:
 	int width;
 	int height;
-	int*** buff;
+	float*** buff;
 	FilmType type;
 	string filename;
 	string imgType;

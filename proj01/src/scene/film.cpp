@@ -1,6 +1,9 @@
+#include <algorithm>
 #include <fstream>
 #include "film.hpp"
 
+using std::max;
+using std::min;
 using std::endl;
 using std::ofstream;
 
@@ -14,13 +17,13 @@ FilmType filmTypeFromString(string str){
 Film::Film(int height, int width, string filename, string imgType, FilmType type){
 	this->height = height;
 	this->width = width;
-	this->buff = new int**[height];
+	this->buff = new float**[height];
 
 	for(int y = 0; y < height; ++y){
-		this->buff[y] = new int*[width];
+		this->buff[y] = new float*[width];
 
 		for(int x = 0; x < width; ++x)
-			this->buff[y][x] = new int[3];
+			this->buff[y][x] = new float[3];
 	}
 
 	this->type = type;
@@ -53,15 +56,16 @@ Film::~Film(){
 }
 
 void Film::setPixel( RgbColorChar color, int row, int col ){
-	this->buff[row][col][0] = color.r();
-	this->buff[row][col][1] = color.g();
-	this->buff[row][col][2] = color.b();
+	this->buff[row][col][0] = color.r() / float(255);
+	this->buff[row][col][1] = color.g() / float(255);
+	this->buff[row][col][2] = color.b() / float(255);
 }
 
 void Film::setPixel(RgbColorChar color, Point2<int> p){
 	this->setPixel(color, p.y, p.x);
 }
 
+#define from01to255(x) max(0,min((int)(x*255),255))
 void Film::writeImg(){
 	ofstream outFile;
 	outFile.open(filename+"."+imgType);
@@ -69,7 +73,9 @@ void Film::writeImg(){
 
 	for(int row = 0; row < height; ++row){
 		for(int col = 0; col < width; ++col){
-			outFile << buff[row][col][0] << " " << buff[row][col][1] << " " << buff[row][col][2] << " ";
+			outFile << from01to255(buff[row][col][0]) << " " 
+					<< from01to255(buff[row][col][1]) << " " 
+					<< from01to255(buff[row][col][2]) << " ";
 		}
 		outFile << endl;
 	}
