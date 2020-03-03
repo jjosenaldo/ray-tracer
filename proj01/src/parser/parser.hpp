@@ -10,7 +10,7 @@
 unique_ptr<Background> parseBackground(const TiXmlElement* background);
 unique_ptr<Camera> parseCamera(const TiXmlElement *);
 unique_ptr<Film> parseFilm(const TiXmlElement *);
-void parseScene(const char* input, unique_ptr<Camera>& camera, unique_ptr<Scene>& scene);
-void parseWorld(const TiXmlElement* world, unique_ptr<Scene>& scene);
+unique_ptr<Scene> parseScene(const TiXmlElement* world);
+void parse(const char* input, unique_ptr<Camera>& camera, unique_ptr<Scene>& scene);
 
 #endif
