@@ -26,11 +26,11 @@ int main(int argc, char** argv){
     }
 
     string inputFile = parseResult["input"].as<string>();
+    Rt3 rt3 = parse(inputFile);
 
-	unique_ptr<Camera> camera;
-	unique_ptr<Scene> scene;
-	
-	parse(inputFile, camera, scene);
+    auto camera = rt3.camera.get();
+    auto scene = rt3.scene.get();
+
 	int height = camera->film->height;
 	int width = camera->film->width;
 	

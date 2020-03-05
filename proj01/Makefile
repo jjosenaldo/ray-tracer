@@ -12,7 +12,7 @@ FLAGS = -g -std=c++14
 INC := -I $(TINYXML) -I $(PARSER) -I $(UTILS) -I $(SCENE)
 OBJS = $(OBJ)/tinyxml.o $(OBJ)/tinystr.o $(OBJ)/tinyxmlerror.o $(OBJ)/tinyxmlparser.o \
 	   $(OBJ)/background.o $(OBJ)/camera.o $(OBJ)/film.o $(OBJ)/parser.o \
-	   $(OBJ)/linearalgebra.o
+	   $(OBJ)/linearalgebra.o $(OBJ)/rt3.o
 
 all: $(BIN)/rt.out
 
@@ -33,6 +33,9 @@ $(OBJ)/linearalgebra.o: $(UTILS)/linearalgebra.hpp $(UTILS)/linearalgebra.cpp
 
 $(OBJ)/parser.o: $(PARSER)/parser.hpp $(PARSER)/parser.cpp
 	g++ -c -o $(OBJ)/parser.o $(PARSER)/parser.cpp $(INC) $(FLAGS)
+
+$(OBJ)/rt3.o: $(SCENE)/rt3.hpp $(SCENE)/rt3.cpp
+	g++ -c -o $(OBJ)/rt3.o $(SCENE)/rt3.cpp $(INC) $(FLAGS)
 
 $(OBJ)/tinystr.o: $(TINYXML)/tinystr.h $(TINYXML)/tinystr.cpp
 	g++ -c -o $(OBJ)/tinystr.o $(TINYXML)/tinystr.cpp $(INC) $(FLAGS)

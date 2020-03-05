@@ -11,27 +11,31 @@ using std::make_unique;
 using std::string;
 using std::stringstream;
 
-void parse(const string input, unique_ptr<Camera>& camera, unique_ptr<Scene>& scene){
+Rt3 parse(const string input){
+	Rt3 rt3Obj;
+
 	TiXmlDocument doc(input);
 	
 	if(doc.LoadFile()){
-		auto rt3 = doc.RootElement();
+		auto rt3Tag = doc.RootElement();
 		
-		for (auto child = rt3->FirstChildElement(); child != NULL; child = child->NextSiblingElement()){
+		for (auto child = rt3Tag->FirstChildElement(); child != NULL; child = child->NextSiblingElement()){
 			string tag = child->ValueStr();
 
 			if(tag == "camera")
-				camera = parseCamera(child);
+				rt3Obj.camera = parseCamera(child);
 
 			else if(tag == "film")
-				camera->film = parseFilm(child);
+				rt3Obj.camera->film = parseFilm(child);
 
 			else if(tag == "world")
-				scene = parseScene(child);
+				rt3Obj.scene = parseScene(child);
 			
 		}
 
 	} else {cout << "ERROR: couldn't load file " << input << endl;exit(0);}
+
+	return rt3Obj;
 }
 
 unique_ptr<Scene> parseScene(const TiXmlElement* world){
