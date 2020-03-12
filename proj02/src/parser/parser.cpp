@@ -68,9 +68,9 @@ Rt3 parse(const string input){
 ParamSet parseLookat(const TiXmlElement* lookat){
 	ParamSet ps;
 
-	addItemToParamset<int>(lookat, "look_from", 3, "lookFrom", ps);
-	addItemToParamset<int>(lookat, "look_at", 3, "lookAt", ps);
-	addItemToParamset<int>(lookat, "up", 3, "up", ps);
+	addItemToParamset<float>(lookat, "look_from", 3, "lookFrom", ps);
+	addItemToParamset<float>(lookat, "look_at", 3, "lookAt", ps);
+	addItemToParamset<float>(lookat, "up", 3, "up", ps);
 
 	return ps;
 }
@@ -118,6 +118,7 @@ ParamSet parseCamera(const TiXmlElement* camera){
 	ParamSet ps;
 
 	addItemToParamset<string>(camera, "type", 1, "type", ps);
+	addItemToParamset<int>(camera, "fovy", 1, "fovy", ps);
 
 	return ps;
 }

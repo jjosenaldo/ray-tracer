@@ -26,6 +26,21 @@ struct ParamSet{
 	unordered_map< string, shared_ptr< void > > params;
 
 	template<typename T>
+	const T & findOneFromPsi(shared_ptr< void > val){
+		auto psi = static_pointer_cast<ParamSetItem<T>>(val);
+		return psi->values[0];
+	}
+
+	template<typename T>
+	const T* findArrayFromPsi(shared_ptr< void > val, size_t& size){
+		auto psi = static_pointer_cast<ParamSetItem<T>>(val);
+		size = psi->size;
+		return psi->values.get();
+	}
+
+
+
+	template<typename T>
 	void add (const string &new_key, unique_ptr< T[]> values, size_t size=1){
 		shared_ptr<ParamSetItem<T>> item = make_shared<ParamSetItem<T>>(move(values), size, false);
 		params[new_key] = item;

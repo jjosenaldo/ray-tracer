@@ -6,7 +6,8 @@
 #include "ray.hpp"
 
 enum CameraType{
-	CT_ORTHO
+	CT_ORTHO,
+	CT_PERSP
 };
 
 CameraType cameraTypeFromString(string str);
@@ -14,6 +15,8 @@ CameraType cameraTypeFromString(string str);
 struct Camera{
 	CameraType type;
 	unique_ptr<Film> film;
+	Vector3<float> u,v,w;
+	Point3<float> e;
 
 	Camera();
 	void readParamSet(ParamSet ps);
