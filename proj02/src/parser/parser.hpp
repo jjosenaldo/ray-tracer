@@ -14,11 +14,12 @@
 using std::make_unique;
 using std::stringstream;
 
-unique_ptr<Background> parseBackground(const TiXmlElement* background);
-unique_ptr<Camera> parseCamera(const TiXmlElement *);
-unique_ptr<Film> parseFilm(const TiXmlElement *);
-unique_ptr<Scene> parseScene(const TiXmlElement* world);
 Rt3 parse(const string input);
+unique_ptr<Background> parseBackground(const TiXmlElement* background);
+ParamSet parseCamera(const TiXmlElement *);
+unique_ptr<Film> parseFilm(const TiXmlElement *);
+ParamSet parseLookat(const TiXmlElement* lookat);
+unique_ptr<Scene> parseScene(const TiXmlElement* world);
 
 template <typename T>
 void addItemToParamset(const TiXmlElement* el, const char* tag, int size, string param, ParamSet& ps){

@@ -32,6 +32,7 @@ void addItemToParamset<unsigned char>(const TiXmlElement* el, const char* tag, i
 
 Rt3 parse(const string input){
 	Rt3 rt3Obj;
+	ParamSet psLookat, psCamera;
 
 	TiXmlDocument doc(input);
 	
@@ -42,7 +43,11 @@ Rt3 parse(const string input){
 			string tag = child->ValueStr();
 
 			if(tag == "camera")
-				rt3Obj.camera = parseCamera(child);
+				psCamera = parseCamera(child);
+
+			if(tag == "lookat"){
+				psLookat = parseLookat(child);
+			}
 
 			else if(tag == "film")
 				rt3Obj.camera->film = parseFilm(child);
@@ -54,7 +59,20 @@ Rt3 parse(const string input){
 
 	} else {cout << "ERROR: couldn't load file " << input << endl;exit(0);}
 
+	rt3Obj.camera->readParamSet(psCamera);
+	rt3Obj.camera->readParamSet(psLookat);
+
 	return rt3Obj;
+}
+
+ParamSet parseLookat(const TiXmlElement* lookat){
+	ParamSet ps;
+
+	addItemToParamset<int>(lookat, "look_from", 3, "lookFrom", ps);
+	addItemToParamset<int>(lookat, "look_at", 3, "lookAt", ps);
+	addItemToParamset<int>(lookat, "up", 3, "up", ps);
+
+	return ps;
 }
 
 unique_ptr<Scene> parseScene(const TiXmlElement* world){
@@ -96,11 +114,11 @@ unique_ptr<Film> parseFilm(const TiXmlElement* film){
 	return make_unique<Film>(psFilm);
 }
 
-unique_ptr<Camera> parseCamera(const TiXmlElement* camera){
+ParamSet parseCamera(const TiXmlElement* camera){
 	ParamSet ps;
 
 	addItemToParamset<string>(camera, "type", 1, "type", ps);
 
-	return make_unique<Camera>(ps);
+	return ps;
 }
 

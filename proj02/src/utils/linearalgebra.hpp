@@ -28,6 +28,9 @@ struct RgbColor : public Point3<T> {
 
 typedef RgbColor<unsigned char> RgbColorChar;
 
+template <typename T>
+using Vector3 = Point3<T>;
+
 
 float bilinearInterpolation(float x, float y, float bl, float tl, float tr, float br );
 

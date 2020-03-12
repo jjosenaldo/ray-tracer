@@ -22,12 +22,9 @@ struct ParamSetItem{
 	ParamSetItem (unique_ptr< T[]> v, size_t sz=1, bool u=false) : values(move(v)), size(sz), used(u){}
 };
 
-class ParamSet{
-
-private:
+struct ParamSet{
 	unordered_map< string, shared_ptr< void > > params;
 
-public:
 	template<typename T>
 	void add (const string &new_key, unique_ptr< T[]> values, size_t size=1){
 		shared_ptr<ParamSetItem<T>> item = make_shared<ParamSetItem<T>>(move(values), size, false);
