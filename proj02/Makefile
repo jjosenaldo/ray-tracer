@@ -34,9 +34,6 @@ $(OBJ)/linearalgebra.o: $(UTILS)/linearalgebra.hpp $(UTILS)/linearalgebra.cpp
 $(OBJ)/parser.o: $(PARSER)/parser.hpp $(PARSER)/parser.cpp
 	g++ -c -o $(OBJ)/parser.o $(PARSER)/parser.cpp $(INC) $(FLAGS)
 
-$(OBJ)/ray.o: $(SCENE)/ray.hpp $(SCENE)/ray.cpp
-	g++ -c -o $(OBJ)/ray.o $(SCENE)/ray.cpp $(INC) $(FLAGS)
-
 $(OBJ)/rt3.o: $(SCENE)/rt3.hpp $(SCENE)/rt3.cpp
 	g++ -c -o $(OBJ)/rt3.o $(SCENE)/rt3.cpp $(INC) $(FLAGS)
 

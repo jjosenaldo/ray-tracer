@@ -2,8 +2,10 @@
 #define LINEARALGEBRA_HPP
 
 #include <cmath> // sqrt()
+#include <ostream>
 #include <string>
 
+using std::ostream;
 using std::string;
 using std::to_string;
 
@@ -11,6 +13,7 @@ template <typename T>
 struct Point2{
     T x;
     T y;
+    Point2(T x, T y){this->x=x;this->y=y;}
 };
 
 template <typename T> 
@@ -34,6 +37,9 @@ struct Point3{
     string toString(){
         return "<"+to_string(x)+","+to_string(y)+","+to_string(z)+">";
     }
+    friend ostream& operator<<(ostream& os, Point3 const & p) {
+        return os << "(" << p.x << "," << p.y << "," << p.z <<  ")";
+    }
 };
 
 template <typename T>
@@ -50,6 +56,18 @@ typedef RgbColor<unsigned char> RgbColorChar;
 template <typename T>
 using Vector3 = Point3<T>;
 
+template <typename T>
+struct Ray{
+    Vector3<T> direction;
+    Point3<T> origin;
+    Vector3<T> u, v, w;
+    Ray<T>(Vector3<T> direction, Point3<T> origin, Vector3<T> u, Vector3<T> v, Vector3<T> w){
+        this->direction=direction;this->origin=origin;this->u=u;this->v=v;this->w=w;
+    }
+    friend ostream& operator<<(ostream& os, Ray const & ray) {
+        return os << "{" << ray.direction << "," << ray.origin << "}";
+    }
+};
 
 float bilinearInterpolation(float x, float y, float bl, float tl, float tr, float br );
 

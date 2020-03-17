@@ -33,12 +33,12 @@ int main(int argc, char** argv){
 
 	int height = camera->film->height;
 	int width = camera->film->width;
-
-	cout << camera->l << " " << camera->r << " " << camera->b << " " << camera->t << endl;
 	
 	for(int row = 0; row < height; ++row){
 		for(int col = 0; col < width; ++col){
 			auto color = scene->background->sample(float(col)/width, 1-float(row)/height); //(x,y)
+			auto ray = camera->generateRay(row, col);
+			cout << ray << endl;
 			camera->film->setPixel(color,Point2<int>{.x=col,.y=row});
 		}
 	}

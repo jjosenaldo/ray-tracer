@@ -2,6 +2,7 @@
 #include <memory>
 #include <sstream>
 #include <string>
+#include <vector>
 
 #include "parser.hpp"
 
@@ -10,6 +11,7 @@ using std::endl;
 using std::make_unique;
 using std::string;
 using std::stringstream;
+using std::vector;
 
 /* Since there are no template variables, this piece of code is here in the .cpp file */
 /* To avoid the "specialization after initiation" error, the implementation of the function
@@ -34,6 +36,7 @@ Rt3 parse(const string input){
 	//std::cout << "parse()_begin\n";
 	Rt3 rt3Obj;
 	ParamSet psLookat, psCamera;
+	unique_ptr<Film> film;
 
 	TiXmlDocument doc(input);
 	
@@ -50,8 +53,7 @@ Rt3 parse(const string input){
 				psLookat = parseLookat(child);
 
 			else if(tag == "film"){
-				auto film = parseFilm(child);
-				rt3Obj.camera->setFilm(move(film));
+				film = parseFilm(child);
 			}
 
 			else if(tag == "world")
@@ -61,8 +63,10 @@ Rt3 parse(const string input){
 
 	} else {cout << "ERROR: couldn't load file " << input << endl;exit(0);}
 
-	rt3Obj.camera->readParamSet(psCamera);
-	rt3Obj.camera->readParamSet(psLookat);
+	vector<ParamSet> paramSetsCamera{psCamera, psLookat};
+	unique_ptr<Camera> cam = Camera::makeCamera(paramSetsCamera);
+	rt3Obj.camera = move(cam);
+	rt3Obj.camera->setFilm(move(film));
 	//std::cout << "parse()_end\n";
 	return rt3Obj;
 }

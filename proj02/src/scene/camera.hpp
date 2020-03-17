@@ -1,9 +1,14 @@
 #ifndef CAMERA_HPP
 #define CAMERA_HPP
 
+#include <memory>
+#include <vector>
+
 #include "film.hpp"
+#include "linearalgebra.hpp"
 #include "paramset.hpp"
-#include "ray.hpp"
+
+using std::vector;
 
 enum CameraType{
 	CT_ORTHO,
@@ -21,19 +26,22 @@ struct Camera{
 
 	Camera();
 	void readParamSet(ParamSet ps);
-
 	void setFilm(unique_ptr<Film> film);
+	Point2<float> screenSpaceCoordinateFromPixel(int row, int col);
 
-	// TODO: these should be purely abstract methods
-	virtual Ray generateRay(int x, int y);
-	virtual Ray generateRay(float x, float y);
+	// TODO: this method should be purely abstract
+	virtual Ray<float> generateRay(int row, int col);
+
+	/* The first ParamSet in the vector must contain the camera type! */
+	static unique_ptr<Camera> makeCamera(vector<ParamSet>& paramSets);
 
 };
 
 struct PerspectiveCamera : Camera{
-
+	Ray<float> generateRay(int row, int col);
 };
 
+// TODO: generateRay
 struct OrtographicCamera : Camera{
 
 };

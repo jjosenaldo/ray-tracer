@@ -1,14 +1,32 @@
+#include <iostream>
+
 #include "camera.hpp"
 
-// TODO: remove this
-#include <iostream>
 using std::cout;
 using std::endl;
+using std::make_unique;
+
+// TODO: support both types of cameras
+unique_ptr<Camera> Camera::makeCamera(vector<ParamSet>& paramSets){
+	unique_ptr<Camera> cam;
+
+	auto type = cameraTypeFromString(paramSets[0].find_one<string>("type", ""));
+
+	if(type == CameraType::CT_ORTHO)
+		cam = make_unique<OrtographicCamera>();
+	else if(type == CameraType::CT_PERSP)
+		cam = make_unique<PerspectiveCamera>();
+
+	for(auto ps : paramSets)
+		cam->readParamSet(ps);
+
+	return cam;
+}
 
 CameraType cameraTypeFromString(string str){
 	if(str == "ortographic") return CameraType::CT_ORTHO;
 	if(str == "perspective") return CameraType::CT_PERSP;
-	return CameraType::CT_ORTHO;
+	return CameraType::CT_PERSP;
 }
 
 Camera::Camera(){
@@ -38,14 +56,10 @@ void Camera::setFilm(unique_ptr<Film> film){
 	// std::cout << "Camera::setFilm()_end\n";
 }
 
-// TODO
-Ray Camera::generateRay(int x, int y){
-	return Ray();
-}
-
-// TODO
-Ray Camera::generateRay(float x, float y){
-	return Ray();
+Ray<float> Camera::generateRay(int x, int y){
+	auto v = Vector3<float>(0,0,0);
+	auto p = Point3<float>(0,0,0);
+	return Ray<float>(v,p,v,v,v);
 }
 
 void Camera::readParamSet(ParamSet ps){
@@ -94,4 +108,19 @@ void Camera::readParamSet(ParamSet ps){
 		delete[] up;
 	}
 	
+}
+
+Ray<float> PerspectiveCamera::generateRay(int row, int col){
+	auto p = screenSpaceCoordinateFromPixel(row, col);
+	return Ray<float>(
+		Vector3<float>(p.y,p.x,1),	/* direction */
+		e,							/* origin */
+		u,v,w 						/* axis */
+		);
+}
+
+Point2<float> Camera::screenSpaceCoordinateFromPixel(int row, int col){
+	float u = l + ((r-l)*(col + 0.5))/film->width;
+	float v = b + ((t-b)*(row + 0.5))/film->height;
+	return Point2<float>(u,v);
 }
