@@ -24,9 +24,12 @@ struct Point3{
     Point3 operator-(const Point3& other){
         return Point3(other.x-x,other.y-y,other.z-z);
     }
+    float norm(){
+        return sqrt(x*x+y*y+z*z);
+    }
     Point3 normalize(){
-        float norm = sqrt(x*x+y*y+z*z);
-        return Point3(x/norm,y/norm,z/norm);
+        float n = norm();
+        return Point3(x/n,y/n,z/n);
     }
     string toString(){
         return "<"+to_string(x)+","+to_string(y)+","+to_string(z)+">";

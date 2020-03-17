@@ -56,7 +56,7 @@ void Camera::readParamSet(ParamSet ps){
 		}
 	}
 
-	// TODO: what should happen if one of two of these guys aren't defined?
+	// TODO: what should happen if one or two of these guys aren't defined?
 	if(lookAtDefined && lookFromDefined && upDefined){
 		Vector3<float> gaze = Vector3<float>(lookAt[0],lookAt[1],lookAt[2]) - Vector3<float>(lookFrom[0],lookFrom[1],lookFrom[2]);
 		this->w = gaze.normalize();
