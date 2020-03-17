@@ -1,5 +1,8 @@
 #include <algorithm>
+#include <iostream>
 #include <fstream>
+
+
 #include "film.hpp"
 
 using std::max;
@@ -15,6 +18,7 @@ FilmType filmTypeFromString(string str){
 }
 
 Film::Film(int height, int width, string filename, string imgType, FilmType type){
+	// std::cout << "Film::Film(params)_begin\n";
 	this->height = height;
 	this->width = width;
 	this->buff = new float**[height];
@@ -30,6 +34,7 @@ Film::Film(int height, int width, string filename, string imgType, FilmType type
 	this->imgType = imgType;
 	this->filename = filename;
 	this->type = type;
+	// std::cout << "Film::Film(params)_end\n";
 }
 
 Film::Film(ParamSet ps) : Film(
@@ -41,6 +46,7 @@ Film::Film(ParamSet ps) : Film(
 ) {}
 
 Film::~Film(){
+	// std::cout << "Film::~Film()_begin\n";
 	if(this->buff == NULL) 
 		return;
 
@@ -53,6 +59,7 @@ Film::~Film(){
 	}
 
 	delete[] this->buff;
+	// std::cout << "Film::~Film()_end\n";
 }
 
 void Film::setPixel( RgbColorChar color, int row, int col ){

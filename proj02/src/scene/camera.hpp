@@ -17,9 +17,12 @@ struct Camera{
 	unique_ptr<Film> film;
 	Vector3<float> u,v,w;
 	Point3<float> e;
+	float l, r, b, t;
 
 	Camera();
 	void readParamSet(ParamSet ps);
+
+	void setFilm(unique_ptr<Film> film);
 
 	// TODO: these should be purely abstract methods
 	virtual Ray generateRay(int x, int y);

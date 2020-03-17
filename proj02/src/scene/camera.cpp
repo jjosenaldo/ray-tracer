@@ -1,9 +1,9 @@
 #include "camera.hpp"
 
 // TODO: remove this
-// #include <iostream>
-// using std::cout;
-// using std::endl;
+#include <iostream>
+using std::cout;
+using std::endl;
 
 CameraType cameraTypeFromString(string str){
 	if(str == "ortographic") return CameraType::CT_ORTHO;
@@ -12,7 +12,30 @@ CameraType cameraTypeFromString(string str){
 }
 
 Camera::Camera(){
-	
+	l = r = b = t = -1;
+}
+
+void Camera::setFilm(unique_ptr<Film> film){
+	// std::cout << "Camera::setFilm()_begin\n";
+	this->film = move(film);
+
+	// If the scren space wasn't defined, it should go from -1 to 1 in the lower dimension
+	if(this->l < 0){
+		if(this->film->width < this->film->height){
+			this->l = -1;
+			this->r = 1;
+			float ratio = this->film->height /  (float)this->film->width;
+			this->b = -ratio;
+			this->t = ratio;
+		} else{
+			this->b = -1;
+			this->t = 1;
+			float ratio = this->film->width /  (float)this->film->height;
+			this->l = -ratio;
+			this->r = ratio;
+		}
+	}
+	// std::cout << "Camera::setFilm()_end\n";
 }
 
 // TODO
@@ -53,6 +76,9 @@ void Camera::readParamSet(ParamSet ps){
 			up = new float[3];
 			for(int i = 0; i < 3; ++i) up[i] = tmpUp[i];
 			upDefined = true;
+		} else if(pair.first == "screenWindow"){
+			auto screenWindow = ps.findArrayFromPsi<float>(pair.second, dummyOutParam);
+			l = screenWindow[0];r = screenWindow[1];b = screenWindow[2];t = screenWindow[3];
 		}
 	}
 
@@ -67,9 +93,5 @@ void Camera::readParamSet(ParamSet ps){
 		delete[] lookAt;
 		delete[] up;
 	}
-
-	
-
-
 	
 }

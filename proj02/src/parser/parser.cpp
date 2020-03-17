@@ -31,6 +31,7 @@ void addItemToParamset<unsigned char>(const TiXmlElement* el, const char* tag, i
 }
 
 Rt3 parse(const string input){
+	//std::cout << "parse()_begin\n";
 	Rt3 rt3Obj;
 	ParamSet psLookat, psCamera;
 
@@ -45,12 +46,13 @@ Rt3 parse(const string input){
 			if(tag == "camera")
 				psCamera = parseCamera(child);
 
-			if(tag == "lookat"){
+			if(tag == "lookat")
 				psLookat = parseLookat(child);
-			}
 
-			else if(tag == "film")
-				rt3Obj.camera->film = parseFilm(child);
+			else if(tag == "film"){
+				auto film = parseFilm(child);
+				rt3Obj.camera->setFilm(move(film));
+			}
 
 			else if(tag == "world")
 				rt3Obj.scene = parseScene(child);
@@ -61,7 +63,7 @@ Rt3 parse(const string input){
 
 	rt3Obj.camera->readParamSet(psCamera);
 	rt3Obj.camera->readParamSet(psLookat);
-
+	//std::cout << "parse()_end\n";
 	return rt3Obj;
 }
 
@@ -76,6 +78,7 @@ ParamSet parseLookat(const TiXmlElement* lookat){
 }
 
 unique_ptr<Scene> parseScene(const TiXmlElement* world){
+	//std::cout << "parseScene()_begin\n";
 	auto scene = make_unique<Scene>();
 
 	for (auto child = world->FirstChildElement(); child != NULL; child = child->NextSiblingElement()){
@@ -84,6 +87,8 @@ unique_ptr<Scene> parseScene(const TiXmlElement* world){
 		if(tag == "background")
 			scene->background = parseBackground(child);		
 	}
+
+	//std::cout << "parseScene()_end\n";
 
 	return scene;
 }
@@ -103,6 +108,7 @@ unique_ptr<Background> parseBackground(const TiXmlElement* background){
 }
 
 unique_ptr<Film> parseFilm(const TiXmlElement* film){
+	//std::cout << "parseFilm()_begin\n";
 	ParamSet psFilm;
 	
 	addItemToParamset<int>(film, "x_res", 1, "xRes", psFilm);
@@ -111,15 +117,20 @@ unique_ptr<Film> parseFilm(const TiXmlElement* film){
 	addItemToParamset<string>(film, "img_type", 1, "imgType", psFilm);
 	addItemToParamset<string>(film, "type", 1, "type", psFilm);
 
+	//std::cout << "parseFilm()_end\n";
+
 	return make_unique<Film>(psFilm);
 }
 
 ParamSet parseCamera(const TiXmlElement* camera){
+	//std::cout << "parseCamera()_begin" << std::endl;
 	ParamSet ps;
 
 	addItemToParamset<string>(camera, "type", 1, "type", ps);
 	addItemToParamset<int>(camera, "fovy", 1, "fovy", ps);
+	addItemToParamset<float>(camera, "screen_window", 4, "screenWindow", ps);
 
+	//std::cout << "parseCamera()_end\n";
 	return ps;
 }
 
