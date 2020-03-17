@@ -6,8 +6,8 @@
         filename="../images/gcodex_matte_ortho.png"
         img_type="png"  gamma_corrected="yes" />
 
-    <world_begin/>
-        <background type="colors" color="0.14 0.19 0.26" />
+    <world>
+        <background type="colors" color="14 19 26" />
         <!-- Here goes the rest of the file, including scene definition. -->
-    <world_end/>
+    </world>
 </RT3>
