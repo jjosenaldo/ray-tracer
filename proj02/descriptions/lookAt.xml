@@ -1,8 +1,0 @@
-<RT3>
-	<lookat look_from="0 4 -11" look_at="0 1 0" up="0 1 0" />
-    <camera type="orthographic" />
-    <film type="image" x_res="200" y_res="100" filename="images/backgroundSimple" img_type="ppm" />
-    <world>
-        <background type="colors" color="153 204 255"/>
-    </world>
-</RT3>
