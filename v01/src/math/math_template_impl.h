@@ -8,7 +8,7 @@ function<T(Point2)> bilinear_interpolation(Point2 tl, Point2 bl, Point2 br, Poin
 {
     return [=](Point2 p)
     {
-        return (val_bl * (tr.x - p.x) * (tr.y - p.y) + val_br * (p.x - bl.x) * (tr.y - p.y) + val_tl * (br.x - p.x) * (p.y - br.y) + val_tr * (p.x - bl.x) * (p.y - br.y)) / ((br.x - bl.x) * (tr.y - br.y));
+        return (val_bl * (tr.x - p.x) * (tl.y - p.y) + val_br * (p.x - bl.x) * (tr.y - p.y) + val_tl * (br.x - p.x) * (p.y - br.y) + val_tr * (p.x - bl.x) * (p.y - br.y)) / ((br.x - bl.x) * (tr.y - br.y));
     };
 }
 
