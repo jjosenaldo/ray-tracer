@@ -11,7 +11,7 @@ WARNS = -pedantic -Wall -Wextra -Wcast-align -Wcast-qual \
 -Wmissing-include-dirs -Wnoexcept -Wold-style-cast \
 -Woverloaded-virtual -Wredundant-decls -Wsign-conversion \
 -Wsign-promo -Wstrict-null-sentinel -Wstrict-overflow=5 \
--Wswitch-default -Wundef -Werror -Wno-unused-variable
+-Wswitch-default -Wundef -Wno-unused-variable
 
 # Other
 FLAGS = -g -std=c++17 $(WARNS)

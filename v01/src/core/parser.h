@@ -40,8 +40,6 @@ using std::optional;
 #include "paramset.h"
 #include "error.h"
 
-namespace rt3 {
-
 	void RT3_ERROR (const std::string &);
 	void RT3_WARNING (const std::string &);
 
@@ -102,6 +100,5 @@ namespace rt3 {
     void parse_parameters( tinyxml2::XMLElement *p_element, const vector<std::pair<param_type_e, string>>param_list, ParamSet *ps_out );
 
     //-------------------------------------------------------------------------------
-} // namespace RT3
 
 #endif // PARSER_H

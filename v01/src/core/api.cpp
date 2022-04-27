@@ -1,8 +1,6 @@
 #include "api.h"
 #include <iostream>
 
-using namespace rt3;
-
 void API::init_engine( const RunningOptions & opt ) {
 
    run_opt = opt;

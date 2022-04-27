@@ -8,9 +8,8 @@
 #include "api.h"
 #include "rt3.h"
 
+#define real_type float
 // === Function Implementation
-
-namespace rt3 {
 
 void RT3_ERROR (const std::string &msg) {
 	std::cerr << "Ei man, se liga, deu erro. Aqui: " << msg << std::endl;
@@ -20,10 +19,6 @@ void RT3_ERROR (const std::string &msg) {
 void RT3_WARNING (const std::string &msg) {
 	std::cerr << "Ei manito, se liga, deu warning. Aqui: " << msg << std::endl;
 }
-
-using rt3::Point3f;
-using rt3::Vector3f;
-using rt3::Vector3i;
 
 /// This is the entry function for the parsing process.
 void parse( const char* scene_file_name )
@@ -59,7 +54,7 @@ void parse_tags(  tinyxml2::XMLElement *p_element, int level )
     while ( p_element != nullptr )
     {
         // Convert the attribute name to lowecase before testing it.
-        auto tag_name = CSTR_LOWERCASE( p_element->Value() );
+        auto tag_name = STR_LOWER( p_element->Value() );
         clog << "\n"<< setw(level*3) << "" << "***** Tag id is `" << tag_name << "`, at level " << level << std::endl;
 
         // Big switch for each possible RT3 tag type.
@@ -191,7 +186,7 @@ void parse_parameters( tinyxml2::XMLElement * p_element,
     for ( const auto& e : param_list )
     {
         const auto & [ type, name ] = e; // structured binding, requires C++ 17
-        std::clog << "---Parsing att \"" << name << "\", type = " << (int)type << "\n";
+        std::clog << "---Parsing att \"" << name << "\", type = " << static_cast<int>(type) << "\n";
         // This is just a dispatcher to the proper extraction functions.
         switch ( type )
         {
@@ -272,7 +267,7 @@ void parse_parameters( tinyxml2::XMLElement * p_element,
  * a Point3f{1,2,3}.
  */
 template < typename BASIC, typename COMPOSITE >
-bool parse_single_COMPOSITE_attrib( tinyxml2::XMLElement *p_element, rt3::ParamSet* ps, string att_key )
+bool parse_single_COMPOSITE_attrib( tinyxml2::XMLElement *p_element, ParamSet* ps, string att_key ) //rt3::ParamSet
 {
     // Attribute() returns the value of the attribute as a const char *, or nullptr if such attribute does not exist.
     const char* att_value_cstr = p_element->Attribute( att_key.c_str() );
@@ -337,7 +332,7 @@ bool parse_single_COMPOSITE_attrib( tinyxml2::XMLElement *p_element, rt3::ParamS
  * \return `true` if the parsing goes smoothly, `false` otherwise.
  */
 template < typename BASIC, typename COMPOSITE, int COMPOSITE_SIZE >
-bool parse_array_COMPOSITE_attrib( tinyxml2::XMLElement *p_element, rt3::ParamSet* ps, string att_key )
+bool parse_array_COMPOSITE_attrib( tinyxml2::XMLElement *p_element, ParamSet* ps, string att_key ) //rt3::ParamSet
 {
     // Attribute() returns the value of the attribute as a const char *, or nullptr if such attribute does not exist.
     const char* att_value_cstr = p_element->Attribute( att_key.c_str() );
@@ -396,7 +391,7 @@ bool parse_array_COMPOSITE_attrib( tinyxml2::XMLElement *p_element, rt3::ParamSe
 }
 
 template < typename T >
-bool parse_array_BASIC_attrib( tinyxml2::XMLElement *p_element, rt3::ParamSet* ps, string att_key )
+bool parse_array_BASIC_attrib( tinyxml2::XMLElement *p_element, ParamSet* ps, string att_key ) //rt3::ParamSet
 {
     // Attribute() returns the value of the attribute as a const char *, or nullptr if such attribute does not exist.
     const char* att_value_cstr = p_element->Attribute( att_key.c_str() );
@@ -430,7 +425,7 @@ bool parse_array_BASIC_attrib( tinyxml2::XMLElement *p_element, rt3::ParamSet* p
 
 /// Parse the XML element `p_element` looking for an attribute `att_key` and extract one or more values into the `ParamSet` `ps`.
 template < typename T >
-bool parse_single_BASIC_attrib( tinyxml2::XMLElement *p_element, rt3::ParamSet* ps, string att_key )
+bool parse_single_BASIC_attrib( tinyxml2::XMLElement *p_element, ParamSet* ps, string att_key ) //rt3::ParamSet
 {
     // Test whether the att_key exists. Attribute() returns the value of the attribute,
     // as a const char *, or nullptr if such attribute does not exist.
@@ -517,5 +512,3 @@ std::optional<T> read_single_value( tinyxml2::XMLElement *p_element, const strin
         return value;
     else return std::nullopt; // Null optional.
 }
-
-} // namespace rt3
