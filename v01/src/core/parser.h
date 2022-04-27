@@ -1,5 +1,5 @@
 #ifndef PARSER_H
-#define PARSER_H 1
+#define PARSER_H
 
 /*!
  * Implementation of XML processing functions.
@@ -38,7 +38,7 @@ using std::pair;
 using std::optional;
 
 #include "paramset.h"
-#include "error.h"
+/* #include "error.h" */
 
 	void RT3_ERROR (const std::string &);
 	void RT3_WARNING (const std::string &);
