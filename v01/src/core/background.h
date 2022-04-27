@@ -3,5 +3,5 @@
 
 class Background {
     
-}
+};
 #endif
