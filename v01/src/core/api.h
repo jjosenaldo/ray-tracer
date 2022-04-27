@@ -2,8 +2,13 @@
 #define API_H
 
 #include <string>
-#include "parse.h"
-#include "image.h"
+#include "parser.h"
+#include "../utils/image.h"
+#include "rt3.h"
+#include "paramset.h"
+#include "film.h"
+#include "camera.h"
+#include "background.h"
 
 class API {
     private:
@@ -30,5 +35,5 @@ class API {
 
         static void world_begin( void );
         static void world_end( void );
-}
+};
 #endif // API_H

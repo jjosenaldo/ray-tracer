@@ -42,6 +42,9 @@ using std::optional;
 
 namespace rt3 {
 
+	void RT3_ERROR (const std::string &);
+	void RT3_WARNING (const std::string &);
+
     /// Lambda expression that transform a c-style string to a lowercase c++-stype string version.
     auto STR_LOWER = []( const char * c_str )->std::string
     {
@@ -51,6 +54,7 @@ namespace rt3 {
     };
 
     // === Support functions
+	// TODO not compiling with optional
     template <typename T>
     std::optional<std::vector< T >> read_array( tinyxml2::XMLElement *, const string& );
     template <typename T>
@@ -58,17 +62,17 @@ namespace rt3 {
 
     /// Extracts a single COMPOSITE element.
     template < typename BASIC, typename COMPOSITE >
-    bool parse_single_COMPOSITE_attrib( tinyxml2::XMLElement *e, rt3::ParamSet *ps, string name );
+    bool parse_single_COMPOSITE_attrib( tinyxml2::XMLElement *e, ParamSet *ps, string name ); //rt3::ParamSet
     /// Extracts an array of COMPOSITE elements.
     template < typename BASIC, typename COMPOSITE , int SIZE=3 >
-    bool parse_array_COMPOSITE_attrib( tinyxml2::XMLElement *e, rt3::ParamSet *ps, string name );
+    bool parse_array_COMPOSITE_attrib( tinyxml2::XMLElement *e, ParamSet *ps, string name ); //rt3::ParamSet
 
     /// Extracts a single BASIC element.
     template < typename T >
-    bool parse_single_BASIC_attrib( tinyxml2::XMLElement *e, rt3::ParamSet *ps , string name );
+    bool parse_single_BASIC_attrib( tinyxml2::XMLElement *e, ParamSet *ps , string name ); //rt3::ParamSet
     /// Extracts an array of BASIC elements.
     template < typename T >
-    bool parse_array_BASIC_attrib( tinyxml2::XMLElement *e, rt3::ParamSet *ps , string name );
+    bool parse_array_BASIC_attrib( tinyxml2::XMLElement *e, ParamSet *ps , string name ); //rt3::ParamSet
 
     // === Enumerations
     /// Type of possible paramter types we may read from the input scene file.

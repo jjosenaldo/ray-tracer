@@ -2,10 +2,7 @@
 #ifndef RT3_H
 #define RT3_H
 
-#include <cmath> 
-#include <iostream>
 #include <vector> //Try later using own vector instead
-#include <string>
 
 struct RunningOptions {
     RunningOptions() : scene_filename{""}, outfile{""}, quick_render{false} {
@@ -16,9 +13,9 @@ struct RunningOptions {
     }
 
     float crop_window[2][2];
-    string scene_filename;
-    string outfile;
+	std::string scene_filename;
+	std::string outfile;
     bool quick_render;
-}
+};
 
 #endif // RT3_H

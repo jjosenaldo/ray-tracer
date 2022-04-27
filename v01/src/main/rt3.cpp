@@ -1,6 +1,7 @@
-
-#include "image.h"
-#include "rt3.h"
+#include "../utils/image.h"
+#include "../core/rt3.h"
+#include "../core/api.h"
+#include <sstream>
 
 using std::cout;
 using std::endl;
@@ -27,7 +28,7 @@ int main( int argc, char * argv[] ) {
     std::ostringstream oss;
 
     // TODO add try and catch to each value atribuition
-    for (int i=1; i < argc, i++) {
+    for (int i=1; i < argc; i++) {
         std::string option = argv[i];
         if (option == "--cropwindow") {
             if (i+4 >= argc) usage( "not enough values for --cropwindow argument");
@@ -37,8 +38,7 @@ int main( int argc, char * argv[] ) {
             opt.crop_window[1][0] = std::stof(argv[++i]);
             opt.crop_window[1][1] = std::stof(argv[++i]);
         } else if (option == "--outfile") {
-            if (i+1 == argc) usage( "missing value for --outfile argument")
-
+            if (i+1 == argc) usage( "missing value for --outfile argument");
             opt.outfile = std::string(argv[++i]);
         } else if (option == "--quickrender") {
             opt.quick_render = true;
