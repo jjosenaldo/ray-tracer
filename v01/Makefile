@@ -38,8 +38,8 @@ $(BIN):
 clean:
 	@# @ symbol at beginning indicates that it will not be printed
 	@if [ "$$(ls -A $(OBJ))" ]; then \
-		rm $(OBJ)/*; \
+		rm -rf $(OBJ); \
 	fi
 	@if [ "$$(ls -A $(BIN))" ]; then \
-		rm $(BIN)/*; \
+		rm -rf $(BIN); \
 	fi
