@@ -5,6 +5,9 @@ OBJ = ./obj
 CORE = $(SRC)/core
 UTILS = $(SRC)/utils
 MAIN = $(SRC)/main
+TINYXML = $(CORE)/tinyxml2
+CXXOPTS = $(CORE)/cxxopts
+
 WARNS = -pedantic -Wall -Wextra -Wcast-align -Wcast-qual \
 -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 \
 -Winit-self -Wlogical-op -Wmissing-declarations \
@@ -14,9 +17,10 @@ WARNS = -pedantic -Wall -Wextra -Wcast-align -Wcast-qual \
 -Wswitch-default -Wundef -Wno-unused-variable
 
 # Other
-FLAGS = -g -std=c++17 $(WARNS)
-INC := -I $(UTILS) -I $(CORE)
-OBJS = $(OBJ)/image.o $(OBJ)/math.o $(OBJ)/api.o $(OBJ)/background.o $(OBJ)/camera.o $(OBJ)/film.o $(OBJ)/parser.o
+FLAGS = $(NO_WARNS_FLAGS) $(WARNS)
+NO_WARNS_FLAGS = -g -std=c++17
+INC := -I $(UTILS) -I $(CORE) -isystem $(TINYXML) -isystem $(CXXOPTS)
+OBJS = $(OBJ)/image.o $(OBJ)/math.o $(OBJ)/api.o $(OBJ)/background.o $(OBJ)/camera.o $(OBJ)/film.o $(OBJ)/parser.o $(OBJ)/tinyxml2.o
 
 all: $(BIN)/rt3.out
 
@@ -43,6 +47,9 @@ $(OBJ)/film.o: $(CORE)/film.h $(CORE)/film.cpp | $(OBJ)
 
 $(OBJ)/parser.o: $(CORE)/parser.h $(CORE)/parser.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/parser.o $(CORE)/parser.cpp $(INC) $(FLAGS)
+
+$(OBJ)/tinyxml2.o: $(TINYXML)/tinyxml2.h $(TINYXML)/tinyxml2.cpp | $(OBJ)
+	g++ -c -o $(OBJ)/tinyxml2.o $(TINYXML)/tinyxml2.cpp $(NO_WARNS_FLAGS)
 
 $(OBJ):
 	mkdir -p $(OBJ)

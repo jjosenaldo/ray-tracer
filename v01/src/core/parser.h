@@ -44,7 +44,7 @@ using std::optional;
 	void RT3_WARNING (const std::string &);
 
     /// Lambda expression that transform a c-style string to a lowercase c++-stype string version.
-    auto STR_LOWER = []( const char * c_str )->std::string
+    static auto STR_LOWER = []( const char * c_str )->std::string
     {
         std::string str{ c_str };
         std::transform( str.begin(), str.end(), str.begin(), ::tolower );

@@ -1,6 +1,8 @@
 #include "api.h"
 #include <iostream>
 
+RunningOptions API::run_opt;
+
 void API::init_engine( const RunningOptions & opt ) {
 
    run_opt = opt;
@@ -17,32 +19,29 @@ void API::clean_up( void ) {
     //TODO Cleaning
 }
 
-/* TODO
-
 void API::camera( const ParamSet& ps ) {
-
+    // TODO
 }
 
 void API::film( const ParamSet& ps ) {
-
+    // TODO
 }
 
 void API::background( const ParamSet& ps ) {
-
+    // TODO
 }
 
 void API::integrator( const ParamSet& ps ) {
-
+    // TODO
 }
 
 void API::look_at( const ParamSet& ps ) {
-
+    // TODO
 }
 
 void API::world_begin( void ) {
-   
+    // TODO
 }
-*/
 
 void API::world_end( void )
 {
