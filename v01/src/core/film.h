@@ -8,6 +8,8 @@ using std::string;
 class Film {
     public:
         string filename;
+        int width;
+        int height;
 };
 
 #endif

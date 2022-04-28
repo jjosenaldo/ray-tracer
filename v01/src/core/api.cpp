@@ -31,13 +31,35 @@ void API::reset_engine( void ) {
 }
 
 void API::camera( const ParamSet& ps ) {
-	std::cout << ">>> Start API::camera()\n";
+	auto type = retrieve<string>(ps, "type", ""); // TODO: what to do with this?
     // TODO
 }
 
 void API::film( const ParamSet& ps ) {
 	std::cout << ">>> Start API::film()\n";
-    // TODO
+
+    auto filename = retrieve<string>(ps, "filename", ""); // TODO: what to do with this?
+    auto img_type = retrieve<string>(ps, "img_type", ""); // TODO: what to do with this?
+    auto type = retrieve<string>(ps, "type", ""); // TODO: what to do with this?
+    auto x_res = retrieve<int>(ps, "x_res", -1); // TODO: what to do with this?
+    auto y_res = retrieve<int>(ps, "y_res", -1); // TODO: what to do with this?
+
+    if (x_res < 0 || y_res < 0) {
+        RT3_ERROR("Invalid film size!");
+    }
+
+    if (img_type != "ppm") {
+        RT3_ERROR("Unsupported image type! It must be ppm.");
+    }
+
+    m_camera.film.filename = run_opt.scene_filename != "" ? run_opt.scene_filename : filename;
+
+    if (m_camera.film.filename == "") {
+        RT3_ERROR("Invalid file name!");
+    }
+
+    m_camera.film.width = x_res;
+    m_camera.film.height = y_res;
 }
 
 void API::background( const ParamSet& ps ) {
@@ -50,7 +72,6 @@ void API::background( const ParamSet& ps ) {
     auto color = retrieve(ps, "color", default_colorxyz());
     auto type = retrieve<string>(ps, "type", ""); // TODO: what to do with this?
     auto mapping = retrieve<string>(ps, "mapping", ""); // TODO: what to do with this?
-    auto filename = retrieve<string>(ps, "filename", ""); // TODO: what to do with this?
 
     if (!is_colorxyz_default(color)) {
         m_background = Background(color);
