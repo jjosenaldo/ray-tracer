@@ -29,4 +29,6 @@ struct RunningOptions {
     bool quick_render;
 };
 
+RunningOptions parse_running_options(int argc, char * argv[]);
+
 #endif // RT3_H

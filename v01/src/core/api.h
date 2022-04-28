@@ -20,12 +20,12 @@ class API {
        int x=10; // só pq n lembro se dá pau ter nada dentro do private
 
     public:
-
         static RunningOptions run_opt;
 
         static void init_engine( const RunningOptions& );
         static void run( void );
         static void clean_up( void );
+		static void reset_engine( void );
 
         static void camera( const ParamSet& ps );
         static void film( const ParamSet& ps );
@@ -35,5 +35,7 @@ class API {
 
         static void world_begin( void );
         static void world_end( void );
+
+		static void render( void );
 };
 #endif // API_H
