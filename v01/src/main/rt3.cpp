@@ -1,6 +1,6 @@
 #include "../utils/image.h"
-#include "../core/rt3.h"
 #include "../core/api.h"
+#include "rt3.h"
 #include <sstream>
 #include <cxxopts.hpp>
 #include <iostream>

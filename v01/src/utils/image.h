@@ -5,6 +5,7 @@
 #include <functional>
 #include <iostream>
 #include "math.h"
+#include "vec3.h"
 
 using std::function;
 using std::ostream;
@@ -25,7 +26,7 @@ struct RgbColor
 struct Pixel
 {
     RgbColor color;
-    Point2 point;
+    Point2f point;
 
     int x() const;
     int y() const;

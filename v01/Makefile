@@ -20,7 +20,7 @@ WARNS = -pedantic -Wall -Wextra -Wcast-align -Wcast-qual \
 FLAGS = $(NO_WARNS_FLAGS) $(WARNS)
 NO_WARNS_FLAGS = -g -std=c++17
 INC := -I $(UTILS) -I $(CORE) -isystem $(TINYXML) -isystem $(CXXOPTS)
-OBJS = $(OBJ)/image.o $(OBJ)/math.o $(OBJ)/api.o $(OBJ)/background.o $(OBJ)/camera.o $(OBJ)/film.o $(OBJ)/parser.o $(OBJ)/tinyxml2.o
+OBJS = $(OBJ)/error.o $(OBJ)/math.o $(OBJ)/api.o $(OBJ)/background.o $(OBJ)/camera.o $(OBJ)/film.o $(OBJ)/parser.o $(OBJ)/vec3.o $(OBJ)/tinyxml2.o
 
 all: $(BIN)/rt3.out
 
@@ -42,11 +42,17 @@ $(OBJ)/background.o: $(CORE)/background.h $(CORE)/background.cpp | $(OBJ)
 $(OBJ)/camera.o: $(CORE)/camera.h $(CORE)/camera.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/camera.o $(CORE)/camera.cpp $(INC) $(FLAGS)
 
+$(OBJ)/error.o: $(CORE)/error.h $(CORE)/error.cpp | $(OBJ)
+	g++ -c -o $(OBJ)/error.o $(CORE)/error.cpp $(INC) $(FLAGS)
+
 $(OBJ)/film.o: $(CORE)/film.h $(CORE)/film.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/film.o $(CORE)/film.cpp $(INC) $(FLAGS)
 
 $(OBJ)/parser.o: $(CORE)/parser.h $(CORE)/parser.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/parser.o $(CORE)/parser.cpp $(INC) $(FLAGS)
+
+$(OBJ)/vec3.o: $(CORE)/vec3.h $(CORE)/vec3.cpp | $(OBJ)
+	g++ -c -o $(OBJ)/vec3.o $(CORE)/vec3.cpp $(INC) $(FLAGS)
 
 $(OBJ)/tinyxml2.o: $(TINYXML)/tinyxml2.h $(TINYXML)/tinyxml2.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/tinyxml2.o $(TINYXML)/tinyxml2.cpp $(NO_WARNS_FLAGS)

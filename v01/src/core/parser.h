@@ -38,10 +38,6 @@ using std::pair;
 using std::optional;
 
 #include "paramset.h"
-/* #include "error.h" */
-
-	void RT3_ERROR (const std::string &);
-	void RT3_WARNING (const std::string &);
 
     /// Lambda expression that transform a c-style string to a lowercase c++-stype string version.
     static auto STR_LOWER = []( const char * c_str )->std::string

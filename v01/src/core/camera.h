@@ -1,8 +1,12 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-class Camera {
+#include "film.h"
 
+class Camera {
+    public:
+        Film film;
+        Camera();
 };
 
 #endif

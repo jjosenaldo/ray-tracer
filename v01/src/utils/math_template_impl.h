@@ -4,11 +4,11 @@
 #include "math.h"
 
 template <class T>
-function<T(Point2)> bilinear_interpolation(Point2 tl, Point2 bl, Point2 br, Point2 tr, T val_tl, T val_bl, T val_br, T val_tr)
+function<T(Point2f)> bilinear_interpolation(Point2f tl, Point2f bl, Point2f br, Point2f tr, T val_tl, T val_bl, T val_br, T val_tr)
 {
-    return [=](Point2 p)
+    return [=](Point2f p)
     {
-        return (val_bl * (tr.x - p.x) * (tl.y - p.y) + val_br * (p.x - bl.x) * (tr.y - p.y) + val_tl * (br.x - p.x) * (p.y - br.y) + val_tr * (p.x - bl.x) * (p.y - br.y)) / ((br.x - bl.x) * (tr.y - br.y));
+        return (val_bl * (tr[0] - p[0]) * (tl[1] - p[1]) + val_br * (p[0] - bl[0]) * (tr[1] - p[1]) + val_tl * (br[0] - p[0]) * (p[1] - br[1]) + val_tr * (p[0] - bl[0]) * (p[1] - br[1])) / ((br[0] - bl[0]) * (tr[1] - br[1]));
     };
 }
 

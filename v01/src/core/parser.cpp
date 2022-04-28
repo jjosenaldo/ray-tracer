@@ -6,19 +6,11 @@
 #include "paramset.h"
 #include "parser.h"
 #include "api.h"
-#include "rt3.h"
+#include "error.h"
+#include "vec3.h"
 
 #define real_type float
-// === Function Implementation
 
-void RT3_ERROR (const std::string &msg) {
-	std::cerr << "Ei man, se liga, deu erro. Aqui: " << msg << std::endl;
-	std::exit(EXIT_FAILURE);
-}
-
-void RT3_WARNING (const std::string &msg) {
-	std::cerr << "Ei manito, se liga, deu warning. Aqui: " << msg << std::endl;
-}
 
 /// This is the entry function for the parsing process.
 void parse( const char* scene_file_name )

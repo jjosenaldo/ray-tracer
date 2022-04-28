@@ -4,20 +4,18 @@
 #include <string>
 #include "parser.h"
 #include "../utils/image.h"
-#include "rt3.h"
+#include "vec3.h"
 #include "paramset.h"
-#include "film.h"
 #include "camera.h"
 #include "background.h"
+#include "rt3.h"
 
 class API {
     private:
-        /*
-        Instancia de Background
-        Instancia de Film
-        Instancia de Camera
-        */
-       int x=10; // só pq n lembro se dá pau ter nada dentro do private
+       static Camera m_camera;
+       static Background m_background;
+
+       static void render( void );
 
     public:
         static RunningOptions run_opt;
@@ -35,7 +33,5 @@ class API {
 
         static void world_begin( void );
         static void world_end( void );
-
-		static void render( void );
 };
 #endif // API_H

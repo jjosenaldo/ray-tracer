@@ -3,20 +3,13 @@
 
 #include <functional>
 #include <iostream>
+#include "vec3.h"
 
 using std::function;
 using std::ostream;
 
-struct Point2
-{
-    int x;
-    int y;
-
-    friend ostream &operator<<(ostream &os, const Point2 &pixel);
-};
-
 template <class T>
-function<T(Point2)> bilinear_interpolation(Point2 tl, Point2 bl, Point2 br, Point2 tr, T val_tl, T val_bl, T val_br, T val_tr);
+function<T(Point2f)> bilinear_interpolation(Point2f tl, Point2f bl, Point2f br, Point2f tr, T val_tl, T val_bl, T val_br, T val_tr);
 
 #include "math_template_impl.h"
 

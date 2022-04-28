@@ -1,8 +1,13 @@
 #ifndef FILM_H
 #define FILM_H
 
-class Film {
+#include <string>
 
+using std::string;
+
+class Film {
+    public:
+        string filename;
 };
 
 #endif
