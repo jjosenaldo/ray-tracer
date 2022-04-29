@@ -12,6 +12,7 @@ using std::vector;
 
 
 RunningOptions parse_running_options(int argc, char * argv[]) {
+    try {
     cxxopts::Options options(argv[0], "A simple ray-tracer");
     options
       .custom_help("[<options>]")
@@ -26,8 +27,8 @@ RunningOptions parse_running_options(int argc, char * argv[]) {
     ;
 
     options.parse_positional({"input_scene_file"});
-
     auto result = options.parse(argc, argv);
+    
 
     RunningOptions running_opts;
 
@@ -66,12 +67,19 @@ RunningOptions parse_running_options(int argc, char * argv[]) {
     }
     
     running_opts.scene_filename = result["input_scene_file"].as<string>();
+
     return running_opts;
+    } 
+    catch (const cxxopts::OptionException& e)
+    {
+        std::cout << "ERROR: " << e.what() << ". Run the program with --help to see the right usage." << std::endl;
+        exit(1);
+    }
 }
 
 int main( int argc, char * argv[] ) {
-    std::ofstream nullstream;
-    std::clog.rdbuf(nullstream.rdbuf());
+    // What is logged with clog won't actually show up
+    std::clog.setstate(std::ios_base::failbit);
 
     RunningOptions opt = parse_running_options(argc, argv);
 
