@@ -70,6 +70,9 @@ RunningOptions parse_running_options(int argc, char * argv[]) {
 }
 
 int main( int argc, char * argv[] ) {
+    std::ofstream nullstream;
+    std::clog.rdbuf(nullstream.rdbuf());
+
     RunningOptions opt = parse_running_options(argc, argv);
 
     // Start API

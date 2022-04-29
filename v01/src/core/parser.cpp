@@ -354,7 +354,7 @@ bool parse_array_COMPOSITE_attrib( tinyxml2::XMLElement *p_element, ParamSet* ps
         // and COMPOSITE = Vector3f, we must extract 4 Vector3f: Vector3f{1,1,1}, {2,2,2}, ..., {8,8,8}.
         for ( auto i{0u} ; i < n_basic/COMPOSITE_SIZE ; i ++ )
         {
-            std::cout << "COMPOSITE_SIZE = " << COMPOSITE_SIZE << std::endl;
+            clog << "COMPOSITE_SIZE = " << COMPOSITE_SIZE << std::endl;
             // Call the proper constructor, as in Vector3f{x,y,z} or Vector2f{x,y}.
             // If, say, COMPOSITE = Vector3f, this will call the constructor Vector3f{x,y,z}.
             if ( COMPOSITE_SIZE == 3 )
@@ -423,7 +423,7 @@ bool parse_single_BASIC_attrib( tinyxml2::XMLElement *p_element, ParamSet* ps, s
     // as a const char *, or nullptr if such attribute does not exist.
     if ( p_element->Attribute( att_key.c_str() ) )
     {
-        std::cout << "\tAttribute \"" << att_key << "\" present, let us extract it!\n";
+        std::clog << "\tAttribute \"" << att_key << "\" present, let us extract it!\n";
         auto result = read_single_value<T>( p_element, att_key );
         if ( result.has_value() )
         {
@@ -433,7 +433,7 @@ bool parse_single_BASIC_attrib( tinyxml2::XMLElement *p_element, ParamSet* ps, s
             (*ps)[att_key] = std::make_shared< Value<T> >( result.value() );
             // const auto [ it, success ] = ps->insert({att_key, std::make_shared< Value<T> >( values )} );
             // Show message 
-            std::cout << "\tInsertion of \"" << att_key << "\" succeeded\n";
+            clog << "\tInsertion of \"" << att_key << "\" succeeded\n";
             clog << "\tAdded attribute (" << att_key << ": \"" << result.value() << "\" )\n";
             return true;
         }

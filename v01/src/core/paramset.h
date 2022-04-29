@@ -54,9 +54,9 @@ T retrieve(const ParamSet &ps, std::string key, const T &default_value = T()) {
 	// Try to retrieve key/data item from the map.
 	auto result = ps.find(key);
 	if (result != ps.end()) {
-		std::cout << "-->ParamSet: Found [\"" << result->first << "\"].\n";
+		std::clog << "-->ParamSet: Found [\"" << result->first << "\"].\n";
 	} else {
-		std::cout << "-->ParamSet: Key [\"" << key << "\"] not present.\n";
+		std::clog << "-->ParamSet: Key [\"" << key << "\"] not present.\n";
 		// Assign a default value in case type is not in the ParamSet object.
 	}
 

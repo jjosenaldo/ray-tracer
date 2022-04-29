@@ -7,6 +7,7 @@ class Camera {
     public:
         Film film;
         Camera();
+
 };
 
 #endif

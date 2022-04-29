@@ -1,5 +1,6 @@
 #include "background.h"
 #include "math.h"
+#include <iostream>
 
 Background::Background(ColorXYZ color) {
     sampler = bilinear_interpolation<ColorXYZ>({0, 1}, {0, 0}, {1, 0}, {1, 1}, color, color, color, color);
