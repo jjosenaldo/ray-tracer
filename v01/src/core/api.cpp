@@ -45,6 +45,11 @@ void API::film( const ParamSet& ps ) {
         RT3_ERROR("Invalid film size!");
     }
 
+    if (run_opt.quick_render) {
+        x_res /= 4;
+        y_res /= 4;
+    }
+
     if (img_type != "ppm3") {
         RT3_ERROR("Unsupported image type " + img_type + "! It must be ppm3.");
     }
