@@ -5,12 +5,12 @@
 struct RunningOptions {
     RunningOptions() : scene_filename{""}, outfile{""}, quick_render{false} {
         crop_window[0][0] = 0;
-        crop_window[0][1] = 1;
-        crop_window[1][0] = 0;
-        crop_window[1][1] = 1;
+        crop_window[1][0] = INT_MAX;
+        crop_window[0][1] = 0;
+        crop_window[1][1] = INT_MAX;
     }
 
-    float crop_window[2][2];
+    int crop_window[2][2];
 	std::string scene_filename;
 	std::string outfile;
     bool quick_render;

@@ -114,8 +114,8 @@ void API::render( void ) {
 	auto width = m_camera.film.width;
     auto height = m_camera.film.height;
     
-    for (int j = 0; j < height; ++j) {
-        for (int i = 0; i < width; ++i) {
+    for (int j = std::min(run_opt.crop_window[0][1], run_opt.crop_window[1][1]); j < std::min(height, std::max(run_opt.crop_window[0][1], run_opt.crop_window[1][1])); ++j) {
+        for (int i = std::min(run_opt.crop_window[0][0], run_opt.crop_window[1][0]); i < std::min(width, std::max(run_opt.crop_window[0][0], run_opt.crop_window[1][0])); ++i) {
             auto color = m_background.sample(Point2f{float(i)/float(width), float(j)/float(height)});
             m_camera.film.add(Point2i{i, j}, color);
         }

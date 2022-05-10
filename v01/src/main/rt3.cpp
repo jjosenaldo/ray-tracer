@@ -20,7 +20,7 @@ RunningOptions parse_running_options(int argc, char * argv[]) {
       .show_positional_help();
     options.add_options()
         ("h,help", "Print this help text")
-        ("c,cropwindow", "Specify an image cropping window", cxxopts::value<std::vector<float>>(), "<x0,x1,y0,y1>")
+        ("c,cropwindow", "Specify an image cropping window", cxxopts::value<std::vector<int>>(), "<x0,x1,y0,y1>")
         ("q,quick", "Reduces quality parameters to render image quickly", cxxopts::value<bool>()->default_value("false")->implicit_value("true"))
         ("o,outfile", "Write the rendered image to <filename>", cxxopts::value<std::string>(), "<filename>")
         ("input_scene_file", "Scene file to be parsed", cxxopts::value<std::string>())
@@ -40,22 +40,22 @@ RunningOptions parse_running_options(int argc, char * argv[]) {
 
     if (result.count("cropwindow"))
     {
-        vector<float> window_read = result["cropwindow"].as<vector<float>>();
+        vector<int> window_read = result["cropwindow"].as<vector<int>>();
         if (window_read.size() != 4) {
-            cout << "Crop window must be four floats" << endl;
+            cout << "Crop window must be four integers" << endl;
             exit(0);
         }
 
         for (float coord: window_read) {
-            if (coord < 0 || coord > 1) {
-                cout << "Crop window must be four floats between 0 and 1" << endl;
+            if (coord < 0) {
+                cout << "Crop window must be four non-negative integers" << endl;
                 exit(0);
             }
         }
         
         running_opts.crop_window[0][0] = window_read[0];
-        running_opts.crop_window[0][1] = window_read[1];
-        running_opts.crop_window[1][0] = window_read[2];
+        running_opts.crop_window[1][0] = window_read[1];
+        running_opts.crop_window[0][1] = window_read[2];
         running_opts.crop_window[1][1] = window_read[3];
     }
     
