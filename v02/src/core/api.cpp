@@ -53,9 +53,10 @@ void API::camera( const ParamSet& ps ) {
         if (screen_window.size() == 4) {
             m_camera = new PerspectiveCamera(screen_window[0], screen_window[1], screen_window[2], screen_window[3]);
         } else {
+            // TODO: read focal_distance and fovy and aspect_ratio (optional), store them and calculate LRBT when reading the film
             auto focal_distance = retrieve(ps, "focal_distance", 1.0);
             auto aspect_ratio = retrieve(ps, "frame_aspectratio", -1.0);
-            auto half_tan = (1 - cos)/sin;
+            auto fovy = retrieve(ps, "fovy", -1.0);
             m_camera = new PerspectiveCamera(screen_window[0], screen_window[1], screen_window[2], screen_window[3]);
         }
 
