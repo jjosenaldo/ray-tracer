@@ -31,6 +31,7 @@ PerspectiveCamera::PerspectiveCamera(float focal_distance, float aspect_ratio, f
  }
 
  void PerspectiveCamera::set_lrbt_from_xres_yres_if_needed() {
+     if (fovy < 0.0) return;
      auto actual_aspect_ratio = aspect_ratio > 0 ? aspect_ratio : static_cast<float>(nx()) / ny();
      auto half_fovy_tan = tan((fovy/2)*PI/180);
      auto height_screen_space = half_fovy_tan * focal_distance * 2;
