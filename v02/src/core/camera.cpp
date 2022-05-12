@@ -34,12 +34,12 @@ PerspectiveCamera::PerspectiveCamera(float focal_distance, float aspect_ratio, f
      if (fovy < 0.0) return;
      auto actual_aspect_ratio = aspect_ratio > 0 ? aspect_ratio : static_cast<float>(nx()) / ny();
      auto half_fovy_tan = tan((fovy/2)*PI/180);
-     auto height_screen_space = half_fovy_tan * focal_distance * 2;
+     auto half_height_screen_space = half_fovy_tan * focal_distance;
 
-     l = -actual_aspect_ratio*height_screen_space;
-     r = actual_aspect_ratio*height_screen_space;
-     b = -height_screen_space;
-     t = height_screen_space;
+     l = -actual_aspect_ratio*half_height_screen_space;
+     r = actual_aspect_ratio*half_height_screen_space;
+     b = -half_height_screen_space;
+     t = half_height_screen_space;
  }
 
 Ray OrthographicCamera::generate_ray(int x, int y) {
