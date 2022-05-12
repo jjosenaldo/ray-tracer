@@ -34,7 +34,7 @@ $(OBJ)/image.o: $(UTILS)/image.h $(UTILS)/image.cpp | $(OBJ)
 $(OBJ)/math.o: $(UTILS)/math.h $(UTILS)/math.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/math.o $(UTILS)/math.cpp $(INC) $(FLAGS)
 
-$(OBJ)/api.o: $(CORE)/api.h $(CORE)/api.cpp | $(OBJ)
+$(OBJ)/api.o: $(CORE)/camera.h $(CORE)/api.h $(CORE)/api.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/api.o $(CORE)/api.cpp $(INC) $(FLAGS)
 
 $(OBJ)/background.o: $(CORE)/background.h $(CORE)/background.cpp | $(OBJ)

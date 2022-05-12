@@ -43,24 +43,21 @@ void API::camera( const ParamSet& ps ) {
 
         m_camera = new OrthographicCamera(screen_window[0], screen_window[1], screen_window[2], screen_window[3]);
     } else if (type == "perspective") {
-        auto fovy = retrieve(ps, "fovy", -1);
+        auto fovy = retrieve<float>(ps, "fovy", -1);
         auto screen_window = retrieve(ps, "screen_window", vector<float>());
 
         if (screen_window.size() != 4 && fovy < 0) {
             RT3_ERROR("For perspective cameras you must either provide a fovy or a screen space!");
-        }
+        } 
 
         if (screen_window.size() == 4) {
             m_camera = new PerspectiveCamera(screen_window[0], screen_window[1], screen_window[2], screen_window[3]);
         } else {
-            // TODO: read focal_distance and fovy and aspect_ratio (optional), store them and calculate LRBT when reading the film
             auto focal_distance = retrieve(ps, "focal_distance", 1.0);
             auto aspect_ratio = retrieve(ps, "frame_aspectratio", -1.0);
-            auto fovy = retrieve(ps, "fovy", -1.0);
-            m_camera = new PerspectiveCamera(screen_window[0], screen_window[1], screen_window[2], screen_window[3]);
+            
+            m_camera = new PerspectiveCamera(focal_distance, aspect_ratio, fovy);
         }
-
-        
     } else {
         RT3_ERROR("Camera type " + type + " invalid! It must be ortographic or perspective.");
     }   
@@ -97,6 +94,11 @@ void API::film( const ParamSet& ps ) {
     }
 
     m_camera->film = Film(x_res, y_res, img_type, filename);
+
+    auto maybe_perspective_m_camera_ptr = dynamic_cast<PerspectiveCamera*>(m_camera);
+    if (maybe_perspective_m_camera_ptr) {
+        maybe_perspective_m_camera_ptr->set_lrbt_from_xres_yres_if_needed();
+    }
 }
 
 void API::background( const ParamSet& ps ) {

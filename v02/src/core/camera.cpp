@@ -1,6 +1,9 @@
+#include <cmath>
 #include "camera.h"
 
-Camera::Camera(int l, int r, int b, int t): l(l), r(r), b(b), t(t) { }
+#define PI 3.14159265
+
+Camera::Camera(float l, float r, float b, float t): l(l), r(r), b(b), t(t) { }
 
 int Camera::nx() {
     return film.width;
@@ -17,14 +20,25 @@ Point2f Camera::map_to_screen_space(Point2f& point) {
     return {u, v};
 }
 
-OrthographicCamera::OrthographicCamera(int l, int r, int b, int t): Camera(l, r, b, t) { }
+OrthographicCamera::OrthographicCamera(float l, float r, float b, float t): Camera(l, r, b, t) { }
 
-PerspectiveCamera::PerspectiveCamera(int l, int r, int b, int t): Camera(l, r, b, t) { }
+PerspectiveCamera::PerspectiveCamera(float l, float r, float b, float t): Camera(l, r, b, t) { }
 
-PerspectiveCamera::PerspectiveCamera(float focal_distance, float aspect_ratio, float fovy) {
+PerspectiveCamera::PerspectiveCamera(float focal_distance, float aspect_ratio, float fovy): Camera(-1.0, -1.0, -1.0, -1.0) {
     this->focal_distance = focal_distance;
     this->aspect_ratio = aspect_ratio;
     this->fovy = fovy;
+ }
+
+ void PerspectiveCamera::set_lrbt_from_xres_yres_if_needed() {
+     auto actual_aspect_ratio = aspect_ratio > 0 ? aspect_ratio : static_cast<float>(nx()) / ny();
+     auto half_fovy_tan = tan((fovy/2)*PI/180);
+     auto height_screen_space = half_fovy_tan * focal_distance * 2;
+
+     l = -actual_aspect_ratio*height_screen_space;
+     r = actual_aspect_ratio*height_screen_space;
+     b = -height_screen_space;
+     t = height_screen_space;
  }
 
 Ray OrthographicCamera::generate_ray(int x, int y) {
