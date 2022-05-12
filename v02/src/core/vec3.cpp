@@ -28,6 +28,25 @@ bool is_point4f_default(Point4f& point) {
   return true;
 }
 
+Point3f default_point3f() {
+  return {numeric_limits<float>::min(), numeric_limits<float>::min(), numeric_limits<float>::min()};
+}
+
+bool is_point3f_default(Point3f& point) {
+  for (unsigned int i = 0; i < 3; ++i) {
+    if (point[i] != numeric_limits<float>::min()) return false;
+  }
+  return true;
+}
+
+Vector3f default_vector3f() {
+  return default_point3f();
+}
+
+bool is_vector3f_default(Vector3f& vector) {
+  return is_point3f_default(vector);
+}
+
 ColorXYZ operator*(const ColorXYZ& color, const float& val) {
   return {color[0]*val, color[1]*val, color[2]*val};
 }

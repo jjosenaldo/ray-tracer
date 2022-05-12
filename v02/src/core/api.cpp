@@ -7,6 +7,7 @@
 
 RunningOptions API::run_opt;
 Camera* API::m_camera;
+LookAt* API::lookat_info;
 Background API::m_background;
 
 void API::init_engine( const RunningOptions & opt ) {
@@ -41,7 +42,7 @@ void API::camera( const ParamSet& ps ) {
             RT3_ERROR("Invalid screen window! It must consist of 4 floats.");
         }
 
-        m_camera = new OrthographicCamera(screen_window[0], screen_window[1], screen_window[2], screen_window[3]);
+        m_camera = new OrthographicCamera(screen_window[0], screen_window[1], screen_window[2], screen_window[3], lookat_info);
     } else if (type == "perspective") {
         auto fovy = retrieve<float>(ps, "fovy", -1);
         auto screen_window = retrieve(ps, "screen_window", vector<float>());
@@ -51,12 +52,12 @@ void API::camera( const ParamSet& ps ) {
         } 
 
         if (screen_window.size() == 4) {
-            m_camera = new PerspectiveCamera(screen_window[0], screen_window[1], screen_window[2], screen_window[3]);
+            m_camera = new PerspectiveCamera(screen_window[0], screen_window[1], screen_window[2], screen_window[3], lookat_info);
         } else {
             auto focal_distance = retrieve(ps, "focal_distance", 1.0);
             auto aspect_ratio = retrieve(ps, "frame_aspectratio", -1.0);
             
-            m_camera = new PerspectiveCamera(focal_distance, aspect_ratio, fovy);
+            m_camera = new PerspectiveCamera(focal_distance, aspect_ratio, fovy, lookat_info);
         }
     } else {
         RT3_ERROR("Camera type " + type + " invalid! It must be ortographic or perspective.");
@@ -128,7 +129,15 @@ void API::integrator( const ParamSet& ps ) {
 
 void API::look_at( const ParamSet& ps ) {
 	std::clog << ">>> Start API::look_at()\n";
-    // TODO
+    auto look_from = retrieve<Point3f>(ps, "look_from", default_point3f());
+    auto look_at = retrieve<Vector3f>(ps, "look_at", default_vector3f());
+    auto up = retrieve<Vector3f>(ps, "up", default_vector3f());
+
+    if (is_point3f_default(look_from)) RT3_ERROR("look_from information invalid or missing!");
+    if (is_vector3f_default(look_at)) RT3_ERROR("look_at information invalid or missing!");
+    if (is_vector3f_default(up)) RT3_ERROR("up information invalid or missing!");
+
+    lookat_info = new LookAt(look_from, look_at, up);
 }
 
 void API::world_begin( void ) {

@@ -14,6 +14,7 @@ class API {
     private:
        static Camera* m_camera;
        static Background m_background;
+       static LookAt* lookat_info;
 
        static void render( void );
 

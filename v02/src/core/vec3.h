@@ -23,6 +23,12 @@ bool is_colorxyz_default(ColorXYZ color);
 Point4f default_point4f();
 bool is_point4f_default(Point4f& point);
 
+Point3f default_point3f();
+bool is_point3f_default(Point3f& point);
+
+Vector3f default_vector3f();
+bool is_vector3f_default(Vector3f& vector);
+
 ColorXYZ operator*(const ColorXYZ& color, const float& val);
 
 ColorXYZ operator/(const ColorXYZ& color, const float& val);

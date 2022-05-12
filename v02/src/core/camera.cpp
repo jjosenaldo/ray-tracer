@@ -3,7 +3,9 @@
 
 #define PI 3.14159265
 
-Camera::Camera(float l, float r, float b, float t): l(l), r(r), b(b), t(t) { }
+LookAt::LookAt(Point3f look_from, Vector3f look_at, Vector3f up): look_from(look_from), look_at(look_at), up(up) { }
+
+Camera::Camera(float l, float r, float b, float t, LookAt* look_at_info): l(l), r(r), b(b), t(t), look_at_info(look_at_info) { }
 
 int Camera::nx() {
     return film.width;
@@ -20,11 +22,11 @@ Point2f Camera::map_to_screen_space(Point2f& point) {
     return {u, v};
 }
 
-OrthographicCamera::OrthographicCamera(float l, float r, float b, float t): Camera(l, r, b, t) { }
+OrthographicCamera::OrthographicCamera(float l, float r, float b, float t, LookAt* look_at_info): Camera(l, r, b, t, look_at_info) { }
 
-PerspectiveCamera::PerspectiveCamera(float l, float r, float b, float t): Camera(l, r, b, t) { }
+PerspectiveCamera::PerspectiveCamera(float l, float r, float b, float t, LookAt* look_at_info): Camera(l, r, b, t, look_at_info) { }
 
-PerspectiveCamera::PerspectiveCamera(float focal_distance, float aspect_ratio, float fovy): Camera(-1.0, -1.0, -1.0, -1.0) {
+PerspectiveCamera::PerspectiveCamera(float focal_distance, float aspect_ratio, float fovy, LookAt* look_at_info): Camera(-1.0, -1.0, -1.0, -1.0, look_at_info) {
     this->focal_distance = focal_distance;
     this->aspect_ratio = aspect_ratio;
     this->fovy = fovy;
