@@ -4,11 +4,10 @@
 #include "vec3.h"
 
 class Ray {
-    private:
-        Point3f origin;
-        Vector3f direction;
     public:
         Ray(const Point3f& o, const Vector3f& d );
+        Point3f origin;
+        Vector3f direction;
         Vector3f operator-(float t) const;
 };
 

@@ -5,6 +5,8 @@
 
 LookAt::LookAt(Point3f look_from, Vector3f look_at, Vector3f up): look_from(look_from), look_at(look_at), up(up) { }
 
+CameraFrame::CameraFrame(Point3f e, Vector3f u, Vector3f v, Vector3f w): e(e), u(u), v(v), w(w) { }
+
 Camera::Camera(float l, float r, float b, float t, LookAt* look_at_info): l(l), r(r), b(b), t(t), look_at_info(look_at_info) { }
 
 int Camera::nx() {
@@ -15,7 +17,17 @@ int Camera::ny() {
     return film.height;
 }
 
-Point2f Camera::map_to_screen_space(Point2f& point) {
+void Camera::calculate_frame() {
+    auto gaze = look_at_info->look_at - look_at_info->look_from; 
+    auto w = normalize_vector3f(gaze);
+    auto cross_up_w = cross_vector3f(look_at_info->up, w);
+    auto u = normalize_vector3f(cross_up_w);
+    auto cross_w_u = cross_vector3f(u, w);
+    auto v = normalize_vector3f(cross_w_u);
+    frame = new CameraFrame(look_at_info->look_from, u, v, w);
+}
+
+Point2f Camera::map_to_screen_space(Point2i& point) {
     float u = l + (r - l)*(point[0] + 0.5)/nx();
     float v = b + (t - b)*(point[1] + 0.5)/ny();
 
@@ -45,11 +57,23 @@ PerspectiveCamera::PerspectiveCamera(float focal_distance, float aspect_ratio, f
  }
 
 Ray OrthographicCamera::generate_ray(int x, int y) {
-    // TODO
-    return Ray{{-1.0, -1.0, -1.0},{-1.0, -1.0, -1.0}};
+    Point2i input_point = {x, y};
+    auto uv = map_to_screen_space(input_point);
+    auto u = uv[0];
+    auto v = uv[1];
+    auto origin = frame->e + u * frame->u + v * frame->v;
+    auto direction = frame->w;
+
+    return Ray{origin, direction};
 }
 
 Ray PerspectiveCamera::generate_ray(int x, int y) {
-    // TODO
-    return Ray{{-1.0, -1.0, -1.0},{-1.0, -1.0, -1.0}};
+    Point2i input_point = {x, y};
+    auto uv = map_to_screen_space(input_point);
+    auto u = uv[0];
+    auto v = uv[1];
+    auto origin = frame->e;
+    auto direction = focal_distance * frame->w + u * frame->u + v * frame->v;
+
+    return Ray{origin, direction};
 }

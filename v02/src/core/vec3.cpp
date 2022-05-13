@@ -1,3 +1,4 @@
+#include <cmath>
 #include <limits>
 #include "vec3.h"
 
@@ -45,6 +46,24 @@ Vector3f default_vector3f() {
 
 bool is_vector3f_default(Vector3f& vector) {
   return is_point3f_default(vector);
+}
+
+
+Vector3f normalize_vector3f(Vector3f& vector) {
+  float norm = sqrt(vector[0]*vector[0] + vector[1]*vector[1] + vector[2]*vector[2]);
+  return {vector[0]/norm, vector[1]/norm, vector[2]/norm};
+}
+
+Vector3f cross_vector3f(const Vector3f& vector1, const Vector3f& vector2) {
+  return {
+    vector1[1]*vector2[2] - vector1[2]*vector2[1] ,
+    vector1[2]*vector2[0] - vector1[0]*vector2[2],
+    vector1[0]*vector2[1] - vector1[1]*vector2[0]
+  };
+}
+
+Vector3f operator-(const Vector3f& vector1, const Vector3f& vector2) {
+  return {vector1[0] - vector2[0], vector1[1] - vector2[1], vector1[2] - vector2[2]};
 }
 
 ColorXYZ operator*(const ColorXYZ& color, const float& val) {

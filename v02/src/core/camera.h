@@ -4,6 +4,15 @@
 #include "film.h"
 #include "ray.h"
 
+class CameraFrame {
+    public:
+        Point3f e;
+        Vector3f u;
+        Vector3f v;
+        Vector3f w;
+        CameraFrame(Point3f e, Vector3f u, Vector3f v, Vector3f w);
+};
+
 class LookAt {
     public:
         Point3f look_from;
@@ -14,11 +23,13 @@ class LookAt {
 
 class Camera {
     protected:
-        Point2f map_to_screen_space(Point2f& point);
         float l, r, b, t;
         LookAt* look_at_info;
     public:
+        CameraFrame* frame; // may be protected
         Camera(float l, float r, float b, float t, LookAt* look_at_info);
+        Point2f map_to_screen_space(Point2i& point); // may be protected
+        void calculate_frame();
         int nx();
         int ny();
         Film film;
