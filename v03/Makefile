@@ -21,7 +21,7 @@ FLAGS = $(NO_WARNS_FLAGS) $(WARNS)
 NO_WARNS_FLAGS = -g -std=c++17
 INC := -I $(UTILS) -I $(CORE) -isystem $(TINYXML) -isystem $(CXXOPTS)
 OBJS = $(OBJ)/error.o $(OBJ)/math.o $(OBJ)/api.o $(OBJ)/background.o $(OBJ)/camera.o $(OBJ)/film.o $(OBJ)/parser.o $(OBJ)/vec3.o $(OBJ)/tinyxml2.o \
-	$(OBJ)/ray.o $(OBJ)/sphere.o
+	$(OBJ)/ray.o $(OBJ)/sphere.o $(OBJ)/object_manager.o
 
 all: $(BIN)/rt3.out
 
@@ -60,6 +60,9 @@ $(OBJ)/ray.o: $(CORE)/vec3.h $(CORE)/ray.h $(CORE)/ray.cpp | $(OBJ)
 
 $(OBJ)/sphere.o: $(CORE)/sphere.h $(CORE)/sphere.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/sphere.o $(CORE)/sphere.cpp $(INC) $(FLAGS)
+
+$(OBJ)/object_manager.o: $(CORE)/object_manager.h $(CORE)/object_manager.cpp | $(OBJ)
+	g++ -c -o $(OBJ)/object_manager.o $(CORE)/object_manager.cpp $(INC) $(FLAGS)
 
 $(OBJ)/tinyxml2.o: $(TINYXML)/tinyxml2.h $(TINYXML)/tinyxml2.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/tinyxml2.o $(TINYXML)/tinyxml2.cpp $(NO_WARNS_FLAGS)

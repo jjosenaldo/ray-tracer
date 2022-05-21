@@ -3,11 +3,13 @@
 #include "api.h"
 #include "error.h"
 #include "vec3.h"
+#include "sphere.h"
 
 RunningOptions API::run_opt;
 Camera* API::m_camera;
 LookAt* API::lookat_info;
 Background API::m_background;
+ObjectManager API::obj_manager;
 
 void API::init_engine( const RunningOptions & opt ) {
    run_opt = opt;
@@ -147,6 +149,8 @@ void API::material( const ParamSet& ps ) {
     auto type = retrieve<string>(ps, "type", "");
     auto color = retrieve(ps, "color", default_colorxyz());
 
+    Material* mat = new Material(color);
+    obj_manager.add_material(mat);
     // TODO
 }
 
@@ -155,6 +159,10 @@ void API::object( const ParamSet& ps ) {
     auto type = retrieve<string>(ps, "type", "");
     auto radius = retrieve<float>(ps, "radius", 0.0);
     auto center = retrieve<Point3f>(ps, "center", default_point3f());
+
+    //if (type == "sphere") só no futuro se preocupar com isso
+    obj_manager.instantiate_sphere(center, radius, obj_manager.get_material());
+
     
     // TODO
 }

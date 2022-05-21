@@ -8,7 +8,9 @@ class Sphere : public Primitive {
         Point3f center;
         float radius;
     public:
-        Sphere(const Point3f& _c, const float& _r) : center(_c), radius{_r} { /* empty */ }
+        Sphere(const Point3f& _c, const float& _r, Material* mat) : center(_c), radius{_r} {
+            material = mat;
+        }
         ~Sphere(){}
 
         bool intersect(const Ray &r, const Surfel *sf) const override;

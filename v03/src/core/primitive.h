@@ -3,12 +3,11 @@
 
 #include "ray.h"
 #include "surfel.h"
-//#include "material.h"
+#include "material.h"
 
 class Primitive {
-    private:
-        // Not necessary for now
-        //std::shared_ptr<Material> material;
+    protected:
+        Material* material;
 
     public:
         virtual ~Primitive(){};
@@ -16,7 +15,7 @@ class Primitive {
         // Simpler and faster version of intersection that only return true/false.
         // It does not compute the hit point information.
         virtual bool intersect_p( const Ray& r) const = 0;
-        //virtual const Material * get_material(void) const = {return material; }
+        virtual const Material* get_material(void) const { return material; }
 };
 
 #endif

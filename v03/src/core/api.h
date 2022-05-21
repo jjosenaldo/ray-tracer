@@ -8,6 +8,7 @@
 #include "paramset.h"
 #include "camera.h"
 #include "background.h"
+#include "object_manager.h"
 #include "rt3.h"
 
 class API {
@@ -15,6 +16,7 @@ class API {
        static Camera* m_camera;
        static Background m_background;
        static LookAt* lookat_info;
+       static ObjectManager obj_manager;
 
        static void render( void );
 
