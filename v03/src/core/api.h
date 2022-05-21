@@ -31,6 +31,8 @@ class API {
         static void background( const ParamSet& ps );
         static void integrator( const ParamSet& ps );
         static void look_at( const ParamSet& ps );
+        static void material( const ParamSet& ps );
+        static void object( const ParamSet& ps );
 
         static void world_begin( void );
         static void world_end( void );

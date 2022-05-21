@@ -125,6 +125,7 @@ void API::background( const ParamSet& ps ) {
 
 void API::integrator( const ParamSet& ps ) {
 	std::clog << ">>> Start API::integrator()\n";
+    auto type = retrieve<string>(ps, "type", "");
     // TODO
 }
 
@@ -139,6 +140,23 @@ void API::look_at( const ParamSet& ps ) {
     if (is_vector3f_default(up)) RT3_ERROR("up information invalid or missing!");
 
     lookat_info = new LookAt(look_from, look_at, up);
+}
+
+void API::material( const ParamSet& ps ) {
+	std::clog << ">>> Start API::material()\n";
+    auto type = retrieve<string>(ps, "type", "");
+    auto color = retrieve(ps, "color", default_colorxyz());
+
+    // TODO
+}
+
+void API::object( const ParamSet& ps ) {
+	std::clog << ">>> Start API::object()\n";
+    auto type = retrieve<string>(ps, "type", "");
+    auto radius = retrieve<float>(ps, "radius", 0.0);
+    auto center = retrieve<Point3f>(ps, "center", default_point3f());
+    
+    // TODO
 }
 
 void API::world_begin( void ) {

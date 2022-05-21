@@ -115,7 +115,7 @@ void parse_tags(  tinyxml2::XMLElement *p_element, int level )
             ParamSet ps;
             vector<std::pair<param_type_e, string>> param_list
             {
-                { param_type_e::STRING , "type"      },
+                    { param_type_e::STRING , "type"      },
                     { param_type_e::COLOR  , "near_color"},
                     { param_type_e::COLOR  , "far_color" },
                     { param_type_e::REAL   , "zmin"      },
@@ -126,8 +126,6 @@ void parse_tags(  tinyxml2::XMLElement *p_element, int level )
 
             API::integrator( ps );
         }
-
-
         else if ( tag_name == "lookat" )
         {
             ParamSet ps;
@@ -140,6 +138,31 @@ void parse_tags(  tinyxml2::XMLElement *p_element, int level )
 
             parse_parameters( p_element, param_list, /* out */&ps );
             API::look_at( ps );
+        }
+        else if ( tag_name == "material")
+        {
+            ParamSet ps;
+            vector<std::pair<param_type_e, string>> param_list
+            {
+                { param_type_e::STRING, "type"  },
+                { param_type_e::COLOR , "color" }
+            };
+
+            parse_parameters( p_element, param_list, /* out */&ps);
+            API::material( ps );
+        }
+        else if (tag_name == "object")
+        {
+            ParamSet ps;
+            vector<std::pair<param_type_e, string>> param_list
+            {
+                { param_type_e::STRING , "type"   },
+                { param_type_e::REAL   , "radius" },
+                { param_type_e::POINT3F, "center" }
+            };
+
+            parse_parameters( p_element, param_list, /* out */&ps);
+            API::object( ps );
         }
         else if ( tag_name == "world_begin" )
         {
