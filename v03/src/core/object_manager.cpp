@@ -17,3 +17,7 @@ void ObjectManager::instantiate_sphere(const Point3f& _c, const float& _r, Mater
 Material* ObjectManager::get_material(void) {
     return mat;
 }
+
+std::vector< Primitive* >& ObjectManager::get_object_list(void) {
+	return obj_list;
+}

@@ -3,10 +3,11 @@ SRC = ./src
 BIN = ./bin
 OBJ = ./obj
 CORE = $(SRC)/core
-UTILS = $(SRC)/utils
+EXT = $(SRC)/ext
 MAIN = $(SRC)/main
-TINYXML = $(CORE)/tinyxml2
-CXXOPTS = $(CORE)/cxxopts
+UTILS = $(SRC)/utils
+CXXOPTS = $(EXT)/cxxopts
+TINYXML = $(EXT)/tinyxml2
 
 WARNS = -pedantic -Wall -Wextra -Wcast-align -Wcast-qual \
 -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 \
@@ -19,7 +20,7 @@ WARNS = -pedantic -Wall -Wextra -Wcast-align -Wcast-qual \
 # Other
 FLAGS = $(NO_WARNS_FLAGS) $(WARNS)
 NO_WARNS_FLAGS = -g -std=c++17
-INC := -I $(UTILS) -I $(CORE) -I $(MAIN) -isystem $(TINYXML) -isystem $(CXXOPTS)
+INC := -I $(UTILS) -I $(EXT) -I $(CORE) -I $(MAIN) -isystem $(TINYXML) -isystem $(CXXOPTS)
 OBJS = $(OBJ)/error.o $(OBJ)/math.o $(OBJ)/api.o $(OBJ)/background.o $(OBJ)/camera.o $(OBJ)/film.o $(OBJ)/parser.o $(OBJ)/vec3.o $(OBJ)/tinyxml2.o \
 	$(OBJ)/ray.o $(OBJ)/sphere.o $(OBJ)/object_manager.o
 
@@ -27,9 +28,6 @@ all: $(BIN)/rt3.out
 
 $(BIN)/rt3.out: $(OBJS) $(MAIN)/rt3.cpp | $(BIN)
 	g++ $(MAIN)/rt3.cpp $(OBJS) -o $(BIN)/rt3.out $(INC) $(FLAGS)
-
-$(OBJ)/image.o: $(UTILS)/image.h $(UTILS)/image.cpp | $(OBJ)
-	g++ -c -o $(OBJ)/image.o $(UTILS)/image.cpp $(INC) $(FLAGS)
 
 $(OBJ)/math.o: $(UTILS)/math.h $(UTILS)/math.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/math.o $(UTILS)/math.cpp $(INC) $(FLAGS)
@@ -43,8 +41,8 @@ $(OBJ)/background.o: $(CORE)/background.h $(CORE)/background.cpp | $(OBJ)
 $(OBJ)/camera.o: $(CORE)/ray.h $(CORE)/camera.h $(CORE)/camera.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/camera.o $(CORE)/camera.cpp $(INC) $(FLAGS)
 
-$(OBJ)/error.o: $(CORE)/error.h $(CORE)/error.cpp | $(OBJ)
-	g++ -c -o $(OBJ)/error.o $(CORE)/error.cpp $(INC) $(FLAGS)
+$(OBJ)/error.o: $(UTILS)/error.h $(UTILS)/error.cpp | $(OBJ)
+	g++ -c -o $(OBJ)/error.o $(UTILS)/error.cpp $(INC) $(FLAGS)
 
 $(OBJ)/film.o: $(CORE)/film.h $(CORE)/film.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/film.o $(CORE)/film.cpp $(INC) $(FLAGS)
@@ -55,10 +53,10 @@ $(OBJ)/parser.o: $(CORE)/parser.h $(CORE)/parser.cpp | $(OBJ)
 $(OBJ)/vec3.o: $(CORE)/vec3.h $(CORE)/vec3.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/vec3.o $(CORE)/vec3.cpp $(INC) $(FLAGS)
 
-$(OBJ)/ray.o: $(CORE)/vec3.h $(CORE)/ray.h $(CORE)/ray.cpp | $(OBJ)
+$(OBJ)/ray.o: $(CORE)/ray.h $(CORE)/ray.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/ray.o $(CORE)/ray.cpp $(INC) $(FLAGS)
 
-$(OBJ)/sphere.o: $(CORE)/sphere.h $(CORE)/vec3.h $(CORE)/sphere.cpp | $(OBJ)
+$(OBJ)/sphere.o: $(CORE)/sphere.h $(CORE)/sphere.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/sphere.o $(CORE)/sphere.cpp $(INC) $(FLAGS)
 
 $(OBJ)/object_manager.o: $(CORE)/object_manager.h $(CORE)/object_manager.cpp | $(OBJ)

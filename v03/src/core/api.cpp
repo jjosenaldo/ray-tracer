@@ -25,6 +25,7 @@ void API::run( void ) {
 void API::clean_up( void ) {
     clog << "Cleaning free space.\n";
     delete m_camera;
+    delete lookat_info;
     // TODO
 }
 
@@ -188,7 +189,7 @@ void API::render( void ) {
             auto any_object_hit = false;
             auto color = ColorXYZ{0,0,0};
             
-            for (const Primitive* p: obj_manager.obj_list) {
+            for (const Primitive* p: obj_manager.get_object_list()) {
                 if (p->intersect_p(ray)) {
                     color = obj_manager.get_material()->color;
                     any_object_hit = true;
