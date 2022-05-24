@@ -160,11 +160,7 @@ void API::object( const ParamSet& ps ) {
     auto radius = retrieve<float>(ps, "radius", 0.0);
     auto center = retrieve<Point3f>(ps, "center", default_point3f());
 
-    //if (type == "sphere") só no futuro se preocupar com isso
     obj_manager.instantiate_sphere(center, radius, obj_manager.get_material());
-
-    
-    // TODO
 }
 
 void API::world_begin( void ) {
@@ -189,39 +185,25 @@ void API::render( void ) {
     for (int j = std::min(run_opt.crop_window[0][1], run_opt.crop_window[1][1]); j < std::min(height, std::max(run_opt.crop_window[0][1], run_opt.crop_window[1][1])); ++j) {
         for (int i = std::min(run_opt.crop_window[0][0], run_opt.crop_window[1][0]); i < std::min(width, std::max(run_opt.crop_window[0][0], run_opt.crop_window[1][0])); ++i) {
             Ray ray = m_camera->generate_ray(i, j);
-            auto color = m_background.sample(Point2f{float(i)/float(width), float(j)/float(height)});
+            auto any_object_hit = false;
+            auto color = ColorXYZ{0,0,0};
+            
+            for (const Primitive* p: obj_manager.obj_list) {
+                if (p->intersect_p(ray)) {
+                    color = obj_manager.get_material()->color;
+                    any_object_hit = true;
+                    break;
+                }
+            }
+
+            if (!any_object_hit) {
+                color = m_background.sample(Point2f{float(i)/float(width), float(j)/float(height)});
+            }
+
             m_camera->film.add(Point2i{i, j}, color);
         }
     }
 
-    // vector<Point2i> inputs = {
-    //     {0,1799},{700,1799},{1400,1799},{2100,1799},
-    //     {0,1798},{700,1798},{1400,1798},{2100,1798},
-    //     {0,1797},{700,1797},{1400,1797},{2100,1797},
-    //     {0,2},{700,2},{1400,2},{2100,2},{2799,2},
-    //     {0,1},{700,1},{1400,1},{2100,1},{2799,1},
-    //     {0,0},{700,0},{1400,0},{2100,0},{2799,0}
-    // };
-
-    // std::cout << std::fixed << std::showpoint;
-    // std::cout << std::setprecision(6);
-
-    // std::cout << "e = [" << m_camera->frame->e[0] << " " << m_camera->frame->e[1] << " " << m_camera->frame->e[2] << "]" << std::endl;
-    // std::cout << "w = [" << m_camera->frame->w[0] << " " << m_camera->frame->w[1] << " " << m_camera->frame->w[2] << "]" << std::endl;
-    // std::cout << "u = [" << m_camera->frame->u[0] << " " << m_camera->frame->u[1] << " " << m_camera->frame->u[2] << "]" << std::endl;
-    // std::cout << "v = [" << m_camera->frame->v[0] << " " << m_camera->frame->v[1] << " " << m_camera->frame->v[2] << "]" << std::endl;
-
-    // std::cout << std::endl;
-
-    // for (auto input : inputs) {
-    //     auto i = input[0];
-    //     auto j = input[1];
-    //     Ray ray = m_camera->generate_ray(i, j);
-    //     auto uv = m_camera->map_to_screen_space(input);
-    //     std::cout << "i=" << i << " j=" << j << " u=" << uv[0] << " v=" << uv[1] << endl << ray.origin[0] << " " << ray.origin[1] << " " << ray.origin[2] << " "
-    //     << ray.direction[0] << " " << ray.direction[1] << " " << ray.direction[2] << endl;
-    // }
-    
 
     m_camera->film.write_image();
 }

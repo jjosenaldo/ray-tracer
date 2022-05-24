@@ -5,13 +5,14 @@
 
 class ObjectManager {
     private:
-        std::vector< Primitive* > obj_list;
+        
         Material* mat;
 
     public:
         ObjectManager(){}
         ~ObjectManager(){}
 
+        std::vector< Primitive* > obj_list;
         void add_object(Primitive* obj);
         void add_material(Material* _mat);
         void instantiate_sphere(const Point3f& _c, const float& _r, Material* mat);
