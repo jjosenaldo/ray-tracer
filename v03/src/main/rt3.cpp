@@ -1,4 +1,3 @@
-#include "../utils/image.h"
 #include "../core/api.h"
 #include "rt3.h"
 #include <sstream>

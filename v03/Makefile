@@ -19,7 +19,7 @@ WARNS = -pedantic -Wall -Wextra -Wcast-align -Wcast-qual \
 # Other
 FLAGS = $(NO_WARNS_FLAGS) $(WARNS)
 NO_WARNS_FLAGS = -g -std=c++17
-INC := -I $(UTILS) -I $(CORE) -isystem $(TINYXML) -isystem $(CXXOPTS)
+INC := -I $(UTILS) -I $(CORE) -I $(MAIN) -isystem $(TINYXML) -isystem $(CXXOPTS)
 OBJS = $(OBJ)/error.o $(OBJ)/math.o $(OBJ)/api.o $(OBJ)/background.o $(OBJ)/camera.o $(OBJ)/film.o $(OBJ)/parser.o $(OBJ)/vec3.o $(OBJ)/tinyxml2.o \
 	$(OBJ)/ray.o $(OBJ)/sphere.o $(OBJ)/object_manager.o
 

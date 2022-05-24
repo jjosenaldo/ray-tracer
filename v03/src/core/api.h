@@ -3,7 +3,6 @@
 
 #include <string>
 #include "parser.h"
-#include "../utils/image.h"
 #include "vec3.h"
 #include "paramset.h"
 #include "camera.h"
