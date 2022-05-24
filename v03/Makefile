@@ -58,7 +58,7 @@ $(OBJ)/vec3.o: $(CORE)/vec3.h $(CORE)/vec3.cpp | $(OBJ)
 $(OBJ)/ray.o: $(CORE)/vec3.h $(CORE)/ray.h $(CORE)/ray.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/ray.o $(CORE)/ray.cpp $(INC) $(FLAGS)
 
-$(OBJ)/sphere.o: $(CORE)/sphere.h $(CORE)/sphere.cpp | $(OBJ)
+$(OBJ)/sphere.o: $(CORE)/sphere.h $(CORE)/vec3.h $(CORE)/sphere.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/sphere.o $(CORE)/sphere.cpp $(INC) $(FLAGS)
 
 $(OBJ)/object_manager.o: $(CORE)/object_manager.h $(CORE)/object_manager.cpp | $(OBJ)

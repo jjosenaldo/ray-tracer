@@ -62,6 +62,10 @@ Vector3f cross_vector3f(const Vector3f& vector1, const Vector3f& vector2) {
   };
 }
 
+float dot_vector3f(const Vector3f& vector1, const Vector3f& vector2) {
+  return vector1[0]*vector2[0]+vector1[1]*vector2[1]+vector1[2]*vector2[2];
+}
+
 Vector3f operator-(const Vector3f& vector1, const Vector3f& vector2) {
   return {vector1[0] - vector2[0], vector1[1] - vector2[1], vector1[2] - vector2[2]};
 }
