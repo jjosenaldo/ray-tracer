@@ -1,7 +1,7 @@
 #include "sphere.h"
 #include "vec3.h"
 
-bool Sphere::intersect( const Ray& r, const Surfel *sf) const {
+bool Sphere::intersect( const Ray& r, const float& t_hit, const Surfel *sf) const {
     // TODO
     return true;
 }

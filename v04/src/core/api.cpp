@@ -161,7 +161,9 @@ void API::object( const ParamSet& ps ) {
     auto radius = retrieve<float>(ps, "radius", 0.0);
     auto center = retrieve<Point3f>(ps, "center", default_point3f());
 
-    obj_manager.instantiate_sphere(center, radius, obj_manager.get_material());
+    if( type == "sphere") {
+        obj_manager.instantiate_sphere(center, radius, obj_manager.get_material());
+    }
 }
 
 void API::world_begin( void ) {

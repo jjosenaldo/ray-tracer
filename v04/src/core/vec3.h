@@ -50,5 +50,6 @@ Vector3f operator*(const float& scalar, const Vector3f& vector);
 // gambiarra
 // TODO solucao sem gambiarra
 class Primitive;
+class Surfel;
 
 #endif // VEC3_H

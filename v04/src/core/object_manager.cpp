@@ -10,8 +10,8 @@ void ObjectManager::add_material(Material* _mat) {
 }
 
 void ObjectManager::instantiate_sphere(const Point3f& _c, const float& _r, Material* mat) {
-    Primitive* sp = new Sphere(_c, _r, mat);
-    add_object(sp);
+    Shape* s = new Sphere(_c, _r);
+    this->add_object(new GeometricPrimitive(s, mat));
 }
 
 Material* ObjectManager::get_material(void) {

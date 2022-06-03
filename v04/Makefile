@@ -22,7 +22,7 @@ FLAGS = $(NO_WARNS_FLAGS) $(WARNS)
 NO_WARNS_FLAGS = -g -std=c++17
 INC := -I $(UTILS) -I $(EXT) -I $(CORE) -I $(MAIN) -isystem $(TINYXML) -isystem $(CXXOPTS)
 OBJS = $(OBJ)/error.o $(OBJ)/math.o $(OBJ)/api.o $(OBJ)/background.o $(OBJ)/camera.o $(OBJ)/film.o $(OBJ)/parser.o $(OBJ)/vec3.o $(OBJ)/tinyxml2.o \
-	$(OBJ)/ray.o $(OBJ)/sphere.o $(OBJ)/object_manager.o
+	$(OBJ)/ray.o $(OBJ)/sphere.o $(OBJ)/object_manager.o $(OBJ)/geometric_primitive.o
 
 all: $(BIN)/rt3.out
 
@@ -61,6 +61,9 @@ $(OBJ)/sphere.o: $(CORE)/sphere.h $(CORE)/sphere.cpp | $(OBJ)
 
 $(OBJ)/object_manager.o: $(CORE)/object_manager.h $(CORE)/object_manager.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/object_manager.o $(CORE)/object_manager.cpp $(INC) $(FLAGS)
+
+$(OBJ)/geometric_primitive.o: $(CORE)/geometric_primitive.h $(CORE)/geometric_primitive.cpp | $(OBJ)
+	g++ -c -o $(OBJ)/geometric_primitive.o $(CORE)/geometric_primitive.cpp $(INC) $(FLAGS)
 
 $(OBJ)/tinyxml2.o: $(TINYXML)/tinyxml2.h $(TINYXML)/tinyxml2.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/tinyxml2.o $(TINYXML)/tinyxml2.cpp $(NO_WARNS_FLAGS)
