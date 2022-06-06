@@ -6,7 +6,7 @@ void ObjectManager::add_object(Primitive* obj) {
 }
 
 void ObjectManager::add_material(Material* _mat) {
-     mat = _mat;
+     materials.push_back(_mat);
 }
 
 void ObjectManager::instantiate_sphere(const Point3f& _c, const float& _r, Material* mat) {
@@ -15,7 +15,7 @@ void ObjectManager::instantiate_sphere(const Point3f& _c, const float& _r, Mater
 }
 
 Material* ObjectManager::get_material(void) {
-    return mat;
+    return materials.back();
 }
 
 std::vector< Primitive* >& ObjectManager::get_object_list(void) {

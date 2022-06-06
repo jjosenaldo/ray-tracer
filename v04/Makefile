@@ -21,7 +21,7 @@ WARNS = -pedantic -Wall -Wextra -Wcast-align -Wcast-qual \
 FLAGS = $(NO_WARNS_FLAGS) $(WARNS)
 NO_WARNS_FLAGS = -g -std=c++17
 INC := -I $(UTILS) -I $(EXT) -I $(CORE) -I $(MAIN) -isystem $(TINYXML) -isystem $(CXXOPTS)
-OBJS = $(OBJ)/error.o $(OBJ)/math.o $(OBJ)/api.o $(OBJ)/background.o $(OBJ)/camera.o $(OBJ)/film.o $(OBJ)/parser.o $(OBJ)/vec3.o $(OBJ)/tinyxml2.o \
+OBJS = $(OBJ)/error.o $(OBJ)/math.o $(OBJ)/api.o $(OBJ)/background.o $(OBJ)/camera.o $(OBJ)/film.o $(OBJ)/flat_material.o $(OBJ)/parser.o $(OBJ)/vec3.o $(OBJ)/tinyxml2.o \
 	$(OBJ)/ray.o $(OBJ)/sphere.o $(OBJ)/object_manager.o $(OBJ)/geometric_primitive.o
 
 all: $(BIN)/rt3.out
@@ -46,6 +46,9 @@ $(OBJ)/error.o: $(UTILS)/error.h $(UTILS)/error.cpp | $(OBJ)
 
 $(OBJ)/film.o: $(CORE)/film.h $(CORE)/film.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/film.o $(CORE)/film.cpp $(INC) $(FLAGS)
+
+$(OBJ)/flat_material.o: $(CORE)/flat_material.h $(CORE)/flat_material.cpp | $(OBJ)
+	g++ -c -o $(OBJ)/flat_material.o $(CORE)/flat_material.cpp $(INC) $(FLAGS)
 
 $(OBJ)/parser.o: $(CORE)/parser.h $(CORE)/parser.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/parser.o $(CORE)/parser.cpp $(INC) $(FLAGS)

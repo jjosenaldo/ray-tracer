@@ -2,6 +2,7 @@
 #include <iostream>
 #include "api.h"
 #include "error.h"
+#include "flat_material.h"
 #include "vec3.h"
 #include "sphere.h"
 
@@ -149,8 +150,15 @@ void API::material( const ParamSet& ps ) {
 	std::clog << ">>> Start API::material()\n";
     auto type = retrieve<string>(ps, "type", "");
     auto color = retrieve(ps, "color", default_colorxyz());
+    Material* mat;
 
-    Material* mat = new Material(color);
+    if (type == "flat") {
+        mat = new FlatMaterial(color);
+    } else {
+        RT3_ERROR("Unsupported material type: " + type);
+    }
+
+     
     obj_manager.add_material(mat);
     // TODO
 }

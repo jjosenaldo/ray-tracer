@@ -5,7 +5,7 @@
 
 class ObjectManager {
     private:
-        Material* mat;
+        std::vector< Material* > materials;
         std::vector< Primitive* > obj_list;
 
     public:
