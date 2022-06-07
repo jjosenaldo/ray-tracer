@@ -16,6 +16,7 @@ class Surfel {
         Surfel( const Point3f& _p, const Vector3f& _n, const Vector3f& _wo, float _time,
                 const Point2f& _uv, const Primitive *pri ) : p{_p}, n{_n}, wo{_wo},
                                                             time{_time}, uv{_uv}, primitive{pri} {/* empty */};
+        Surfel() { }
 };
 
 #endif

@@ -5,6 +5,7 @@
 #include "shape.h"
 #include "material.h"
 
+class Shape;
 class GeometricPrimitive : public Primitive {
     private:
         Shape* shape;
@@ -13,7 +14,7 @@ class GeometricPrimitive : public Primitive {
     public:
         GeometricPrimitive(Shape* s, Material* m) : shape{s}, material{m}{}
         ~GeometricPrimitive(){}
-        bool intersect( const Ray& r, const Surfel *sf ) const override;
+        bool intersect( const Ray& r, Surfel *sf ) const override;
         // Simpler and faster version of intersection that only return true/false.
         // It does not compute the hit point information.
         bool intersect_p( const Ray& r) const override;

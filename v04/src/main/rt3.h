@@ -1,6 +1,8 @@
-#include <stdexcept>
 #ifndef RT3_H
 #define RT3_H
+
+#include <climits>
+#include <stdexcept>
 
 struct RunningOptions {
     RunningOptions() : scene_filename{""}, outfile{""}, quick_render{false} {

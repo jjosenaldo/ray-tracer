@@ -1,12 +1,15 @@
 #ifndef SHAPE_H
 #define SHAPE_H
 
+#include "geometric_primitive.h"
 #include "ray.h"
 #include "surfel.h"
 
+class GeometricPrimitive;
 class Shape {
     protected:
         bool flip_normals = false;
+        GeometricPrimitive* primitive = nullptr;
 
     public:
         Shape(){}
@@ -14,7 +17,7 @@ class Shape {
         ~Shape(){}
 
         //virtual Bounds3f world_bounds() const = 0;
-        virtual bool intersect(const Ray &r, const float& t_hit, const Surfel *sf) const = 0;
+        virtual bool intersect(const Ray &r, float& t_hit, Surfel *sf) const = 0;
         virtual bool intersect_p(const Ray &r) const = 0;
 };
 

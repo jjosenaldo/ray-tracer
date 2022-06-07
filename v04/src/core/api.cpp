@@ -188,33 +188,5 @@ void API::world_end( void )
 }
 
 void API::render( void ) {
-	std::clog << ">>> Start API::render()\n";
-
-	auto width = m_camera->film.width;
-    auto height = m_camera->film.height;
-    
-    for (int j = std::min(run_opt.crop_window[0][1], run_opt.crop_window[1][1]); j < std::min(height, std::max(run_opt.crop_window[0][1], run_opt.crop_window[1][1])); ++j) {
-        for (int i = std::min(run_opt.crop_window[0][0], run_opt.crop_window[1][0]); i < std::min(width, std::max(run_opt.crop_window[0][0], run_opt.crop_window[1][0])); ++i) {
-            Ray ray = m_camera->generate_ray(i, j);
-            auto any_object_hit = false;
-            auto color = ColorXYZ{0,0,0};
-            
-            for (const Primitive* p: obj_manager.get_object_list()) {
-                if (p->intersect_p(ray)) {
-                    color = obj_manager.get_material()->color;
-                    any_object_hit = true;
-                    break;
-                }
-            }
-
-            if (!any_object_hit) {
-                color = m_background.sample(Point2f{float(i)/float(width), float(j)/float(height)});
-            }
-
-            m_camera->film.add(Point2i{i, j}, color);
-        }
-    }
-
-
-    m_camera->film.write_image();
+	// TODO: call Integrator.render
 }

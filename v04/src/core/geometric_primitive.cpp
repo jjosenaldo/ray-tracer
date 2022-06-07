@@ -1,6 +1,6 @@
 #include "geometric_primitive.h"
 
-bool GeometricPrimitive::intersect(const Ray& r, const Surfel *sf) const {
+bool GeometricPrimitive::intersect(const Ray& r, Surfel *sf) const {
     // tá mas pelo diagrama GeometricPrimitive n tem membro time
     // então quem q recebe essa informação do time? 
     
