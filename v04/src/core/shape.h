@@ -17,7 +17,7 @@ class Shape {
         ~Shape(){}
 
         //virtual Bounds3f world_bounds() const = 0;
-        virtual bool intersect(const Ray &r, float& t_hit, Surfel *sf) const = 0;
+        virtual bool intersect(const Ray &r, Surfel *sf) const = 0;
         virtual bool intersect_p(const Ray &r) const = 0;
 };
 

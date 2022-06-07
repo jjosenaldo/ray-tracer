@@ -17,6 +17,8 @@ class Surfel {
                 const Point2f& _uv, const Primitive *pri ) : p{_p}, n{_n}, wo{_wo},
                                                             time{_time}, uv{_uv}, primitive{pri} {/* empty */};
         Surfel() { }
+
+        void copy_from(Surfel* other);
 };
 
 #endif

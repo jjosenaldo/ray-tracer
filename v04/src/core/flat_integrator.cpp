@@ -2,7 +2,7 @@
 #include "flat_material.h"
 #include "surfel.h"
 
-ColorXYZ FlatIntegrator::Li(const Ray& ray, const Scene& scene, ColorXYZ& default_color ) {
+ColorXYZ FlatIntegrator::Li(const Ray& ray, Scene& scene, ColorXYZ& default_color ) {
     ColorXYZ radiance;
     Surfel isect;
 

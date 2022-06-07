@@ -2,6 +2,7 @@
 #define SCENE_H
 
 #include "background.h"
+#include "primitive.h"
 #include "ray.h"
 
 class Scene {
@@ -10,9 +11,9 @@ class Scene {
 
     public:
         Background* background;
-        Scene(Primitive* ag, Background* bkg ) : background{bkg}, aggregate{ag} {/* empty */ }
-        bool intersect( const Ray& r, Surfel *isect ) const;
-        bool intersect_p( const Ray& r ) const;
+        Scene(Primitive* ag, Background* bkg);
+        bool intersect( const Ray& r, Surfel *isect );
+        bool intersect_p( const Ray& r );
 };
 
 #endif

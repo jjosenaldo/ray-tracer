@@ -6,7 +6,7 @@
 class FlatIntegrator: public SamplerIntegrator {
     public:
         using SamplerIntegrator::Li;
-        ColorXYZ Li( const Ray& ray, const Scene& scene, ColorXYZ& default_color);
+        ColorXYZ Li( const Ray& ray, Scene& scene, ColorXYZ& default_color);
 };
 
 
