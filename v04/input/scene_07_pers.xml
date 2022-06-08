@@ -19,4 +19,6 @@
 <material type="flat" color="253 3 3" /> <!-- Red -->
 <object type="sphere" radius="0.8" center="1 -2.5 5" />
 
+<world_end/>
+
 </RT3>
