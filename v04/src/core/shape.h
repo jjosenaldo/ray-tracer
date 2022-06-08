@@ -9,9 +9,9 @@ class GeometricPrimitive;
 class Shape {
     protected:
         bool flip_normals = false;
-        GeometricPrimitive* primitive = nullptr;
 
     public:
+        GeometricPrimitive* primitive = nullptr;
         Shape(){}
         Shape(const bool& flip_n) : flip_normals(flip_n) {}
         ~Shape(){}
