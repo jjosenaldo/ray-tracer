@@ -14,7 +14,7 @@ void AggregatePrimitive::add_primitive(Primitive* primitive) {
 }
 
 bool AggregatePrimitive::intersect( const Ray& ray, Surfel *sf ) {
-    Surfel* best_surfel;
+    Surfel* best_surfel = nullptr;
     float best_t = std::numeric_limits<float>::min();
     
     for (Primitive* p: primitives) {
