@@ -5,8 +5,8 @@
 
 class Integrator {
     public:
-        virtual ~Integrator();
-        virtual void render( const Scene& scene ) =0;
+        virtual ~Integrator() = default;
+        virtual void render( Scene& scene ) =0;
 };
 
 #endif

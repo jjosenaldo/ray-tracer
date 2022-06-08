@@ -14,7 +14,7 @@ class Background {
         Background(){}
         Background(ColorXYZ color);
         Background(ColorXYZ bl, ColorXYZ tl, ColorXYZ tr, ColorXYZ br);
-	virtual ~Background() = default;
+	    virtual ~Background() = default;
         ColorXYZ sample(Point2f);
 };
 #endif

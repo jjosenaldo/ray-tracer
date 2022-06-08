@@ -1,7 +1,7 @@
 #include <algorithm>
 #include "sampler_integrator.h"
 
-void SamplerIntegrator::render(const Scene& scene) {
+void SamplerIntegrator::render(Scene& scene) {
     preprocess(scene);
 
     auto width = camera->film.width;

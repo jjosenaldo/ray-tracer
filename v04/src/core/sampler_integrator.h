@@ -8,12 +8,13 @@
 
 class SamplerIntegrator : public Integrator {
     public:
-        virtual ~SamplerIntegrator();
+        using Integrator::render;
+        virtual ~SamplerIntegrator() = default;
         SamplerIntegrator( Camera* cam ) : camera{cam} { };
 
         // returns the incident radiance at the origin of a given ray
-        virtual ColorXYZ Li( const Ray& ray, const Scene& scene, ColorXYZ& default_color) const = 0;
-        virtual void render( const Scene& scene );
+        virtual ColorXYZ Li( const Ray& ray, Scene& scene, ColorXYZ& default_color) = 0;
+        virtual void render( Scene& scene );
         virtual void preprocess( const Scene& scene );
         
     protected:

@@ -5,12 +5,15 @@
 #include "flat_material.h"
 #include "vec3.h"
 #include "sphere.h"
+#include "flat_integrator.h"
+#include "aggregate_primitive.h"
 
 RunningOptions API::run_opt;
 Camera* API::m_camera;
 LookAt* API::lookat_info;
-Background API::m_background;
 ObjectManager API::obj_manager;
+Integrator* API::m_integrator;
+Scene* API::scene;
 
 void API::init_engine( const RunningOptions & opt ) {
    run_opt = opt;
@@ -119,9 +122,9 @@ void API::background( const ParamSet& ps ) {
     auto mapping = retrieve<string>(ps, "mapping", ""); // TODO
 
     if (!is_colorxyz_default(color)) {
-        m_background = Background(color);
+        scene->background = new Background(color);
     } else if (!is_colorxyz_default(tl) && !is_colorxyz_default(tr) && !is_colorxyz_default(br) && !is_colorxyz_default(bl)) {
-        m_background = Background(bl, tl, tr, br);
+        scene->background = new Background(bl, tl, tr, br);
     } else {
         RT3_ERROR("It is necessary to pass either a single color or four colors!");
     }
@@ -130,7 +133,12 @@ void API::background( const ParamSet& ps ) {
 void API::integrator( const ParamSet& ps ) {
 	std::clog << ">>> Start API::integrator()\n";
     auto type = retrieve<string>(ps, "type", "");
-    // TODO
+    
+    if (type == "flat") {
+        m_integrator = new FlatIntegrator(m_camera);
+    } else {
+        RT3_ERROR("Unsupported integrator type: " + type);
+    }
 }
 
 void API::look_at( const ParamSet& ps ) {
@@ -160,7 +168,6 @@ void API::material( const ParamSet& ps ) {
 
      
     obj_manager.add_material(mat);
-    // TODO
 }
 
 void API::object( const ParamSet& ps ) {
@@ -176,17 +183,15 @@ void API::object( const ParamSet& ps ) {
 
 void API::world_begin( void ) {
 	std::clog << ">>> Start API::world_begin()\n";
-    // TODO
+    scene = new Scene();
 }
 
 void API::world_end( void )
 {
 	std::clog << ">>> Start API::world_end()\n";
 
-	render();
-	reset_engine();
-}
+    scene->aggregate = new AggregatePrimitive(obj_manager.get_object_list());
 
-void API::render( void ) {
-	// TODO: call Integrator.render
+    m_integrator->render(*scene);
+	reset_engine();
 }

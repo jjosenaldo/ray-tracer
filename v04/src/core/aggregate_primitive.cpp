@@ -17,7 +17,7 @@ bool AggregatePrimitive::intersect( const Ray& ray, Surfel *sf ) {
     Surfel* best_surfel;
     float best_t = std::numeric_limits<float>::min();
     
-    for (const Primitive* p: primitives) {
+    for (Primitive* p: primitives) {
         Surfel current_surfel;
 
         if (p->intersect(ray, &current_surfel)) {
@@ -33,7 +33,7 @@ bool AggregatePrimitive::intersect( const Ray& ray, Surfel *sf ) {
 }
 
 bool AggregatePrimitive::intersect_p( const Ray& ray) {
-    for (const Primitive* p: primitives) {
+    for (Primitive* p: primitives) {
         if (p->intersect_p(ray)) {
             return true;
         }

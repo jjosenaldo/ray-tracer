@@ -8,16 +8,17 @@
 #include "camera.h"
 #include "background.h"
 #include "object_manager.h"
+#include "integrator.h"
+#include "scene.h"
 #include "rt3.h"
 
 class API {
     private:
        static Camera* m_camera;
-       static Background m_background;
        static LookAt* lookat_info;
        static ObjectManager obj_manager;
-
-       static void render( void );
+       static Integrator* m_integrator;
+       static Scene* scene;
 
     public:
         static RunningOptions run_opt;

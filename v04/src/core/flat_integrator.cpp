@@ -2,6 +2,8 @@
 #include "flat_material.h"
 #include "surfel.h"
 
+FlatIntegrator::FlatIntegrator(Camera* camera): SamplerIntegrator(camera) { }
+
 ColorXYZ FlatIntegrator::Li(const Ray& ray, Scene& scene, ColorXYZ& default_color ) {
     ColorXYZ radiance;
     Surfel isect;

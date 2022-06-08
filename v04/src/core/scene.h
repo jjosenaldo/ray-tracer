@@ -6,12 +6,10 @@
 #include "ray.h"
 
 class Scene {
-    private:
-        Primitive* aggregate;
-
     public:
+        Primitive* aggregate;
         Background* background;
-        Scene(Primitive* ag, Background* bkg);
+        Scene();
         bool intersect( const Ray& r, Surfel *isect );
         bool intersect_p( const Ray& r );
 };

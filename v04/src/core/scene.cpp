@@ -1,6 +1,6 @@
 #include "scene.h"
 
-Scene::Scene(Primitive* ag, Background* bkg ) : background{bkg}, aggregate{ag} {/* empty */ }
+Scene::Scene() {/* empty */ }
 
 bool Scene::intersect( const Ray& r, Surfel *isect ) {
     return aggregate->intersect(r, isect);
