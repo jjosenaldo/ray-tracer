@@ -29,7 +29,7 @@ bool AggregatePrimitive::intersect( const Ray& ray, Surfel *sf ) {
 
     sf->copy_from(best_surfel);
 
-    return !best_surfel;
+    return best_surfel;
 }
 
 bool AggregatePrimitive::intersect_p( const Ray& ray) {
