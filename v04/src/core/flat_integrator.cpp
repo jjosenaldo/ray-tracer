@@ -13,7 +13,7 @@ ColorXYZ FlatIntegrator::Li(const Ray& ray, Scene& scene, ColorXYZ& default_colo
     } else {
         FlatMaterial *fm = dynamic_cast< FlatMaterial *>( isect.primitive->get_material());
         if (fm) {
-            radiance = fm->kd();
+            radiance = fm->kd()/255.0;
         }
     }
 

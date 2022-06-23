@@ -14,22 +14,24 @@ void AggregatePrimitive::add_primitive(Primitive* primitive) {
 }
 
 bool AggregatePrimitive::intersect( const Ray& ray, Surfel *sf ) {
-    Surfel* best_surfel = nullptr;
-    float best_t = std::numeric_limits<float>::min();
-    
-    for (Primitive* p: primitives) {
-        Surfel current_surfel;
+    int size = primitives.size(), best_idx = -1;
+    Surfel* current = new Surfel[size];
+    float best_t;
 
-        if (p->intersect(ray, &current_surfel)) {
-            if (!best_surfel || (current_surfel.time >= 0 && current_surfel.time < best_surfel->time)) {
-                best_surfel = &current_surfel;
+    for (int i=0; i<size; i++) {
+        if (primitives[i]->intersect(ray, &current[i])) {
+            if (best_idx == -1 || current[i].time < best_t) {
+                best_idx = i;
+				best_t = current[i].time;
             }
         }
     }
 
-    sf->copy_from(best_surfel);
-
-    return best_surfel;
+    if (best_idx == -1) return false;
+    sf->copy_from(&current[best_idx]);
+    delete current;
+    
+    return true;
 }
 
 bool AggregatePrimitive::intersect_p( const Ray& ray) {
