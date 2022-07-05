@@ -10,7 +10,7 @@ class Ray {
 
         Ray(const Point3f& o, const Vector3f& d );
 	~Ray(){}
-        Vector3f operator-(float t) const;
+        Vector3f operator()(float t) const;
 };
 
 #endif

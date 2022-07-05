@@ -49,7 +49,7 @@ bool is_vector3f_default(Vector3f& vector) {
 }
 
 
-Vector3f normalize_vector3f(Vector3f& vector) {
+Vector3f normalize_vector3f(const Vector3f& vector) {
   float norm = sqrt(vector[0]*vector[0] + vector[1]*vector[1] + vector[2]*vector[2]);
   return {vector[0]/norm, vector[1]/norm, vector[2]/norm};
 }
@@ -72,6 +72,10 @@ Vector3f operator-(const Vector3f& vector1, const Vector3f& vector2) {
 
 ColorXYZ operator*(const ColorXYZ& color, const float& val) {
   return {color[0]*val, color[1]*val, color[2]*val};
+}
+
+ColorXYZ operator*(const ColorXYZ& color1, const ColorXYZ& color2) {
+  return {color1[0]*color2[0], color1[1]*color2[1], color1[2]*color2[2]};
 }
 
 ColorXYZ operator/(const ColorXYZ& color, const float& val) {

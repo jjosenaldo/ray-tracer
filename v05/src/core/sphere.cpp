@@ -26,6 +26,9 @@ bool Sphere::intersect( const Ray& ray, Surfel *sf) const {
 
     sf->primitive = primitive;
     sf->time = time;
+    sf->wo = o - d;
+    sf->p = ray(time);
+    sf->n = normalize_vector3f(sf->p - c);
 
     return delta >= 0;
 }
