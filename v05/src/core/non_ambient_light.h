@@ -8,8 +8,8 @@
 class NonAmbientLight:  public Light {
     public:
         NonAmbientLight(ColorXYZ _scale): Light(_scale){}
-        ColorXYZ sample_Li_from_nlh(Vector3f& n, Vector3f& l, Vector3f& h, BlinnPhongMaterial& material, Vector3f *wi, VisibilityTester *vis);
-        virtual ColorXYZ I() = 0;
+        ColorXYZ sample_Li_from_nlh(Vector3f& n, Vector3f& l, Vector3f& h, BlinnPhongMaterial& material, const Vector3f *wi, const VisibilityTester *vis);
+        virtual ColorXYZ get_I() = 0;
 };
 
 #endif

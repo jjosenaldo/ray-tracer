@@ -11,6 +11,7 @@
 #include "integrator.h"
 #include "scene.h"
 #include "rt3.h"
+#include "light.h"
 
 class API {
     private:
@@ -19,6 +20,7 @@ class API {
        static ObjectManager obj_manager;
        static Integrator* m_integrator;
        static Scene* scene;
+       static vector<Light*> lights;
 
     public:
         static RunningOptions run_opt;
@@ -34,6 +36,7 @@ class API {
         static void integrator( const ParamSet& ps );
         static void look_at( const ParamSet& ps );
         static void material( const ParamSet& ps );
+        static void light( const ParamSet& ps );
         static void object( const ParamSet& ps );
 
         static void world_begin( void );

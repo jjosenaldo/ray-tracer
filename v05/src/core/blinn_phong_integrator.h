@@ -9,11 +9,12 @@ using std::vector;
 
 class BlinnPhongIntegrator: public SamplerIntegrator {
     private:
-        vector<Light> lights;
+        vector<Light*> lights;
         int depth;
     public:
         using SamplerIntegrator::Li;
-        BlinnPhongIntegrator(Camera* camera, vector<Light> lights, int depth);
+        BlinnPhongIntegrator(Camera* camera, int depth);
+        void set_lights(vector<Light*> lights);
         ColorXYZ Li( const Ray& ray, Scene& scene, ColorXYZ& default_color);
         ColorXYZ Li( const Ray& ray, Scene& scene, ColorXYZ& default_color, int depth);
 };

@@ -7,6 +7,8 @@
 #include "sphere.h"
 #include "flat_integrator.h"
 #include "aggregate_primitive.h"
+#include "blinn_phong_integrator.h"
+#include "point_light.h"
 
 RunningOptions API::run_opt;
 Camera* API::m_camera;
@@ -14,6 +16,7 @@ LookAt* API::lookat_info;
 ObjectManager API::obj_manager;
 Integrator* API::m_integrator;
 Scene* API::scene;
+vector<Light*> API::lights;
 
 void API::init_engine( const RunningOptions & opt ) {
    run_opt = opt;
@@ -136,8 +139,37 @@ void API::integrator( const ParamSet& ps ) {
     
     if (type == "flat") {
         m_integrator = new FlatIntegrator(m_camera);
+    } else if (type == "blinn_phong") {
+        auto depth = retrieve<int>(ps, "depth", 1);
+        m_integrator = new BlinnPhongIntegrator(m_camera, depth);
     } else {
         RT3_ERROR("Unsupported integrator type: " + type);
+    }
+}
+
+void API::light( const ParamSet& ps ) {
+	std::clog << ">>> Start API::light()\n";
+    auto type = retrieve<string>(ps, "type", "");
+    
+    if (type == "point") {
+        auto I = retrieve<ColorXYZ>(ps, "I", default_colorxyz());
+        if (is_colorxyz_default(I)) {
+            RT3_ERROR("\"I\" parameter missing for point light");    
+        }
+
+        auto scale = retrieve<ColorXYZ>(ps, "scale", default_colorxyz());
+        if (is_colorxyz_default(I)) {
+            RT3_ERROR("\"scale\" parameter missing for point light");    
+        }
+
+        auto from = retrieve<Point3f>(ps, "from", default_point3f());
+        if (is_point3f_default(from)) {
+            RT3_ERROR("\"from\" parameter missing for point light");    
+        }
+
+        lights.push_back(new PointLight(I, from, scale));
+    } else {
+        RT3_ERROR("Unsupported light source type: " + type);
     }
 }
 
@@ -159,10 +191,29 @@ void API::material( const ParamSet& ps ) {
     auto type = retrieve<string>(ps, "type", "");
     auto color = retrieve(ps, "color", default_colorxyz());
     Material* mat;
+    // <material type="blinn" name="redish" ambient="0.6 0.6 0.6" diffuse="0.9 0.2 0.1" specular="0.8 0.8 0.8" mirror="0.0 0.0 0.0" glossiness="64"/> Red
 
     if (type == "flat") {
         mat = new FlatMaterial(color);
-    } else {
+    } else if (type == "blinn") {
+        auto name = retrieve<string>(ps, "name", "");
+
+        auto ambient = retrieve<ColorXYZ>(ps, "ambient", default_colorxyz());
+        if (is_colorxyz_default(ambient)) RT3_ERROR("Missing \"ambient\" parameter in Blinn material");
+
+        auto diffuse = retrieve<ColorXYZ>(ps, "diffuse", default_colorxyz());
+        if (is_colorxyz_default(diffuse)) RT3_ERROR("Missing \"diffuse\" parameter in Blinn material");
+
+        auto specular = retrieve<ColorXYZ>(ps, "specular", default_colorxyz());
+        if (is_colorxyz_default(specular)) RT3_ERROR("Missing \"specular\" parameter in Blinn material");
+
+        auto mirror = retrieve<ColorXYZ>(ps, "mirror", default_colorxyz());
+        if (is_colorxyz_default(mirror)) RT3_ERROR("Missing \"mirror\" parameter in Blinn material");
+
+        auto glossiness = retrieve<int>(ps, "glossiness", 1);
+
+        mat = new BlinnPhongMaterial(ambient, diffuse, specular, mirror, glossiness);
+    } {
         RT3_ERROR("Unsupported material type: " + type);
     }
 
@@ -191,6 +242,9 @@ void API::world_end( void )
 	std::clog << ">>> Start API::world_end()\n";
 
     scene->aggregate = new AggregatePrimitive(obj_manager.get_object_list());
+
+    BlinnPhongIntegrator *bf_integrator = dynamic_cast< BlinnPhongIntegrator *>( m_integrator);
+    if (bf_integrator) bf_integrator->set_lights(lights);
 
     m_integrator->render(*scene);
 	reset_engine();

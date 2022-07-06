@@ -1,7 +1,12 @@
 #include "blinn_phong_integrator.h"
 #include "blinn_phong_material.h"
 
-BlinnPhongIntegrator::BlinnPhongIntegrator(Camera* camera, vector<Light> _lights, int _depth): lights(_lights), depth(_depth), SamplerIntegrator(camera) { }
+BlinnPhongIntegrator::BlinnPhongIntegrator(Camera* camera, int _depth): SamplerIntegrator(camera), depth(_depth) { }
+
+void BlinnPhongIntegrator::set_lights(vector<Light*> lights) {
+    this->lights = lights;
+}
+
 
 ColorXYZ BlinnPhongIntegrator::Li( const Ray& ray, Scene& scene, ColorXYZ& default_color) {
     return Li(ray, scene, default_color, 0);
@@ -30,7 +35,7 @@ ColorXYZ BlinnPhongIntegrator::Li( const Ray& ray, Scene& scene, ColorXYZ& defau
         BlinnPhongMaterial *bf_material = dynamic_cast< BlinnPhongMaterial *>( isect.primitive->get_material());
         if (bf_material) {
             for (auto light: lights) {
-                L = L + light.sample_Li(isect, &wi, &vis);
+                L = L + light->sample_Li(isect, *bf_material, &wi, &vis);
             }
         }
         // TODO: cast shadows
