@@ -135,6 +135,7 @@ void parse_tags(  tinyxml2::XMLElement *p_element, int level )
                     { param_type_e::COLOR   , "I"         },
                     { param_type_e::COLOR   , "scale"     },
                     { param_type_e::POINT3F , "from"      },
+                    { param_type_e::POINT3F , "to"      }
             };
             parse_parameters( p_element, param_list, /* out */&ps );
 

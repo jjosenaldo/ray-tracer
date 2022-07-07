@@ -9,6 +9,7 @@
 #include "aggregate_primitive.h"
 #include "blinn_phong_integrator.h"
 #include "point_light.h"
+#include "directional_light.h"
 
 RunningOptions API::run_opt;
 Camera* API::m_camera;
@@ -169,7 +170,31 @@ void API::light( const ParamSet& ps ) {
 
         // TODO: actually do something with the scale
         lights.push_back(new PointLight(I, from, scale));
-    } else {
+    } else if(type == "directional") {
+        auto I = retrieve<ColorXYZ>(ps, "I", default_colorxyz());
+        if (is_colorxyz_default(I)) {
+            RT3_ERROR("\"I\" parameter missing for directional light");    
+        }
+
+        auto scale = retrieve<ColorXYZ>(ps, "scale", default_colorxyz());
+        if (is_colorxyz_default(I)) {
+            RT3_ERROR("\"scale\" parameter missing for directional light");    
+        }
+
+        auto from = retrieve<Point3f>(ps, "from", default_point3f());
+        if (is_point3f_default(from)) {
+            RT3_ERROR("\"from\" parameter missing for directional light");    
+        }
+
+        auto to = retrieve<Point3f>(ps, "to", default_point3f());
+        if (is_point3f_default(to)) {
+            RT3_ERROR("\"to\" parameter missing for directional light");    
+        }
+
+        // TODO: actually do something with the scale
+        lights.push_back(new DirectionalLight(I, from, to, scale));
+    }
+    else {
         RT3_ERROR("Unsupported light source type: " + type);
     }
 }

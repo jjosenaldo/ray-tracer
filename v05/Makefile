@@ -23,7 +23,8 @@ NO_WARNS_FLAGS = -g -std=c++17
 INC := -I $(UTILS) -I $(EXT) -I $(CORE) -I $(MAIN) -isystem $(TINYXML) -isystem $(CXXOPTS)
 OBJS = $(OBJ)/error.o $(OBJ)/math.o $(OBJ)/api.o $(OBJ)/background.o $(OBJ)/camera.o $(OBJ)/film.o $(OBJ)/flat_material.o $(OBJ)/parser.o $(OBJ)/vec3.o $(OBJ)/tinyxml2.o \
 	$(OBJ)/ray.o $(OBJ)/sphere.o $(OBJ)/object_manager.o $(OBJ)/geometric_primitive.o $(OBJ)/sampler_integrator.o $(OBJ)/flat_integrator.o $(OBJ)/scene.o \
-	$(OBJ)/aggregate_primitive.o $(OBJ)/surfel.o $(OBJ)/blinn_phong_integrator.o $(OBJ)/point_light.o $(OBJ)/non_ambient_light.o
+	$(OBJ)/aggregate_primitive.o $(OBJ)/surfel.o $(OBJ)/blinn_phong_integrator.o $(OBJ)/point_light.o $(OBJ)/non_ambient_light.o \
+	$(OBJ)/directional_light.o
 
 all: $(BIN)/rt3.out
 
@@ -80,6 +81,9 @@ $(OBJ)/object_manager.o: $(CORE)/object_manager.h $(CORE)/object_manager.cpp | $
 
 $(OBJ)/point_light.o: $(CORE)/point_light.h $(CORE)/point_light.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/point_light.o $(CORE)/point_light.cpp $(INC) $(FLAGS)
+
+$(OBJ)/directional_light.o: $(CORE)/directional_light.h $(CORE)/directional_light.cpp | $(OBJ)
+	g++ -c -o $(OBJ)/directional_light.o $(CORE)/directional_light.cpp $(INC) $(FLAGS)
 
 $(OBJ)/non_ambient_light.o: $(CORE)/non_ambient_light.h $(CORE)/non_ambient_light.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/non_ambient_light.o $(CORE)/non_ambient_light.cpp $(INC) $(FLAGS)
