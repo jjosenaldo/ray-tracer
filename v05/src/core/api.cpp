@@ -191,7 +191,6 @@ void API::material( const ParamSet& ps ) {
     auto type = retrieve<string>(ps, "type", "");
     auto color = retrieve(ps, "color", default_colorxyz());
     Material* mat;
-    // <material type="blinn" name="redish" ambient="0.6 0.6 0.6" diffuse="0.9 0.2 0.1" specular="0.8 0.8 0.8" mirror="0.0 0.0 0.0" glossiness="64"/> Red
 
     if (type == "flat") {
         mat = new FlatMaterial(color);
@@ -213,7 +212,7 @@ void API::material( const ParamSet& ps ) {
         auto glossiness = retrieve<int>(ps, "glossiness", 1);
 
         mat = new BlinnPhongMaterial(ambient, diffuse, specular, mirror, glossiness);
-    } {
+    } else {
         RT3_ERROR("Unsupported material type: " + type);
     }
 
