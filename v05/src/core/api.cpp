@@ -167,6 +167,7 @@ void API::light( const ParamSet& ps ) {
             RT3_ERROR("\"from\" parameter missing for point light");    
         }
 
+        // TODO: actually do something with the scale
         lights.push_back(new PointLight(I, from, scale));
     } else {
         RT3_ERROR("Unsupported light source type: " + type);
