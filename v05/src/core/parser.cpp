@@ -179,7 +179,10 @@ void parse_tags(  tinyxml2::XMLElement *p_element, int level )
             {
                 { param_type_e::STRING , "type"   },
                 { param_type_e::REAL   , "radius" },
-                { param_type_e::POINT3F, "center" }
+                { param_type_e::POINT3F, "center" },
+                { param_type_e::POINT3F, "p1" },
+                { param_type_e::POINT3F, "p2" },
+                { param_type_e::POINT3F, "p3" }
             };
 
             parse_parameters( p_element, param_list, /* out */&ps);

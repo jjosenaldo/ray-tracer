@@ -249,11 +249,22 @@ void API::material( const ParamSet& ps ) {
 void API::object( const ParamSet& ps ) {
 	std::clog << ">>> Start API::object()\n";
     auto type = retrieve<string>(ps, "type", "");
-    auto radius = retrieve<float>(ps, "radius", 0.0);
-    auto center = retrieve<Point3f>(ps, "center", default_point3f());
 
     if( type == "sphere") {
+        auto radius = retrieve<float>(ps, "radius", 0.0);
+        auto center = retrieve<Point3f>(ps, "center", default_point3f());
         obj_manager.instantiate_sphere(center, radius, obj_manager.get_material());
+    } else if (type == "triangle") {
+        auto p1 = retrieve<Point3f>(ps, "p1", default_point3f());
+        if (is_point3f_default(p1)) RT3_ERROR("Missing parameter \"p1\" for plane");
+        auto p2 = retrieve<Point3f>(ps, "p2", default_point3f());
+        if (is_point3f_default(p2)) RT3_ERROR("Missing parameter \"p2\" for plane");
+        auto p3 = retrieve<Point3f>(ps, "p3", default_point3f());
+        if (is_point3f_default(p3)) RT3_ERROR("Missing parameter \"p3\" for plane");
+
+        obj_manager.instantiate_triangle(p1, p2, p3, obj_manager.get_material());
+    } else {
+        RT3_ERROR("Unsupported object type: " + type);
     }
 }
 

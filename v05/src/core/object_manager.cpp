@@ -1,5 +1,6 @@
 #include "object_manager.h"
 #include "sphere.h"
+#include "plane.h"
 
 void ObjectManager::add_object(Primitive* obj) {
     obj_list.push_back(obj);
@@ -15,6 +16,11 @@ void ObjectManager::instantiate_sphere(const Point3f& _c, const float& _r, Mater
     shape->primitive = primitive;
 
     this->add_object(primitive);
+}
+
+void ObjectManager::instantiate_triangle(const Point3f& _p1, const Point3f& _p2, const Point3f& _p3, Material* mat) {
+    Plane* plane = new Plane(mat, _p1, _p2, _p3);
+    this->add_object(plane);
 }
 
 Material* ObjectManager::get_material(void) {

@@ -35,6 +35,10 @@ Vector3f cross_vector3f(const Vector3f& vector1, const Vector3f& vector2);
 
 float dot_vector3f(const Vector3f& vector1, const Vector3f& vector2);
 
+Vector3f proj_vector3f(const Vector3f& vector_a, const Vector3f& vector_b);
+
+float norm_vector3f(const Vector3f& v);
+
 Vector3f operator-(const Vector3f& vector1, const Vector3f& vector2);
 
 ColorXYZ operator*(const ColorXYZ& color, const float& val);

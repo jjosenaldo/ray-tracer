@@ -66,6 +66,14 @@ float dot_vector3f(const Vector3f& vector1, const Vector3f& vector2) {
   return vector1[0]*vector2[0]+vector1[1]*vector2[1]+vector1[2]*vector2[2];
 }
 
+Vector3f proj_vector3f(const Vector3f& vector_a, const Vector3f& vector_b) {
+  return (dot_vector3f(vector_a,vector_b) / dot_vector3f(vector_b,vector_b))*vector_b;
+}
+
+float norm_vector3f(const Vector3f& v) {
+  return sqrt(pow(v[0], 2) + pow(v[1], 2) + pow(v[2], 2));
+}
+
 Vector3f operator-(const Vector3f& vector1, const Vector3f& vector2) {
   return {vector1[0] - vector2[0], vector1[1] - vector2[1], vector1[2] - vector2[2]};
 }
