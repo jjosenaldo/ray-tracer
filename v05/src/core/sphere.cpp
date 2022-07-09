@@ -3,7 +3,12 @@
 #include "sphere.h"
 #include "vec3.h"
 
-bool Sphere::intersect( const Ray& ray, Surfel *sf) const {
+#include <iostream>
+#include <cstdlib>
+#include <string>
+using namespace std;
+
+bool Sphere::intersect( const Ray& ray, Surfel *sf, float min_t, float max_t) const {
     Vector3f o = ray.origin;
     Vector3f d = ray.direction;
     Point3f c = center;
@@ -14,23 +19,44 @@ bool Sphere::intersect( const Ray& ray, Surfel *sf) const {
     float C = dot_vector3f(o - c, o - c) - r*r;
     float delta = B*B-4*A*C;
 
-    float time = -1.0;
+    float time = -1.0; 
+    string s;
 
     if (delta > 0) {
         float root_1 = (-B + sqrt(delta)) / (2*A);
         float root_2 = (-B - sqrt(delta)) / (2*A);
 
-        time = std::min(root_1, root_2);
+        float min_root = std::min(root_1, root_2);
+        float max_root = std::max(root_1, root_2);
+
+        if (max_root < min_t || min_root > max_t) {
+            return false;
+        }
+
+        if (min_root < min_t) {
+            time = max_root;
+        } else {
+            time = min_root;
+        }
+
+        s= "hit_point: times = " + to_string(root_1) + " " + to_string(root_2) + "\n";
     }
 	else if(delta == 0) time = -B/(2*A);
+    else return false;
+    
+    auto hit_point = ray(time);
 
     sf->primitive = primitive;
     sf->time = time;
-    sf->wo = o - d;
-    sf->p = ray(time);
-    sf->n = normalize_vector3f(sf->p - c);
+    sf->wo = o - hit_point;
+    sf->p = hit_point;
+    sf->n = normalize_vector3f(hit_point - c);
 
-    return delta >= 0;
+    if (hit_point[1] >= 0.0) {
+        // cout << s;
+    }
+
+    return true;
 }
 
 bool Sphere::intersect_p( const Ray& ray) const {

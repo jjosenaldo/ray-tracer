@@ -13,14 +13,14 @@ void AggregatePrimitive::add_primitive(Primitive* primitive) {
     primitives.push_back(primitive);
 }
 
-bool AggregatePrimitive::intersect( const Ray& ray, Surfel *sf ) {
+bool AggregatePrimitive::intersect( const Ray& ray, Surfel *sf, float min_t, float max_t ) {
     long unsigned int size = primitives.size();
 	int best_idx = -1;
     Surfel* current = new Surfel[size];
     float best_t;
 
     for (long unsigned int i=0; i<size; i++) {
-        if (primitives[i]->intersect(ray, &current[i])) {
+        if (primitives[i]->intersect(ray, &current[i], min_t, max_t)) {
             if (best_idx == -1 || current[i].time < best_t) {
                 best_idx = i;
 				best_t = current[i].time;

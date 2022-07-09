@@ -15,7 +15,7 @@ class AggregatePrimitive: public Primitive {
         AggregatePrimitive(std::vector<Primitive*> p_primitives): primitives(p_primitives) {  }
         Material* get_material();
         void add_primitive(Primitive* primitive);
-        bool intersect( const Ray& r, Surfel *sf );
+        bool intersect( const Ray& r, Surfel *sf, float min_t, float max_t );
         bool intersect_p( const Ray& r);
 };
 

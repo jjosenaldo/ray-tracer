@@ -14,7 +14,7 @@ class Sphere : public Shape {
         }
         ~Sphere(){}
 
-        bool intersect(const Ray &r, Surfel *sf) const override;
+        bool intersect(const Ray &r, Surfel *sf, float min_t, float max_t) const override;
         bool intersect_p(const Ray &r) const override;
 };
 

@@ -1,3 +1,4 @@
+#include <limits>
 #include "plane.h"
 
 Plane::Plane(Material* m, const Point3f& _p1, const Point3f& _p2, const Point3f& _p3): material(m), p1(_p1), p2(_p2), p3(_p3) {
@@ -5,7 +6,7 @@ Plane::Plane(Material* m, const Point3f& _p1, const Point3f& _p2, const Point3f&
 }
 
 
-bool Plane::intersect( const Ray& r, Surfel *sf ) {
+bool Plane::intersect( const Ray& r, Surfel *sf, float min_t, float max_t ) {
     auto denominator = dot_vector3f(n, r.direction);
 
     if (denominator == 0) {
@@ -14,6 +15,9 @@ bool Plane::intersect( const Ray& r, Surfel *sf ) {
 
     auto numerator = dot_vector3f(n, p1-r.origin);
     auto t = numerator / denominator;
+
+    if (t < min_t || t > max_t) return false;
+
     auto p = r(t);
 
     if (!same_side_as(p1, p2, p3, p) || !same_side_as(p2, p3, p1, p) || !same_side_as(p1, p3, p2, p)) {
@@ -22,7 +26,7 @@ bool Plane::intersect( const Ray& r, Surfel *sf ) {
 
     sf->primitive = this;
     sf->time = t;
-    sf->wo = r.origin - r.direction;
+    sf->wo = r.origin - r.direction; // TODO: review this, it is probably wrong
     sf->p = p;
     sf->n = n;
 
@@ -31,7 +35,7 @@ bool Plane::intersect( const Ray& r, Surfel *sf ) {
 
 bool Plane::intersect_p( const Ray& r) {
     auto surfel = Surfel();
-    return intersect(r, &surfel);
+    return intersect(r, &surfel, 0.0, std::numeric_limits<float>::max()/2);
 }
 
 Material* Plane::get_material() {

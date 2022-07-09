@@ -14,7 +14,7 @@ class GeometricPrimitive : public Primitive {
     public:
         GeometricPrimitive(Shape* s, Material* m) : shape{s}, material{m}{}
         ~GeometricPrimitive(){}
-        bool intersect( const Ray& r, Surfel *sf ) override;
+        bool intersect( const Ray& r, Surfel *sf, float min_t, float max_t ) override;
         // Simpler and faster version of intersection that only return true/false.
         // It does not compute the hit point information.
         bool intersect_p( const Ray& r) override;

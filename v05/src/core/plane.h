@@ -16,7 +16,7 @@ class Plane : public Primitive {
     public:
         Plane(Material* m, const Point3f& _p1, const Point3f& _p2, const Point3f& _p3);
         ~Plane(){}
-        bool intersect( const Ray& r, Surfel *sf ) override;
+        bool intersect( const Ray& r, Surfel *sf, float min_t, float max_t ) override;
         // Simpler and faster version of intersection that only return true/false.
         // It does not compute the hit point information.
         bool intersect_p( const Ray& r) override;

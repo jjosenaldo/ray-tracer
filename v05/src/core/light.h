@@ -13,6 +13,7 @@ public:
     // Retorna a intensidade da luz, direção e o teste oclusão.
     virtual ColorXYZ sample_Li( const Surfel& hit, BlinnPhongMaterial& material, const Vector3f *wi, const VisibilityTester *vis) = 0;
     virtual void preprocess( const Scene & ) {};
+    virtual Point3f max_shadow_ray_point(Point3f origin) = 0;
 };
 
 #endif

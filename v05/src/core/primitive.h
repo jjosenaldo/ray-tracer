@@ -8,7 +8,7 @@
 class Primitive {
     public:
         virtual ~Primitive(){};
-        virtual bool intersect( const Ray& r, Surfel *sf ) = 0;
+        virtual bool intersect( const Ray& r, Surfel *sf, float min_t, float max_t) = 0;
         // Simpler and faster version of intersection that only return true/false.
         // It does not compute the hit point information.
         virtual bool intersect_p( const Ray& r) = 0;

@@ -1,6 +1,7 @@
 #include "point_light.h"
 
 #include <iostream>
+#include <cstdlib>
 using namespace std;
 
 ColorXYZ PointLight::sample_Li( const Surfel& hit, BlinnPhongMaterial& material, const Vector3f *wi, const VisibilityTester *vis) {
@@ -9,13 +10,13 @@ ColorXYZ PointLight::sample_Li( const Surfel& hit, BlinnPhongMaterial& material,
     auto V = hit.wo;
     auto H = normalize_vector3f(V+L);
 
-    if (material.ks[0] == 0.0) {
-        cout << "Calculating color of point (" << hit.p[0] << " " << hit.p[1] << " " << hit.p[2] << "): ";
-    }
-
     return sample_Li_from_nlh(N, L, H, material, wi, vis);
 }
 
 ColorXYZ PointLight::get_I() {
     return I;
+}
+
+Point3f PointLight::max_shadow_ray_point(Point3f origin) {
+    return from;
 }

@@ -1,7 +1,7 @@
 #include "geometric_primitive.h"
 
-bool GeometricPrimitive::intersect(const Ray& r, Surfel *sf) {
-    return shape->intersect(r, sf);
+bool GeometricPrimitive::intersect(const Ray& r, Surfel *sf, float min_t, float max_t) {
+    return shape->intersect(r, sf, min_t, max_t);
 }
 
 bool GeometricPrimitive::intersect_p(const Ray& r) {
