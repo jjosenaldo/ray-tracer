@@ -53,8 +53,6 @@ ColorXYZ operator+(const ColorXYZ& color1, const ColorXYZ& color2);
 
 Vector3f operator*(const float& scalar, const Vector3f& vector);
 
-// gambiarra
-// TODO solucao sem gambiarra
 class Primitive;
 class Surfel;
 

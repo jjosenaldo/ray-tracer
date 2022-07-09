@@ -48,7 +48,6 @@ using std::optional;
     };
 
     // === Support functions
-	// TODO not compiling with optional
     template <typename T>
     std::optional<std::vector< T >> read_array( tinyxml2::XMLElement *, const string& );
     template <typename T>

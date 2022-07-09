@@ -3,10 +3,7 @@
 #include "sphere.h"
 #include "vec3.h"
 
-#include <iostream>
 #include <cstdlib>
-#include <string>
-using namespace std;
 
 bool Sphere::intersect( const Ray& ray, Surfel *sf, float min_t, float max_t) const {
     Vector3f o = ray.origin;
@@ -20,7 +17,6 @@ bool Sphere::intersect( const Ray& ray, Surfel *sf, float min_t, float max_t) co
     float delta = B*B-4*A*C;
 
     float time = -1.0; 
-    string s;
 
     if (delta > 0) {
         float root_1 = (-B + sqrt(delta)) / (2*A);
@@ -38,8 +34,6 @@ bool Sphere::intersect( const Ray& ray, Surfel *sf, float min_t, float max_t) co
         } else {
             time = min_root;
         }
-
-        s= "hit_point: times = " + to_string(root_1) + " " + to_string(root_2) + "\n";
     }
 	else if(delta == 0) time = -B/(2*A);
     else return false;
@@ -51,10 +45,6 @@ bool Sphere::intersect( const Ray& ray, Surfel *sf, float min_t, float max_t) co
     sf->wo = o - hit_point;
     sf->p = hit_point;
     sf->n = normalize_vector3f(hit_point - c);
-
-    if (hit_point[1] >= 0.0) {
-        // cout << s;
-    }
 
     return true;
 }
