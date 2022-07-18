@@ -2,7 +2,7 @@
     <lookat look_from="-3 5.5 -10" look_at="0 2 1" up="0 1 0" />
     <camera type="perspective" fovy="45" />
     <integrator type="blinn_phong" depth="2"/>
-    <film type="image" x_res="800" y_res="600" filename="diretional.png" img_type="ppm3" />
+    <film type="image" x_res="800" y_res="600" filename="spot.png" img_type="ppm3" />
 
     <!-- The Scene -->
     <world_begin/>
@@ -11,8 +11,14 @@
         <background type="colors" bl="153 204 255" tl="18 10 143" tr="18 10 143" br="153 204 255" />
 
         <!-- Lights -->
-        <light_source type="directional" L="0.9 0.9 0.9" scale="1 1 1" from="1 0.8 -1" to="0 0 1" />
-        <light_source type="directional" L="0.4 0.4 0.4" scale="1 1 1" from="-1 0.2 0.5" to="0 0 1" />
+        <!-- over green sphere -->
+        <light_source type="spot" I="0.9 0.9 0.9" scale="1 1 1" from="-2 8 2" to="-2 2 3" cutoff="30" falloff="15" />
+        <!-- over blue sphere -->
+        <light_source type="spot" I="0.9 0.9 0.9" scale="1 1 1" from="2 5 -1" to="2 2 -2" cutoff="25" falloff="25" />
+        <!-- over red sphere -->
+        <light_source type="spot" I="0.9 0.2 0.2" scale="1 1 1" from="0 7 -1" to="0 2 0" cutoff="30" falloff="0" />
+        <!-- over golden sphere -->
+        <light_source type="spot" I="1.0 0.65 0"  scale="1 1 1" from="15 12 -2" to="3 3 7" cutoff="15" falloff="5" />
 
         <!-- Material Library -->
         <material type="blinn" name="redish"   ambient="0.6 0.6 0.6" diffuse ="0.9 0.2 0.1"  specular ="0.8 0.8 0.8" mirror ="0.0 0.0 0.0" glossiness ="64"/>
