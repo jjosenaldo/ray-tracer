@@ -159,7 +159,7 @@ void API::light( const ParamSet& ps ) {
         }
 
         auto scale = retrieve<ColorXYZ>(ps, "scale", default_colorxyz());
-        if (is_colorxyz_default(I)) {
+        if (is_colorxyz_default(scale)) {
             RT3_ERROR("\"scale\" parameter missing for point light");    
         }
 
@@ -171,13 +171,13 @@ void API::light( const ParamSet& ps ) {
         // TODO: actually do something with the scale
         lights.push_back(new PointLight(I, from, scale));
     } else if(type == "directional") {
-        auto I = retrieve<ColorXYZ>(ps, "I", default_colorxyz());
-        if (is_colorxyz_default(I)) {
-            RT3_ERROR("\"I\" parameter missing for directional light");    
+        auto L = retrieve<ColorXYZ>(ps, "L", default_colorxyz());
+        if (is_colorxyz_default(L)) {
+            RT3_ERROR("\"L\" parameter missing for directional light");    
         }
 
         auto scale = retrieve<ColorXYZ>(ps, "scale", default_colorxyz());
-        if (is_colorxyz_default(I)) {
+        if (is_colorxyz_default(scale)) {
             RT3_ERROR("\"scale\" parameter missing for directional light");    
         }
 
@@ -192,7 +192,33 @@ void API::light( const ParamSet& ps ) {
         }
 
         // TODO: actually do something with the scale
-        lights.push_back(new DirectionalLight(I, from, to, scale));
+        lights.push_back(new DirectionalLight(L, from, to, scale));
+    } else if(type == "spot") {
+        auto I = retrieve<ColorXYZ>(ps, "I", default_colorxyz());
+        if (is_colorxyz_default(I)) {
+            RT3_ERROR("\"I\" parameter missing for spot light");    
+        }
+
+        auto scale = retrieve<ColorXYZ>(ps, "scale", default_colorxyz());
+        if (is_colorxyz_default(scale)) {
+            RT3_ERROR("\"scale\" parameter missing for spot light");    
+        }
+
+        auto from = retrieve<Point3f>(ps, "from", default_point3f());
+        if (is_point3f_default(from)) {
+            RT3_ERROR("\"from\" parameter missing for spot light");    
+        }
+
+        auto to = retrieve<Point3f>(ps, "to", default_point3f());
+        if (is_point3f_default(to)) {
+            RT3_ERROR("\"to\" parameter missing for spot light");    
+        }
+
+        auto cutoff = retrieve<int>(ps, "cutoff", 1);
+        auto falloff = retrieve<int>(ps, "falloff", 1);
+
+        //lights.push_back(new SpotlLight(I, from, to, scale));
+
     }
     else {
         RT3_ERROR("Unsupported light source type: " + type);
