@@ -9,7 +9,7 @@ class BlinnPhongMaterial: public Material {
         ColorXYZ ka; // ambient
         ColorXYZ kd; // diffuse
         ColorXYZ ks; // specular
-        ColorXYZ mirror; 
+        ColorXYZ mirror; // mirror
         int g; // glossiness
 
         BlinnPhongMaterial(const ColorXYZ _ka, const ColorXYZ _kd, const ColorXYZ _ks, const ColorXYZ _mirror, const int _g) : 

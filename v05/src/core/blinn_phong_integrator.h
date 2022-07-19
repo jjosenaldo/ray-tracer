@@ -10,7 +10,7 @@ using std::vector;
 class BlinnPhongIntegrator: public SamplerIntegrator {
     private:
         vector<Light*> lights;
-        int depth;
+        int max_depth;
     public:
         using SamplerIntegrator::Li;
         BlinnPhongIntegrator(Camera* camera, int depth);

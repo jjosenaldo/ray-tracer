@@ -1,7 +1,5 @@
 #include "point_light.h"
 
-#include <iostream>
-#include <cstdlib>
 using namespace std;
 
 ColorXYZ PointLight::sample_Li( const Surfel& hit, BlinnPhongMaterial& material, const Vector3f *wi, const VisibilityTester *vis) {
