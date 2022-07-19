@@ -1,6 +1,6 @@
 #include "surfel.h"
 
-void Surfel::copy_from(Surfel* other) {
+void Surfel::copy_from(const Surfel* other) {
     if (!other) return;
     
     p = other->p;

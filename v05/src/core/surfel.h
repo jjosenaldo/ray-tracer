@@ -14,11 +14,11 @@ class Surfel {
         Primitive *primitive = nullptr;   //!< Pointer to the primitive.
         
         Surfel( const Point3f& _p, const Vector3f& _n, const Vector3f& _wo, float _time,
-                const Point2f& _uv, Primitive *pri ) : p{_p}, n{_n}, wo{_wo},
+                const Point2f& _uv = {0.0,0.0}, Primitive *pri = nullptr) : p{_p}, n{_n}, wo{_wo},
                                                             time{_time}, uv{_uv}, primitive{pri} {/* empty */};
         Surfel() { }
 
-        void copy_from(Surfel* other);
+        void copy_from(const Surfel* other);
 };
 
 #endif

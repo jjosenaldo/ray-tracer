@@ -22,7 +22,7 @@ ColorXYZ BlinnPhongIntegrator::Li( const Ray& ray, Scene& scene, ColorXYZ& defau
     
     // TODO: actually use those two guys for something
     Vector3f wi;
-    VisibilityTester vis;
+    VisibilityTester* vis;
     const float low_float = 1e-3;
 
     if (scene.intersect(ray, &isect)) {
@@ -49,7 +49,10 @@ ColorXYZ BlinnPhongIntegrator::Li( const Ray& ray, Scene& scene, ColorXYZ& defau
                     continue;
                 }
 
-                L = L + light->sample_Li(isect, *bf_material, &wi, &vis);
+                ColorXYZ color = light->sample_Li(isect, *bf_material, &wi, vis);
+                //if(vis->unoccluded(scene)) {
+                    L = L + color;
+                //}
             }
 
             if(curr_depth < max_depth) {
