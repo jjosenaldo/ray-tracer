@@ -10,6 +10,8 @@
 #include "blinn_phong_integrator.h"
 #include "point_light.h"
 #include "directional_light.h"
+#include "ambient_light.h"
+#include "spot_light.h"
 
 RunningOptions API::run_opt;
 Camera* API::m_camera;
@@ -217,8 +219,20 @@ void API::light( const ParamSet& ps ) {
         auto cutoff = retrieve<int>(ps, "cutoff", 1);
         auto falloff = retrieve<int>(ps, "falloff", 1);
 
-        //lights.push_back(new SpotlLight(I, from, to, scale));
+        lights.push_back(new SpotLight(I, from, to, scale, cutoff, falloff));
+    } else if( type == "ambient") {
+        auto L = retrieve<ColorXYZ>(ps, "L", default_colorxyz());
+        if (is_colorxyz_default(L)) {
+            RT3_ERROR("\"L\" parameter missing for directional light");    
+        }
 
+        auto scale = retrieve<ColorXYZ>(ps, "scale", default_colorxyz());
+        if (is_colorxyz_default(scale)) {
+            RT3_ERROR("\"scale\" parameter missing for spot light");    
+        }
+
+        auto flux = retrieve<float>(ps, "flux", 0);
+        lights.push_back(new AmbientLight(L, scale, flux));
     }
     else {
         RT3_ERROR("Unsupported light source type: " + type);

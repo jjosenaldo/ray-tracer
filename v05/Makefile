@@ -25,7 +25,7 @@ OBJS = $(OBJ)/error.o $(OBJ)/math.o $(OBJ)/api.o $(OBJ)/background.o $(OBJ)/came
 	$(OBJ)/parser.o $(OBJ)/vec3.o $(OBJ)/tinyxml2.o $(OBJ)/ray.o $(OBJ)/sphere.o $(OBJ)/object_manager.o \
 	$(OBJ)/geometric_primitive.o $(OBJ)/sampler_integrator.o $(OBJ)/flat_integrator.o $(OBJ)/scene.o \
 	$(OBJ)/aggregate_primitive.o $(OBJ)/surfel.o $(OBJ)/blinn_phong_integrator.o $(OBJ)/point_light.o $(OBJ)/non_ambient_light.o \
-	$(OBJ)/directional_light.o $(OBJ)/plane.o $(OBJ)/visibility_tester.o
+	$(OBJ)/directional_light.o $(OBJ)/spot_light.o $(OBJ)/ambient_light.o $(OBJ)/plane.o $(OBJ)/visibility_tester.o
 
 all: $(BIN)/rt3.out
 
@@ -88,6 +88,12 @@ $(OBJ)/plane.o: $(CORE)/plane.h $(CORE)/plane.cpp | $(OBJ)
 
 $(OBJ)/directional_light.o: $(CORE)/directional_light.h $(CORE)/directional_light.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/directional_light.o $(CORE)/directional_light.cpp $(INC) $(FLAGS)
+
+$(OBJ)/ambient_light.o: $(CORE)/ambient_light.h $(CORE)/ambient_light.cpp | $(OBJ)
+	g++ -c -o $(OBJ)/ambient_light.o $(CORE)/ambient_light.cpp $(INC) $(FLAGS)
+
+$(OBJ)/spot_light.o: $(CORE)/spot_light.h $(CORE)/spot_light.cpp | $(OBJ)
+	g++ -c -o $(OBJ)/spot_light.o $(CORE)/spot_light.cpp $(INC) $(FLAGS)
 
 $(OBJ)/non_ambient_light.o: $(CORE)/non_ambient_light.h $(CORE)/non_ambient_light.cpp | $(OBJ)
 	g++ -c -o $(OBJ)/non_ambient_light.o $(CORE)/non_ambient_light.cpp $(INC) $(FLAGS)

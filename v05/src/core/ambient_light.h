@@ -3,10 +3,16 @@
 
 #include "light.h"
 
-class AmbientLight:  public Light {
+class AmbientLight : public Light {
+    private:
+        ColorXYZ I;
     public:
-        ColorXYZ L;
-        AmbientLight(ColorXYZ _L, ColorXYZ _scale): L(_L), Light(_scale){}
+        float flux;
+        AmbientLight(ColorXYZ _I, ColorXYZ _scale, float _flux): I(_I), flux(_flux), Light(_scale){}
+
+        ColorXYZ sample_Li( const Surfel& hit, BlinnPhongMaterial& material, Vector3f* wi, VisibilityTester* vis);
+        ColorXYZ get_I();
+        Ray shadow_ray(Point3f origin);
 };
 
 #endif
