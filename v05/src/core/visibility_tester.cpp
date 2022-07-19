@@ -2,10 +2,10 @@
 #include <iostream>
 
 VisibilityTester::VisibilityTester(const Surfel& obj, const Surfel& light) {
-    std::cout << "Entered VisibilityTester\n";
-    objectContact->copy_from(&obj);
-    lightContact->copy_from(&light);
-    std::cout << "Got out VisibilityTester\n";
+    // std::cout << "Entered VisibilityTester\n";
+    // objectContact->copy_from(&obj);
+    // lightContact->copy_from(&light);
+    // std::cout << "Got out VisibilityTester\n";
 }
 
 bool VisibilityTester::unoccluded(Scene& scene) {
