@@ -38,12 +38,13 @@ ColorXYZ BlinnPhongIntegrator::Li( const Ray& ray, Scene& scene, ColorXYZ& defau
         BlinnPhongMaterial *bf_material = dynamic_cast< BlinnPhongMaterial *>( isect.primitive->get_material());
         if (bf_material) {
             for (auto light: lights) {
-                auto shadow_ray_origin = isect.p;
-                auto shadow_ray_dest = light->max_shadow_ray_point(isect.p);
-                auto shadow_ray_direction = shadow_ray_dest - shadow_ray_origin;
-                auto shadow_ray = Ray(shadow_ray_origin, shadow_ray_direction);
+                auto shadow_ray = light->shadow_ray(isect.p);
                 Surfel isect2;
                 auto min_t = 0.001;
+                /**
+                 * TODO: maybe this should be higher for directional lights, since the limit is in theory
+                 * some bounding box encompassing the scene. However, 1 is working fine for now.
+                 */
                 auto max_t = 1;
                 if (scene.intersect(shadow_ray, &isect2, min_t, max_t)) {
                     continue;

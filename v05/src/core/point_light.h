@@ -14,7 +14,7 @@ class PointLight:  public NonAmbientLight {
         PointLight(ColorXYZ _I, Point3f _from, ColorXYZ _scale): NonAmbientLight(_scale), I(_I), from(_from) {}
         ColorXYZ sample_Li( const Surfel& hit, BlinnPhongMaterial& material, Vector3f* wi, VisibilityTester* vis);
         ColorXYZ get_I();
-        Point3f max_shadow_ray_point(Point3f origin);
+        Ray shadow_ray(Point3f origin);
 };
 
 #endif

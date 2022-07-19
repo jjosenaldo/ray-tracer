@@ -18,3 +18,9 @@ ColorXYZ DirectionalLight::sample_Li( const Surfel& hit, BlinnPhongMaterial& mat
 ColorXYZ DirectionalLight::get_I() {
     return I;
 }
+
+Ray DirectionalLight::shadow_ray(Point3f origin) {
+    auto direction = to - from;
+
+    return Ray(origin, direction);
+}

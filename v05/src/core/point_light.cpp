@@ -22,6 +22,9 @@ ColorXYZ PointLight::get_I() {
     return I;
 }
 
-Point3f PointLight::max_shadow_ray_point(Point3f origin) {
-    return from;
+Ray PointLight::shadow_ray(Point3f origin) {
+    auto dest = from;
+    auto direction = dest - origin;
+
+    return Ray(origin, direction);
 }

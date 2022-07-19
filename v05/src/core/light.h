@@ -1,6 +1,7 @@
 #ifndef LIGHT_H
 #define LIGHT_H
 
+#include "ray.h"
 #include "scene.h"
 #include "surfel.h"
 #include "visibility_tester.h"
@@ -13,7 +14,7 @@ public:
     // Retorna a intensidade da luz, direção e o teste oclusão.
     virtual ColorXYZ sample_Li( const Surfel& hit, BlinnPhongMaterial& material, Vector3f* wi, VisibilityTester* vis) = 0;
     virtual void preprocess( const Scene & ) {};
-    virtual Point3f max_shadow_ray_point(Point3f origin) = 0;
+    virtual Ray shadow_ray(Point3f origin) = 0;
 };
 
 #endif

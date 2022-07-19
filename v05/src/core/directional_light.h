@@ -13,8 +13,7 @@ class DirectionalLight:  public NonAmbientLight {
         DirectionalLight(ColorXYZ _I, Vector3f _from, Vector3f _to, ColorXYZ _scale): NonAmbientLight(_scale), I(_I), from(_from), to(_to) {}
         ColorXYZ sample_Li( const Surfel& hit, BlinnPhongMaterial& material, Vector3f* wi, VisibilityTester* vis);
         ColorXYZ get_I();
-        // TODO: implement this
-        Point3f max_shadow_ray_point(Point3f origin) {return default_point3f();}
+        Ray shadow_ray(Point3f origin);
 };
 
 #endif
