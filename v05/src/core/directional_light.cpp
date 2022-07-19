@@ -1,7 +1,7 @@
 #include "directional_light.h"
 
 ColorXYZ DirectionalLight::sample_Li( const Surfel& hit, BlinnPhongMaterial& material, Vector3f* wi, VisibilityTester* vis) {
-    Vector3f direction = to - from;
+    Vector3f direction = from - to;
     Vector3f norm_direction = normalize_vector3f(direction);
     Vector3f N = hit.n;
     Vector3f V = hit.wo;
@@ -20,7 +20,7 @@ ColorXYZ DirectionalLight::get_I() {
 }
 
 Ray DirectionalLight::shadow_ray(Point3f origin) {
-    auto direction = to - from;
+    Vector3f direction = from - to;
 
     return Ray(origin, direction);
 }

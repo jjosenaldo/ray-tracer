@@ -3,7 +3,6 @@
 using namespace std;
 
 ColorXYZ PointLight::sample_Li( const Surfel& hit, BlinnPhongMaterial& material, Vector3f* wi, VisibilityTester* vis) {
-    // pelo pdf deveria ser hit.p - from
     Vector3f direction = from - hit.p;
     Vector3f norm_direction = normalize_vector3f(direction);
     Vector3f N = hit.n;
@@ -23,8 +22,7 @@ ColorXYZ PointLight::get_I() {
 }
 
 Ray PointLight::shadow_ray(Point3f origin) {
-    auto dest = from;
-    auto direction = dest - origin;
+    Vector3f direction = from - origin;
 
     return Ray(origin, direction);
 }
